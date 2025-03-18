@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import CRAPI from '$lib/CRAPI';
 
-	const handleLogout = () => {
-		CRAPI.db.authStore.clear();
-		window.location.href = '/login';
-	};
+	const handleLogout = () => {};
 </script>
 
 <div class="mx-auto flex flex-col">

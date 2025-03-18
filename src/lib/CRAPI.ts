@@ -1,5 +1,3 @@
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
-import PocketBase from 'pocketbase';
 import { get, writable } from 'svelte/store';
 
 export type TNotyType = 'toast' | 'snack' | 'banner';
@@ -23,8 +21,6 @@ export interface INotyInput {
  * @description A class that provides a composable RESTful API for use across the application.
  */
 class CRAPI {
-	static db = new PocketBase(PUBLIC_POCKETBASE_URL);
-
 	/**
 	 * @deprecated This hasn't been implemented yet.
 	 * @description A simple fetch method to make API requests.

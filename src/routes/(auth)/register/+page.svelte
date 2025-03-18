@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import PocketBase, { ClientResponseError } from 'pocketbase';
 	import TextInput from '$lib/components/forms/TextInput.svelte';
 	import { goto } from '$app/navigation';
-	import { PUBLIC_ENVIRONMENT, PUBLIC_POCKETBASE_URL } from '$env/static/public';
+	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
 	import { onMount } from 'svelte';
-	import CRAPI from '$lib/CRAPI';
 
 	const state = $state({
 		username: '',
@@ -20,47 +18,6 @@
 	});
 
 	let isValid = $derived(state.emailValid && state.passwordValid && state.passwordConfirmValid);
-
-	const onsubmit = (e: Event) => {
-		e.preventDefault();
-		state.errors = [];
-		if (!isValid) {
-			CRAPI.notify.trigger('Form not valid.', { type: 'toast', style: 'error' });
-			return;
-		}
-
-		console.log(state.email, state.password);
-		CRAPI.api
-			.post(
-				'',
-				JSON.stringify({
-					email: state.email,
-					password: state.password,
-					passwordConfirm: state.passwordConfirm
-				})
-			)
-			.then((res) => {
-				console.log(res);
-				if (res.errors) {
-					state.errors.push(...res.errors);
-					return null;
-				}
-				// Handle successful registration here
-				goto('/login');
-				CRAPI.notify.trigger('Registration successful! Please login.', {
-					type: 'toast',
-					style: 'success'
-				});
-			})
-			.catch((err: ClientResponseError) => {
-				console.error(err);
-				CRAPI.notify.trigger('Registration failed. Please try again.', {
-					type: 'toast',
-					style: 'error'
-				});
-			});
-		return false;
-	};
 
 	onMount(() => {
 		if (PUBLIC_ENVIRONMENT === 'dev') {

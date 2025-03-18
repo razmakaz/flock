@@ -4,6 +4,7 @@
 
 	let {
 		label,
+		name,
 		value = $bindable(),
 		validation,
 		required = false,
@@ -12,6 +13,7 @@
 		type = 'text'
 	}: {
 		label?: string;
+		name: string;
 		value: string;
 		required?: boolean;
 		isValid?: boolean;
