@@ -2,19 +2,25 @@
 	import { onMount } from 'svelte';
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	let { children } = $props();
+	import Navbar from '$lib/components/nav/Navbar.svelte';
+	let { data, children } = $props();
+
+	const { session } = data;
 
 	let ready = $state(false);
 
 	onMount(() => {
-		// goto('/app');
+		if (session) {
+			goto('/app');
+			return;
+		}
 		ready = true;
 	});
 </script>
 
 <div class="grid min-h-screen w-full grid-rows-[auto_1fr]">
 	{#if ready}
-		<div class="bg-neutral sticky top-0 grid w-full grid-cols-[auto_1fr_auto] p-4">Nav</div>
+		<Navbar />
 	{/if}
 	<div>
 		{@render children()}

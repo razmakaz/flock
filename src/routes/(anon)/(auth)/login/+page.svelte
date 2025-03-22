@@ -23,12 +23,6 @@
 			state.password = 'TestPassword123!';
 			state.passwordValid = true;
 		}
-
-		enhance(form, (data) => {
-			console.log(data);
-			// Handle form submission here
-			return false; // Prevent default form submission
-		});
 	});
 </script>
 

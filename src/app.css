@@ -1,4 +1,31 @@
 @import 'tailwindcss';
+@import './fonts.css';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 @plugin "daisyui";
+
+body,
+.poppins {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.inter {
+	font-family: 'Inter', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 600;
+	font-style: normal;
+}
+
+.floc {
+	font-family: 'Patrick Hand', cursive;
+	font-weight: 400;
+	font-style: normal;
+}
