@@ -174,3 +174,23 @@
 	font-weight: 900;
 	font-style: italic;
 }
+
+.pacifico {
+	font-family: 'Pacifico', cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.baloo {
+	font-family: 'Baloo 2', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.baloo-bold {
+	font-family: 'Baloo 2', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: normal;
+}

@@ -1,0 +1,42 @@
+{
+	"lang": {
+		"en": "English",
+		"es": "Spanish",
+		"fr": "French",
+		"de": "German",
+		"zh": "Chinese",
+		"ja": "Japanese",
+		"ko": "Korean",
+		"it": "Italian",
+		"pt": "Portuguese",
+		"ru": "Russian",
+		"ar": "Arabic"
+	},
+	"common": {
+		"app": "floc",
+		"loading": "Loading...",
+		"error": "An error occurred. Please try again later.",
+		"language": "Language",
+		"login": "Login",
+		"logout": "Logout",
+		"email": "Email",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"submit": "Submit",
+		"cancel": "Cancel",
+		"name": "Name",
+		"welcome": "Welcome",
+		"placeholder": "Placeholder"
+	},
+
+	"nav": {},
+	"landing": {
+		"nav": {
+			"product": "Product",
+			"pricing": "Pricing",
+			"about": "About"
+		},
+		"footer": {}
+	},
+	"auth": {}
+}
