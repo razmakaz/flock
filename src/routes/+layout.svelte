@@ -52,7 +52,7 @@
 		// Subscribe to the App store to update the theme
 		appHandler = App.subscribe((s) => {
 			if (s.theme) {
-				document.documentElement.setAttribute('data-theme', s.theme);
+				document.documentElement.setAttribute('data-theme', 'floc-' + s.theme);
 			}
 
 			if (s.lang) {

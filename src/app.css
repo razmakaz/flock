@@ -4,62 +4,120 @@
 @plugin '@tailwindcss/typography';
 @plugin "daisyui";
 @plugin "daisyui/theme" {
-	name: "floc";
+	name: 'floc-dark';
 	default: true;
 	prefersdark: true;
 	color-scheme: dark;
-  
+
 	/* Base layers */
 	--color-base-100: theme(colors.gray.900); /* deep background */
 	--color-base-200: theme(colors.gray.800); /* containers */
 	--color-base-300: theme(colors.gray.700); /* inputs/cards */
 	--color-base-content: theme(colors.gray.100); /* text */
-  
+
 	/* Primary – bold teal/blue like the starling's feathers */
-	--color-primary: theme(colors.sky.500);   /* #2dd4bf or close to #00677F */
+	--color-primary: theme(colors.sky.500); /* #2dd4bf or close to #00677F */
 	--color-primary-content: theme(colors.sky.950);
-  
+
 	/* Secondary – warm tan to offset the coolness */
 	--color-secondary: theme(colors.emerald.500); /* soft beige */
 	--color-secondary-content: theme(colors.emerald.950);
-  
+
 	/* Accent – misty violet, like its throat shimmer */
-	--color-accent: theme(colors.rose.300); 
+	--color-accent: theme(colors.rose.300);
 	--color-accent-content: theme(colors.rose.900);
-  
+
 	/* Neutral – a gray-blue for subtle surfaces */
 	--color-neutral: theme(colors.slate.600);
 	--color-neutral-content: theme(colors.slate.100);
-  
+
 	/* Status */
 	--color-info: theme(colors.sky.400);
 	--color-success: theme(colors.emerald.400);
 	--color-warning: theme(colors.amber.400);
 	--color-error: theme(colors.rose.400);
-  
+
 	--color-info-content: theme(colors.slate.900);
 	--color-success-content: theme(colors.slate.900);
 	--color-warning-content: theme(colors.slate.900);
 	--color-error-content: theme(colors.slate.900);
-  
+
 	/* Radii & sizing */
 	--radius-selector: 0.25rem;
 	--radius-field: 0.25rem;
 	--radius-box: 0.75rem;
-  
+
 	--size-selector: 0.25rem;
 	--size-field: 0.25rem;
-  
+
 	--border: 1px;
 	--depth: 0;
-	--noise: 0.1;
-  }
-  
+	--noise: 0;
+}
+
+@plugin "daisyui/theme" {
+	name: 'floc-light';
+	default: true;
+	prefersdark: false;
+	color-scheme: light;
+
+	/* Base layers */
+	--color-base-100: theme(colors.slate.100); /* deep background */
+	--color-base-200: theme(colors.slate.200); /* containers */
+	--color-base-300: theme(colors.slate.300); /* inputs/cards */
+	--color-base-content: theme(colors.slate.700); /* text */
+
+	/* Primary – bold teal/blue like the starling's feathers */
+	--color-primary: theme(colors.sky.600); /* #2dd4bf or close to #00677F */
+	--color-primary-content: theme(colors.sky.50);
+
+	/* Secondary – warm tan to offset the coolness */
+	--color-secondary: theme(colors.emerald.600); /* soft beige */
+	--color-secondary-content: theme(colors.emerald.50);
+
+	/* Accent – misty violet, like its throat shimmer */
+	--color-accent: theme(colors.rose.600);
+	--color-accent-content: theme(colors.rose.50);
+
+	/* Neutral – a gray-blue for subtle surfaces */
+	--color-neutral: theme(colors.slate.600);
+	--color-neutral-content: theme(colors.slate.100);
+
+	/* Status */
+	--color-info: theme(colors.sky.400);
+	--color-success: theme(colors.emerald.400);
+	--color-warning: theme(colors.amber.400);
+	--color-error: theme(colors.rose.400);
+
+	--color-info-content: theme(colors.slate.900);
+	--color-success-content: theme(colors.slate.900);
+	--color-warning-content: theme(colors.slate.900);
+	--color-error-content: theme(colors.slate.900);
+
+	/* Radii & sizing */
+	--radius-selector: 0.25rem;
+	--radius-field: 0.25rem;
+	--radius-box: 0.75rem;
+
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+
+	--border: 1px;
+	--depth: 0;
+	--noise: 0;
+}
+
 body,
 .poppins {
 	font-family: 'Poppins', sans-serif;
 	font-weight: 400;
 	font-style: normal;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	letter-spacing: 0.025rem;
+	line-height: 1.5;
 }
 
 h1,

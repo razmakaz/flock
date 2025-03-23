@@ -5,9 +5,12 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import Icon from '@iconify/svelte';
+	import { emailRegex } from '$lib/regex';
+	import { page } from '$app/state';
+	import { t } from '$lib/translations.svelte';
 
 	const state = $state({
-		email: '',
+		email: page.url.searchParams.get('email') || '',
 		emailValid: false
 	});
 
@@ -81,12 +84,22 @@
 
 	onMount(() => {
 		if (PUBLIC_ENVIRONMENT === 'dev') {
-			const idempotency = Math.random().toString(36).substring(2, 8);
-			state.email = `thejessekoch+${idempotency}@gmail.com`;
-			state.emailValid = true;
+			if (!state.email) {
+				const idempotency = Math.random().toString(36).substring(2, 8);
+				state.email = `thejessekoch+${idempotency}@gmail.com`;
+				state.emailValid = true;
+			} else {
+				state.emailValid = emailRegex.test(state.email);
+			}
 		}
 	});
 </script>
+
+<svelte:head>
+	<title>{$t('auth.login.title')}</title>
+	<meta name="description" content="Login to your account" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</svelte:head>
 
 {#snippet oauthButton({
 	id,
@@ -115,24 +128,26 @@
 <div class="relative">
 	<div class="card bg-base-200 flex w-md flex-col gap-4 p-4">
 		<div>
-			<h1 class="text-2xl font-bold">Login</h1>
+			<h1 class="text-2xl font-bold">{@html $t('auth.login.title')}</h1>
+			<p class="text-sm">{@html $t('auth.login.subtitle')}</p>
 		</div>
 		<TextInput
 			bind:value={state.email}
 			name="email"
-			label={'Email'}
+			label={$t('auth.login.email')}
 			required={true}
 			bind:isValid={state.emailValid}
 			validation={(input: string) => {
-				return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input);
+				return emailRegex.test(input);
 			}}
-			validationError={'Invalid email address'}
+			validationError={$t('auth.login.emailInvalid')}
 		/>
 
-		<button disabled={!isValid} class="btn btn-primary" onclick={() => handleSubmit()}>Login</button
-		>
+		<button disabled={!isValid} class="btn btn-primary" onclick={() => handleSubmit()}>
+			{$t('auth.login.action')}
+		</button>
 
-		<div class="divider my-0">OR</div>
+		<div class="divider my-0">{$t('common.separatorOr')}</div>
 		<div class="flex flex-col gap-4">
 			{#each avaiableProviders as provider}
 				{@render oauthButton(provider)}

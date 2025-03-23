@@ -1,0 +1,41 @@
+export default {
+	lang: {
+		en: 'Inglés',
+		es: 'Español',
+		fr: 'Francés',
+		de: 'Alemán',
+		zh: 'Chino',
+		ja: 'Japonés',
+		ko: 'Coreano',
+		it: 'Italiano',
+		pt: 'Portugués',
+		ru: 'Ruso',
+		ar: 'Árabe'
+	},
+	common: {
+		app: 'floc',
+		loading: 'Cargando...',
+		error: 'Ocurrió un error. Por favor, inténtelo de nuevo más tarde.',
+		language: 'Idioma',
+		login: 'Iniciar sesión',
+		logout: 'Cerrar sesión',
+		email: 'Correo electrónico',
+		password: 'Contraseña',
+		confirmPassword: 'Confirmar contraseña',
+		submit: 'Enviar',
+		cancel: 'Cancelar',
+		name: 'Nombre',
+		welcome: 'Bienvenido'
+	},
+
+	nav: {},
+	landing: {
+		nav: {
+			product: 'Producto',
+			pricing: 'Precios',
+			about: 'Acerca de'
+		},
+		footer: {}
+	},
+	auth: {}
+};

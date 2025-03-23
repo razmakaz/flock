@@ -3,6 +3,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import LangSelect from './LangSelect.svelte';
 	import { t } from '$lib/translations.svelte';
+	import ThemeSwitcher from './ThemeSwitcher.svelte';
 
 	const state = $state({
 		atTop: false
@@ -46,6 +47,7 @@
 		</div>
 		<div class="flex items-center justify-end gap-4">
 			<LangSelect />
+			<ThemeSwitcher />
 			{@render navButton({ label: $t('common.login'), link: '/login' })}
 		</div>
 	</div>
