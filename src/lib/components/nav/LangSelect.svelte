@@ -26,20 +26,18 @@
 	</label>
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 	<ul tabindex="0" class="dropdown-content menu bg-base-200 rounded-box w-52 p-2 shadow">
-		{#each languages as { code, icon, visible }}
-			{#if visible}
-				<li>
-					<button
-						class="btn btn-ghost grid w-full grid-cols-[auto_1fr] items-center gap-2 text-left"
-						onclick={() => setLocale(code)}
-					>
-						<span class="mr-2">
-							<Icon {icon} width={18} height={18} />
-						</span>
-						{$t(`lang.${code}`)}
-					</button>
-				</li>
-			{/if}
+		{#each languages.filter((item) => item.visible) as item}
+			<li>
+				<button
+					class="btn btn-ghost grid w-full grid-cols-[auto_1fr] items-center gap-2 text-left"
+					onclick={() => setLocale(item.code)}
+				>
+					<span class="mr-2">
+						<Icon icon={item.icon} width={18} height={18} />
+					</span>
+					{$t(`lang.${item.code}`)}
+				</button>
+			</li>
 		{/each}
 	</ul>
 </div>

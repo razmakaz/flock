@@ -4,6 +4,7 @@
 	import LangSelect from './LangSelect.svelte';
 	import { t } from '$lib/translations.svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
+	import Icon from '@iconify/svelte';
 
 	const state = $state({
 		atTop: false
@@ -32,20 +33,22 @@
 {/snippet}
 
 <div
-	class="bg-base-100 sticky top-0 flex w-full items-center justify-center p-4 transition-all duration-100"
-	style="height: 84px; z-index: 100"
+	class="bg-base-100 sticky top-0 flex w-full max-w-svw items-center justify-center p-4 transition-all duration-100"
+	style="height: 84px; z-index: 100;"
 >
-	<div class=" grid w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center">
+	<div
+		class=" grid w-full max-w-7xl grid-cols-[1fr] items-center gap-2 lg:grid-cols-[1fr_auto_1fr]"
+	>
 		<button class="flex cursor-pointer items-center gap-2" onclick={() => goto('/')}>
 			<img class="h-12 w-12" src="/img/floc-alt.svg" alt="floc logo" />
 			<div class="floc" style="font-size: 48px;">{$t('common.app')}</div>
 		</button>
-		<div class=" bg-base-200 flex items-center gap-4 rounded-full px-8">
+		<div class=" bg-base-200 hidden items-center gap-4 rounded-full px-8 lg:flex">
 			{@render navButton({ label: $t('landing.nav.product'), link: '/product' })}
 			{@render navButton({ label: $t('landing.nav.pricing'), link: '/pricing' })}
 			{@render navButton({ label: $t('landing.nav.about'), link: '/about' })}
 		</div>
-		<div class="flex items-center justify-end gap-4">
+		<div class="hidden items-center justify-end gap-4 lg:flex">
 			<LangSelect />
 			<ThemeSwitcher />
 			{@render navButton({ label: $t('common.login'), link: '/login' })}

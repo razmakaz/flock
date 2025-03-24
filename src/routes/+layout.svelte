@@ -7,6 +7,7 @@
 	import App from '$lib/stores/App';
 	import type { Unsubscriber } from 'svelte/store';
 	import { setLocale } from '$lib/translations.svelte';
+	import MobileDock from '$lib/components/nav/MobileDock.svelte';
 
 	let { data, children } = $props();
 
@@ -79,12 +80,11 @@
 	});
 </script>
 
-<div class="grid min-h-screen w-full grid-rows-[auto_1fr]">
-	{#if ready}
-		<Navbar />
-		<div>
-			{@render children()}
-		</div>
-		<Footer />
-	{/if}
-</div>
+{#if ready}
+	<Navbar />
+	<div>
+		{@render children()}
+	</div>
+	<Footer />
+	<MobileDock />
+{/if}

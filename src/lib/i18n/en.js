@@ -39,6 +39,7 @@ export default {
 	nav: {},
 	landing: {
 		nav: {
+			home: 'Home',
 			product: 'Product',
 			pricing: 'Pricing',
 			about: 'About'
