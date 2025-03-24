@@ -23,10 +23,10 @@
 	};
 </script>
 
-<section id="hero" class="hero flex justify-center" style="min-height: 70vh;">
-	<div class="hero-content flex-col lg:flex-row-reverse">
-		<img src="https://placehold.co/600x400/EEE/31343C" alt="placeholder" />
-		<div>
+<section class="hero flex max-w-svw justify-center" style="min-height: 70vh;">
+	<div class="hero-content flex-col px-0 lg:flex-row-reverse lg:px-4">
+		<img src="https://placehold.co/600x400/EEE/31343C" class="w-full max-w-svw" alt="placeholder" />
+		<div class="px-4 lg:p-0">
 			<h1
 				class="floc inline-block bg-gradient-to-r from-indigo-400 to-violet-500 bg-clip-text text-6xl font-bold text-transparent"
 			>
@@ -36,7 +36,7 @@
 				{@html $t('landing.hero.subtitle')}
 			</h2>
 			<div class="flex justify-center">
-				<div class="join">
+				<div class="join join-vertical lg:join-horizontal">
 					<div>
 						<label class="input validator join-item w-full">
 							<Icon icon="ic:baseline-email" width={24} height={24} />
