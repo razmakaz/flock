@@ -11,19 +11,19 @@
 	$: features = [
 		{
 			title: $t('landing.features.timeEntry'),
-			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit '
 		},
 		{
 			title: $t('landing.features.invoicing'),
-			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit '
 		},
 		{
 			title: $t('landing.features.crossFeatureTools'),
-			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit '
 		},
 		{
 			title: $t('landing.features.integrations'),
-			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit '
 		}
 	];
 </script>
@@ -46,8 +46,9 @@
 	<meta property="twitter:image" content="%sveltkeit_head%/img/floc-alt.svg" />
 </svelte:head>
 
+<!-- TODO: Add images above each feature item -->
 {#snippet FeatureSection(section)}
-	<ul class="list-style-none flex flex-col gap-6">
+	<ul class="list-style-none flex flex-col gap-6 text-center md:flex-row">
 		{#each section as item}
 			<li>
 				<h3 class="text-lg">{item.title}</h3>
@@ -71,6 +72,10 @@
 			</div>
 
 			{@render FeatureSection(features)}
+
+			<!-- TODO: Create a pricing section (probably a component) -->
+
+			<!-- TODO: Create a FAQ section -->
 		</div>
 	</section>
 </div>

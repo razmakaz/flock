@@ -50,9 +50,9 @@
 {/snippet}
 
 <footer
-	class="bg-base-200 text-base-content flex h-fit w-full items-center justify-center px-4 py-16"
+	class="bg-base-200 text-base-content flex h-fit w-full items-center justify-center px-4 pt-16 pb-28"
 >
-	<div class="mx-auto flex max-w-7xl flex-col gap-12 md:w-full">
+	<div class="mx-auto flex w-full max-w-7xl flex-col gap-12">
 		<div class="flex items-center justify-between">
 			<div>
 				<h4 class="text-3xl">{$t('common.app')}</h4>
