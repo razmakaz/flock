@@ -35,6 +35,21 @@ export default {
 			pricing: 'Precios',
 			about: 'Acerca de'
 		},
+		features: {
+			sectionTitle: "Características",
+
+			// Invoicing
+			invoicing: "Facturación",
+
+			// Time Entry
+			timeEntry: "Registro de Tiempo",
+
+			// Cross-Feature Tools
+			crossFeatureTools: "Herramientas Inter-Características",
+
+			// Integrations
+			integrations: "Integraciones",
+		},
 		footer: {
 			// Recursos
 			resourcesTitle: "Recursos",

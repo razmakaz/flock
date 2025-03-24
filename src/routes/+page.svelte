@@ -8,21 +8,21 @@
 		console.log('Page mounted');
 	});
 
-	const features = [
+	$: features = [
 		{
-			title: 'Time Entry',
+			title: $t('landing.features.timeEntry'),
 			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
 		},
 		{
-			title: 'Invoicing',
+			title: $t('landing.features.invoicing'),
 			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
 		},
 		{
-			title: 'Cross-Feature Tools',
+			title: $t('landing.features.crossFeatureTools'),
 			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
 		},
 		{
-			title: 'Integrations',
+			title: $t('landing.features.integrations'),
 			body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
 		}
 	];
@@ -46,27 +46,31 @@
 	<meta property="twitter:image" content="%sveltkeit_head%/img/floc-alt.svg" />
 </svelte:head>
 
+{#snippet FeatureSection(section)}
+	<ul class="list-style-none flex flex-col gap-6">
+		{#each section as item}
+			<li>
+				<h3 class="text-lg">{item.title}</h3>
+				<p class="">{item.body}</p>
+			</li>
+		{/each}
+	</ul>
+{/snippet}
+
 <div class="flex h-fit flex-col gap-4">
 	<Hero />
 
 	<section class="bg-base-300 w-full py-24">
 		<div class="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4">
 			<div class="flex flex-col gap-2 text-center">
-				<h2 class="text-5xl">Features</h2>
+				<h2 class="text-5xl">{$t('landing.features.sectionTitle')}</h2>
 				<p class="text-lg">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
 					ut labore et dolore magna aliqua.
 				</p>
 			</div>
 
-			<ul class="list-style-none flex gap-6">
-				{#each features as feature}
-					<li>
-						<h3 class="text-lg">{feature.title}</h3>
-						<p class="">{feature.body}</p>
-					</li>
-				{/each}
-			</ul>
+			{@render FeatureSection(features)}
 		</div>
 	</section>
 </div>

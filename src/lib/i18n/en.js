@@ -49,6 +49,21 @@ export default {
 			validator: 'Enter valid email.',
 			cta: 'Open Account'
 		},
+		features: {
+			sectionTitle: "Features",
+
+			// Invoicing
+			invoicing: "Invoicing",
+
+			// Time Entry
+			timeEntry: "Time Entry",
+
+			// Cross-Feature Tools
+			crossFeatureTools: "Cross-Feature Tools",
+
+			// Integrations
+			integrations: "Integrations",
+		},
 		footer: {
 			// Resources
 			resourcesTitle: "Resources",
