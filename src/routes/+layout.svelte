@@ -7,7 +7,6 @@
 	import App from '$lib/stores/App';
 	import type { Unsubscriber } from 'svelte/store';
 	import { setLocale } from '$lib/translations.svelte';
-	import MobileDock from '$lib/components/nav/MobileDock.svelte';
 
 	let { data, children } = $props();
 
@@ -18,6 +17,18 @@
 	let appHandler: Unsubscriber;
 
 	onMount(() => {
+		// Register Service Worker
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker
+				.register('/sw.js')
+				.then((registration) => {
+					console.log('Service Worker registered with scope:', registration.scope);
+				})
+				.catch((error) => {
+					console.error('Service Worker registration failed:', error);
+				});
+		}
+
 		// Set the default language and theme based on the user's browser settings
 		if (typeof window !== 'undefined') {
 			// Get the user's language
@@ -86,5 +97,4 @@
 		{@render children()}
 	</div>
 	<Footer />
-	<MobileDock />
 {/if}
