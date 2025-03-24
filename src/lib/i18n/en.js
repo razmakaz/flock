@@ -27,7 +27,26 @@ export default {
 		name: 'Name',
 		welcome: 'Welcome',
 		placeholder: 'Placeholder',
-		separatorOr: 'OR'
+		separatorOr: 'OR',
+		yes: 'Yes',
+		no: 'No',
+		confirm: 'Confirm',
+		back: 'Back',
+		next: 'Next',
+		save: 'Save',
+		edit: 'Edit',
+		delete: 'Delete',
+		createdAt: 'Created At',
+		updatedAt: 'Updated At',
+		actions: 'Actions',
+		view: 'View',
+		download: 'Download',
+		search: 'Search',
+		filter: 'Filter',
+		clear: 'Clear',
+		apply: 'Apply',
+		help: 'Help',
+		close: 'Close'
 	},
 	seo: {
 		landing: {
@@ -36,7 +55,9 @@ export default {
 				'floc is a time capture and invoicing tool designed to help freelancers and small businesses manage their time and get paid faster.'
 		}
 	},
-	nav: {},
+	nav: {
+		closeSidebar: 'Close'
+	},
 	landing: {
 		nav: {
 			home: 'Home',
@@ -45,8 +66,11 @@ export default {
 			about: 'About'
 		},
 		hero: {
-			title: "get floc'd",
-			subtitle: `Track your time <b><i>&</i></b> Get paid for it`,
+			title: 'Time Capture & Invoicing',
+			subtitle: `
+				Manage your time and get paid faster with floc. <br />
+				The simple time capture and invoicing tool for freelancers and small businesses.
+			`,
 			validator: 'Enter valid email.',
 			cta: 'Open Account'
 		},
