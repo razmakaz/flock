@@ -1,109 +1,74 @@
 <script>
 	import Icon from '@iconify/svelte';
+	import { t } from '$lib/translations.svelte';
 
 	// TODO @izyk: Try to make the links dynamically generated.
+
+	$: footerLinks = [
+		{
+			title: $t('landing.footer.resourcesTitle'),
+			links: [{ title: $t('landing.footer.helpCenter'), link: '/help' }]
+		},
+		{
+			title: $t('landing.footer.solutionsTitle'),
+			links: [{ title: $t('landing') }]
+		}
+	];
 
 	const currentYear = new Date().getFullYear();
 </script>
 
+{#snippet FooterSection(section)}
+	<div class="flex flex-col gap-4">
+		<h5 class="text-lg">{section.title}</h5>
+		<ul class="flex flex-col gap-2">
+			{#each section.links as item}
+				{@render SectionItems(item)}
+			{/each}
+		</ul>
+	</div>
+{/snippet}
+
+{#snippet SectionItems(item)}
+	<li>
+		<a href={item.link} class="cursor-pointer">{item.title}</a>
+	</li>
+{/snippet}
+
 <footer
 	class="bg-base-200 text-base-content flex h-fit w-full items-center justify-center px-4 py-16"
 >
-	<div class="mx-auto flex w-full max-w-7xl flex-col gap-12">
+	<div class="mx-auto flex max-w-7xl flex-col gap-12 md:w-full">
 		<div class="flex items-center justify-between">
 			<div>
-				<h4 class="inter-bold text-3xl">Floc</h4>
-			</div>
-
-			<div class="join">
-				<div>
-					<label class="input validator join-item z-0">
-						<Icon icon="ic:baseline-email" width={18} height={18} />
-						<input type="email" placeholder="mail@site.com" required />
-					</label>
-					<div class="validator-hint hidden">Enter valid email address</div>
-				</div>
-				<button class="poppins-regular btn btn-base-100 join-item">Sign Up Now</button>
+				<h4 class="text-3xl">{$t('common.app')}</h4>
 			</div>
 		</div>
 
-		<div class="border-1"></div>
+		<div class="w-full border"></div>
 
-		<div class="flex justify-between">
-			<div class="flex flex-col gap-4">
-				<h5 class="inter-bold text-lg">Placeholder</h5>
-				<ul class="poppins-light flex flex-col gap-2">
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-				</ul>
-			</div>
-			<div class="flex flex-col gap-4">
-				<h5 class="inter-bold text-lg">Placeholder</h5>
-				<ul class="poppins-light flex flex-col gap-2">
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-				</ul>
-			</div>
-			<div class="flex flex-col gap-4">
-				<h5 class="inter-bold text-lg">Placeholder</h5>
-				<ul class="poppins-light flex flex-col gap-2">
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-				</ul>
-			</div>
-			<div class="flex flex-col gap-4">
-				<h5 class="inter-bold text-lg">Placeholder</h5>
-				<ul class="poppins-light flex flex-col gap-2">
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-					<li>
-						<button type="button" class="cursor-pointer">Placeholder</button>
-					</li>
-				</ul>
-			</div>
+		<div class="flex flex-col justify-between gap-4 md:flex-row">
+			{#each footerLinks as section}
+				{@render FooterSection(section)}
+			{/each}
 		</div>
 
-		<div class="border-1"></div>
+		<div class="w-full border"></div>
 
-		<div class="flex items-center justify-between">
-			<p class="text-md">
-				Floc &#169; {currentYear}. All rights reserved
+		<div class="flex flex-col justify-between gap-4 md:flex-row">
+			<p class="">
+				{$t('common.app')} &#169; {currentYear}. {$t('landing.footer.rightsReserved')}
 			</p>
 
-			<ul class="poppins-light flex w-fit gap-2">
+			<ul class="flex w-fit flex-col gap-4 md:flex-row">
 				<li>
-					<button type="button">Placeholder</button>
+					<a href="/">{$t('landing.footer.terms')}</a>
 				</li>
 				<li>
-					<button type="button">Placeholder</button>
+					<a href="/">{$t('landing.footer.privacy')}</a>
 				</li>
 				<li>
-					<button type="button">Placeholder</button>
+					<a href="/">{$t('landing.footer.cookies')}</a>
 				</li>
 			</ul>
 		</div>

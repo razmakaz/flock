@@ -52,18 +52,18 @@
 	<section class="bg-base-300 w-full py-24">
 		<div class="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4">
 			<div class="flex flex-col gap-2 text-center">
-				<h2 class="inter-bold text-5xl">Features</h2>
-				<p class="poppins-light text-lg">
+				<h2 class="text-5xl">Features</h2>
+				<p class="text-lg">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
 					ut labore et dolore magna aliqua.
 				</p>
 			</div>
 
-			<ul class="list-style-none poppins-light flex gap-6">
+			<ul class="list-style-none flex gap-6">
 				{#each features as feature}
 					<li>
-						<h3 class="inter-bold text-lg">{feature.title}</h3>
-						<p class="poppins-light">{feature.body}</p>
+						<h3 class="text-lg">{feature.title}</h3>
+						<p class="">{feature.body}</p>
 					</li>
 				{/each}
 			</ul>
