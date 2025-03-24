@@ -35,7 +35,29 @@ export default {
 			pricing: 'Precios',
 			about: 'Acerca de'
 		},
-		footer: {}
+		footer: {
+			// Recursos
+			resourcesTitle: "Recursos",
+			helpCenter: "Centro de Ayuda",
+
+			// Soluciones
+			solutionsTitle: "Soluciones",
+			// Características
+			featuresTitle: "Características",
+			invoicing: "Facturación",
+			timeEntry: "Registro de Tiempo",
+			crossFeatureTools: "Herramientas Inter-Características",
+			integrations: "Integraciones",
+
+			// Producto
+			productTitle: "Producto",
+
+			// Misc
+			rightsReserved: "Todos los derechos reservados.",
+			terms: "Términos de Servicio",
+			cookies: "Preferencias de Cookies",
+			privacy: "Privacidad"
+		}
 	},
 	auth: {}
 };

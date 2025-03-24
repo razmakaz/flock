@@ -2,8 +2,6 @@
 	import Icon from '@iconify/svelte';
 	import { t } from '$lib/translations.svelte';
 
-	// TODO @izyk: Try to make the links dynamically generated.
-
 	$: footerLinks = [
 		{
 			title: $t('landing.footer.resourcesTitle'),
@@ -11,7 +9,23 @@
 		},
 		{
 			title: $t('landing.footer.solutionsTitle'),
-			links: [{ title: $t('landing') }]
+			// TODO: Add solutions
+			links: [{ title: $t('landing.footer'), link: '/' }]
+		},
+		{
+			title: $t('landing.footer.featuresTitle'),
+			// TODO: Add links to features
+			links: [
+				{ title: $t('landing.footer.invoicing'), link: '/' },
+				{ title: $t('landing.footer.timeEntry'), link: '/' },
+				{ title: $t('landing.footer.crossFeatureTools'), link: '/' },
+				{ title: $t('landing.footer.integrations'), link: '/' }
+			]
+		},
+		{
+			title: $t('landing.footer.productTitle'),
+			// TODO: Add products
+			links: [{ title: $t('landing.footer'), link: '/' }]
 		}
 	];
 
@@ -19,7 +33,7 @@
 </script>
 
 {#snippet FooterSection(section)}
-	<div class="flex flex-col gap-4">
+	<div class="flex flex-col gap-2">
 		<h5 class="text-lg">{section.title}</h5>
 		<ul class="flex flex-col gap-2">
 			{#each section.links as item}
@@ -47,7 +61,7 @@
 
 		<div class="w-full border"></div>
 
-		<div class="flex flex-col justify-between gap-4 md:flex-row">
+		<div class="flex flex-col justify-between gap-6 md:flex-row">
 			{#each footerLinks as section}
 				{@render FooterSection(section)}
 			{/each}

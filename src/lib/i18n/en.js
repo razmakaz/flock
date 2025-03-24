@@ -53,18 +53,24 @@ export default {
 			// Resources
 			resourcesTitle: "Resources",
 			helpCenter: "Help Center",
+
+
 			// Solutions
 			solutionsTitle: "Solutions",
 
 			//  Features
 			featuresTitle: "Features",
-			timeEntry: "Time Entry",
 			invoicing: "Invoicing",
+			timeEntry: "Time Entry",
 			crossFeatureTools: "Cross-Feature Tools",
 			integrations: "Integrations",
+
+
 			// Product
 			productTitle: "Product",
 
+
+			// Misc
 			rightsReserved: "All rights reserved.",
 			terms: "Terms of Service",
 			cookies: "Cookie Preferences",
