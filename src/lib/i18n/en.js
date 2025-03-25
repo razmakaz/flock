@@ -117,6 +117,33 @@ export default {
 			privacy: "Privacy"
 		}
 	},
+	pricing: {
+
+		// TODO: Change this structure and naming to something better fitting 
+
+		free: {
+			title: "Free Tier",
+			frequency: "Free Forever",
+			bestFor: "Best for trying out the service"
+		},
+		license: {
+			title: "$149 Personal License",
+			frequency: "One-Time Payment Per License",
+			bestFor: "Best for independent contractors"
+		},
+		subscription: {
+			title: "$19/MAU",
+			frequency: "Short-Term Project",
+			bestFor: "Best for business managing teams",
+		},
+		custom: {
+			title: "Contact Sales",
+			frequency: "Custom Pricing",
+			bestFor: "Best for large scale, long term projects"
+		}
+
+
+	},
 	auth: {
 		login: {
 			pageTitle: 'Login',

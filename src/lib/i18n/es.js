@@ -27,7 +27,6 @@ export default {
 		name: 'Nombre',
 		welcome: 'Bienvenido'
 	},
-
 	nav: {},
 	landing: {
 		nav: {
@@ -73,6 +72,29 @@ export default {
 			cookies: "Preferencias de Cookies",
 			privacy: "Privacidad"
 		}
+	},
+	pricing: {
+		free: {
+			title: "Plan Gratuito",
+			frequency: "Gratis para Siempre",
+			bestFor: "Ideal para probar el servicio"
+		},
+		license: {
+			title: "Licencia Personal de $149",
+			frequency: "Pago Único por Licencia",
+			bestFor: "Ideal para trabajadores independientes"
+		},
+		subscription: {
+			title: "$19/MAU",
+			frequency: "Proyecto a Corto Plazo",
+			bestFor: "Ideal para empresas que gestionan equipos"
+		},
+		custom: {
+			title: "Contactar Ventas",
+			frequency: "Precio Personalizado",
+			bestFor: "Ideal para proyectos a gran escala y a largo plazo"
+		}
+
 	},
 	auth: {}
 };

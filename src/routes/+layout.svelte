@@ -96,5 +96,4 @@
 	<div>
 		{@render children()}
 	</div>
-	<Footer />
 {/if}

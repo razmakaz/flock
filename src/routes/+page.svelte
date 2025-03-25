@@ -3,6 +3,8 @@
 	import Icon from '@iconify/svelte';
 	import Hero from '$lib/components/landing/Hero.svelte';
 	import { t } from '$lib/translations.svelte';
+	import Pricing from '$lib/components/pricing/Pricing.svelte';
+	import Footer from '$lib/components/footer/Footer.svelte';
 
 	onMount(() => {
 		console.log('Page mounted');
@@ -72,10 +74,10 @@
 			</div>
 
 			{@render FeatureSection(features)}
-
-			<!-- TODO: Create a pricing section (probably a component) -->
-
-			<!-- TODO: Create a FAQ section -->
 		</div>
 	</section>
+
+	<Pricing />
+
+	<Footer />
 </div>
