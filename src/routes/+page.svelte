@@ -77,7 +77,5 @@
 		</div>
 	</section>
 
-	<Pricing />
-
 	<Footer />
 </div>

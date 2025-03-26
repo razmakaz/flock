@@ -16,17 +16,22 @@
 			title: $t('pricing.subscription.title'),
 			frequency: $t('pricing.subscription.frequency'),
 			bestFor: $t('pricing.subscription.bestFor')
-		},
-		{
-			title: $t('pricing.custom.title'),
-			frequency: $t('pricing.custom.frequency'),
-			bestFor: $t('pricing.custom.bestFor')
 		}
 	];
 </script>
 
 {#snippet PricingSnippet(section)}
-	<div></div>
+	{#each section as item}
+		<div class="border-base-300 h-full w-full flex-col border-2 p-6 shadow-lg">
+			<h2 class="text-4xl">{item.title}</h2>
+			<p>{item.frequency}</p>
+			<p>{item.bestFor}</p>
+		</div>
+	{/each}
 {/snippet}
 
-<section class="relative w-full"></section>
+<section class="relative w-full py-16">
+	<div class="mx-auto flex h-full max-w-7xl justify-between gap-16">
+		{@render PricingSnippet(pricing)}
+	</div>
+</section>

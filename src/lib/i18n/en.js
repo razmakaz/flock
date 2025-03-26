@@ -119,6 +119,8 @@ export default {
 	},
 	pricing: {
 
+		pageTitle: "Plans and Pricing",
+
 		// TODO: Change this structure and naming to something better fitting 
 
 		free: {
