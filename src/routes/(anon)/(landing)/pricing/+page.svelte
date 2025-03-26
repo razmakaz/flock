@@ -18,5 +18,8 @@
 	<div class="mx-auto max-w-7xl">
 		<h1 class="text-6xl">{$t('pricing.pageTitle')}</h1>
 		<Pricing />
+
+		<!-- TODO: Implement features and dropdowns here with comparisons
+        TODO: Create comparisons grid -->
 	</div>
 </main>
