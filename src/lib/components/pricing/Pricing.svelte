@@ -22,7 +22,9 @@
 
 {#snippet PricingSnippet(section)}
 	{#each section as item}
-		<div class="bg-base-100 flex h-full w-full flex-col gap-2 p-6 shadow-lg">
+		<div
+			class="bg-base-100 transition-ease flex h-full w-full flex-col gap-2 p-6 shadow-lg duration-200 hover:scale-[1.1]"
+		>
 			<h2 class="text-4xl">{item.title}</h2>
 			<p class="text-lg">{item.frequency}</p>
 

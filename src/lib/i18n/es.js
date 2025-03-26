@@ -96,5 +96,65 @@ export default {
 		}
 
 	},
+	services: {
+		timesheet: {
+			title: "Hoja de Tiempo",
+			projectRates: "Tasas de Proyecto y Tasas Horarias",
+			miscBillables: "Gastos y Otros Cargos",
+			timeclock: "Reloj de Tiempo",
+			taskTracking: "Seguimiento de Tareas",
+			overtime: "Horas Extras / Doble Tiempo",
+			liveReporting: "Informes en Vivo",
+			forecasting: "Previsión",
+			teams: "Equipos",
+			scheduleGeneration: "Generación de Horarios",
+			shiftApprovals: "Aprobaciones de Turnos",
+			textReminders: "Recordatorios de Texto"
+		},
+		invoicing: {
+			title: "Facturación",
+			contractManagement: "Gestión de Contratos",
+			lateFees: "Cargos por Pago Tardío",
+			remittanceAdvice: "Asesoramiento de Pago",
+			revisions: "Revisiones",
+			creditMemos: "Notas de Crédito",
+			forecastingTools: "Herramientas de Previsión",
+			dunningNotices: "Notificaciones de Recordatorio de Pago",
+			disputeHandling: "Gestión de Disputas",
+			mailingInvoices: "Envío de Facturas"
+		},
+		ai: {
+			title: "Características de IA",
+			textToShifts: "Texto a Turnos",
+			scheduleImport: "Análisis de Importación de Horarios",
+			contractImport: "Análisis de Importación de Contratos",
+			timecardParsing: "Análisis de Tarjetas de Tiempo",
+			csvImport: "Herramientas de Importación CSV",
+			autoDisputeHandling: "Gestión Automática de Disputas"
+		},
+		accountingIntegrations: {
+			title: "Integraciones de Contabilidad",
+			quickBooks: "QuickBooks",
+			zohoBooks: "Zoho Books",
+			freshBooks: "FreshBooks",
+			xero: "Xero",
+			quicken: "Quicken",
+			netSuite: "NetSuite",
+			sageIntacct: "Sage Intacct"
+		},
+		payrollIntegrations: {
+			title: "Integraciones de Nómina",
+			gusto: "Gusto",
+			adp: "ADP",
+			zeal: "Zeal"
+		},
+		shortTermProject: {
+			title: "Proyecto a Corto Plazo",
+			customPricing: "Estructura de Precios Personalizada",
+			paymentFees: "Tarifas de Procesamiento de Pagos",
+			monthlyUserFee: "Tarifa de Usuario Mensual",
+			premiumSupport: "Soporte Premium"
+		}
+	},
 	auth: {}
 };
