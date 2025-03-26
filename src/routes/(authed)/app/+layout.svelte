@@ -1,6 +1,5 @@
 <!-- This route is used for inbound webhooks -->
 <script lang="ts">
-	import PocketBase from 'pocketbase';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Sidebar from '$lib/components/nav/Sidebar.svelte';
@@ -9,7 +8,7 @@
 
 	let { children } = $props();
 
-	let isAuthed = new PocketBase().authStore.isValid;
+	let isAuthed = false;
 
 	const state = $state({
 		sidebarOpen: false
@@ -23,8 +22,8 @@
 </script>
 
 {#if isAuthed}
-	<!-- svelte-ignore a11y_consider_explicit_label -->
 	<Noty />
+	<!-- svelte-ignore a11y_consider_explicit_label -->
 	<button
 		onclick={(e) => {
 			e.stopPropagation();

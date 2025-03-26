@@ -1,5 +1,11 @@
-export const load = ({ locals }) => {
+export const load = async (event) => {
+	const locals = event.locals || {};
+
+	const theme = await event.fetch('/theme').then((res) => res.text());
+
+	const session = locals.session || {};
 	return {
-		session: locals.session || null
+		theme,
+		session
 	};
 };

@@ -16,6 +16,8 @@
 
 	let appHandler: Unsubscriber;
 
+	// Apply data.theme as css to the document
+
 	onMount(() => {
 		// Register Service Worker
 		if ('serviceWorker' in navigator) {
@@ -28,6 +30,11 @@
 					console.error('Service Worker registration failed:', error);
 				});
 		}
+
+		// const style = document.createElement('style');
+		// style.id = 'main-theme';
+		// style.innerHTML = data.theme;
+		// document.head.appendChild(style);
 
 		// Set the default language and theme based on the user's browser settings
 		if (typeof window !== 'undefined') {
@@ -64,7 +71,7 @@
 		// Subscribe to the App store to update the theme
 		appHandler = App.subscribe((s) => {
 			if (s.theme) {
-				document.documentElement.setAttribute('data-theme', 'floc-' + s.theme);
+				document.documentElement.setAttribute('data-theme', s.theme);
 			}
 
 			if (s.lang) {
@@ -90,6 +97,10 @@
 		appHandler?.();
 	});
 </script>
+
+<svelte:head>
+	<link rel="stylesheet" href="/theme" />
+</svelte:head>
 
 {#if ready}
 	<Navbar />
