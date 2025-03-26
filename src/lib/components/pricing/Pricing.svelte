@@ -22,16 +22,17 @@
 
 {#snippet PricingSnippet(section)}
 	{#each section as item}
-		<div class="border-base-300 h-full w-full flex-col border-2 p-6 shadow-lg">
+		<div class="bg-base-100 flex h-full w-full flex-col gap-2 p-6 shadow-lg">
 			<h2 class="text-4xl">{item.title}</h2>
-			<p>{item.frequency}</p>
-			<p>{item.bestFor}</p>
+			<p class="text-lg">{item.frequency}</p>
+
+			<div></div>
 		</div>
 	{/each}
 {/snippet}
 
 <section class="relative w-full py-16">
-	<div class="mx-auto flex h-full max-w-7xl justify-between gap-16">
+	<div class="mx-auto flex h-fit max-w-7xl justify-between gap-16">
 		{@render PricingSnippet(pricing)}
 	</div>
 </section>

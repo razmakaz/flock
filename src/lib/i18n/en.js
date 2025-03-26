@@ -146,6 +146,66 @@ export default {
 
 
 	},
+	services: {
+		timesheet: {
+			title: "Timesheet",
+			projectRates: "Project Rates and Hourly Rates",
+			miscBillables: "Misc Billables (Expenses, etc)",
+			timeclock: "Timeclock",
+			taskTracking: "Task Time Tracking",
+			overtime: "Overtime / Doubletime",
+			liveReporting: "Reporting (Live Reporting)",
+			forecasting: "Forecasting",
+			teams: "Teams",
+			scheduleGeneration: "Schedule Generation",
+			shiftApprovals: "Shift-Level Approvals",
+			textReminders: "Text Reminders"
+		},
+		invoicing: {
+			title: "Invoicing",
+			contractManagement: "Contract Management",
+			lateFees: "Late Fees",
+			remittanceAdvice: "Remittance Advice",
+			revisions: "Revisions",
+			creditMemos: "Credit Memos",
+			forecastingTools: "Forecasting Tools",
+			dunningNotices: "Dunning Notices",
+			disputeHandling: "Dispute Handling",
+			mailingInvoices: "Mailing Invoices"
+		},
+		ai: {
+			title: "AI Features",
+			textToShifts: "Text-To-Shifts",
+			scheduleImport: "Printed Schedule Import Parsing",
+			contractImport: "Contract Import Parsing",
+			timecardParsing: "Physical Timecard Parsing",
+			csvImport: "CSV Import Tools",
+			autoDisputeHandling: "Automated Dispute Handling"
+		},
+		accountingIntegrations: {
+			title: "Accounting Integrations",
+			quickBooks: "QuickBooks",
+			zohoBooks: "Zoho Books",
+			freshBooks: "FreshBooks",
+			xero: "Xero",
+			quicken: "Quicken",
+			netSuite: "NetSuite",
+			sageIntacct: "Sage Intacct"
+		},
+		payrollIntegrations: {
+			title: "Payroll Integrations",
+			gusto: "Gusto",
+			adp: "ADP",
+			zeal: "Zeal"
+		},
+		shortTermProject: {
+			title: "Short-Term Project",
+			customPricing: "Customized Pricing Structure",
+			paymentFees: "Payment Processing Fees",
+			monthlyUserFee: "Monthly Active User Fee",
+			premiumSupport: "Premium Support"
+		}
+	},
 	auth: {
 		login: {
 			pageTitle: 'Login',
