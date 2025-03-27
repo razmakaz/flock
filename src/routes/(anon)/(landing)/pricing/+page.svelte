@@ -47,6 +47,288 @@
 						license: true,
 						subscription: true,
 						tooltip: $t('services.timesheet.miscBillablesTooltip')
+					},
+					{
+						name: $t('services.timesheet.timeclock'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.timesheet.timeclockTooltip')
+					},
+					{
+						name: $t('services.timesheet.taskTracking'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.timesheet.taskTrackingTooltip')
+					},
+					{
+						name: $t('services.timesheet.overtime'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.timesheet.overtimeTooltip')
+					},
+					{
+						name: $t('services.timesheet.liveReporting'),
+						free: false,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.timesheet.liveReportingTooltip')
+					},
+					{
+						name: $t('services.timesheet.forecasting'),
+						free: false,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.timesheet.forecastingTooltip')
+					},
+					{
+						name: $t('services.timesheet.teams'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.timesheet.teamsTooltip')
+					},
+					{
+						name: $t('services.timesheet.scheduleGeneration'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.timesheet.scheduleGenerationTooltip')
+					},
+					{
+						name: $t('services.timesheet.shiftApprovals'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.timesheet.shiftApprovalsTooltip')
+					},
+					{
+						name: $t('services.timesheet.textReminders'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.timesheet.textRemindersTooltip')
+					}
+				]
+			},
+			{
+				name: $t('services.invoicing.title'),
+				stars: {
+					free: 2,
+					license: 3,
+					subscription: 5
+				},
+
+				items: [
+					{
+						name: $t('services.invoicing.contractManagement'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.contractManagementTooltip')
+					},
+					{
+						name: $t('services.invoicing.lateFees'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.lateFeesTooltip')
+					},
+					{
+						name: $t('services.invoicing.remittanceAdvice'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.remittanceAdviceTooltip')
+					},
+					{
+						name: $t('services.invoicing.revisions'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.revisionsTooltip')
+					},
+					{
+						name: $t('services.invoicing.creditMemos'),
+						free: true,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.creditMemosTooltip')
+					},
+					{
+						name: $t('services.invoicing.forecastingTools'),
+						free: false,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.forecastingToolsTooltip')
+					},
+					{
+						name: $t('services.invoicing.dunningNotices'),
+						free: false,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.dunningNoticesTooltip')
+					},
+					{
+						name: $t('services.invoicing.disputeHandling'),
+						free: false,
+						license: true,
+						subscription: true,
+						tooltip: $t('services.invoicing.disputeHandlingTooltip')
+					},
+					{
+						name: $t('services.invoicing.mailingInvoices'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.invoicing.mailingInvoicesTooltip')
+					}
+				]
+			},
+			{
+				name: $t('services.ai.title'),
+				stars: {
+					free: 2,
+					license: 3,
+					subscription: 5
+				},
+
+				items: [
+					{
+						name: $t('services.ai.textToShifts'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.ai.textToShiftsTooltip')
+					},
+					{
+						name: $t('services.ai.scheduleImport'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.ai.scheduleImportTooltip')
+					},
+					{
+						name: $t('services.ai.contractImport'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.ai.contractImportTooltip')
+					},
+					{
+						name: $t('services.ai.timecardParsing'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.ai.timecardParsingTooltip')
+					},
+					{
+						name: $t('services.ai.csvImport'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.ai.csvImportTooltip')
+					},
+					{
+						name: $t('services.ai.autoDisputeHandling'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.ai.autoDisputeHandlingTooltip')
+					}
+				]
+			},
+			{
+				name: $t('services.accountingIntegrations.title'),
+				stars: {
+					free: 2,
+					license: 3,
+					subscription: 5
+				},
+
+				items: [
+					{
+						name: $t('services.accountingIntegrations.quickBooks'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.quickBooksToolTip')
+					},
+					{
+						name: $t('services.accountingIntegrations.zohoBooks'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.zohoBooksToolTip')
+					},
+					{
+						name: $t('services.accountingIntegrations.freshBooks'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.freshBooksToolTip')
+					},
+					{
+						name: $t('services.accountingIntegrations.xero'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.xeroToolTip')
+					},
+					{
+						name: $t('services.accountingIntegrations.quicken'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.quickenToolTip')
+					},
+					{
+						name: $t('services.accountingIntegrations.netSuite'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.netSuiteToolTip')
+					},
+					{
+						name: $t('services.accountingIntegrations.sageIntacct'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.accountingIntegrations.sageIntacctToolTip')
+					}
+				]
+			},
+			{
+				name: $t('services.payrollIntegrations.title'),
+				stars: {
+					free: 2,
+					license: 3,
+					subscription: 5
+				},
+
+				items: [
+					{
+						name: $t('services.payrollIntegrations.gusto'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.payrollIntegrations.gustoTooltip')
+					},
+					{
+						name: $t('services.payrollIntegrations.adp'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.payrollIntegrations.adpTooltip')
+					},
+					{
+						name: $t('services.payrollIntegrations.zeal'),
+						free: false,
+						license: false,
+						subscription: true,
+						tooltip: $t('services.payrollIntegrations.zealTooltip')
 					}
 				]
 			}
@@ -73,6 +355,10 @@
 {#snippet ItemValue(value: boolean | number)}
 	{#if typeof value == 'boolean'}
 		<Icon icon={value ? 'check' : 'close'} />
+	{:else if value == null}
+		<Icon icon="minus" />
+	{:else if typeof value == 'number'}
+		{value}
 	{:else}
 		{value}
 	{/if}
