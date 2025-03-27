@@ -27,7 +27,7 @@
 		],
 		categories: [
 			{
-				name: $t('services.timesheets.title'),
+				name: $t('services.timesheet.title'),
 				stars: {
 					free: 2,
 					license: 3,
@@ -364,6 +364,127 @@
 	{/if}
 {/snippet}
 
+{#snippet OpenCategories(_pricing)}
+	<section class="grid grid-cols-[1fr_auto_auto_auto] gap-8">
+		{#each _pricing.categories as category}
+			<button
+				class=" text-left {category.tooltip
+					? 'underline'
+					: ''} trasnition cursor-pointer text-xl font-bold duration-200 hover:translate-x-2"
+				onclick={() => handleToggleCategory(category.name)}>{category.name}</button
+			>
+			{@render Rating(category.stars.free)}
+			{@render Rating(category.stars.license)}
+			{@render Rating(category.stars.subscription)}
+			{#if state.openCategories.includes(category.name)}
+				{#each category.items as item}
+					<div class="flex">
+						<div class="tooltip">
+							<div class="tooltip-content">
+								<p class="">{item.tooltip}</p>
+							</div>
+							<p class="">{item.name}</p>
+						</div>
+					</div>
+					<div class="flex justify-center">
+						{#if item.free}
+							<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M5 12L10 17L19 7"
+									stroke="blue"
+									stroke-width="2"
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						{:else}
+							<div style="color: blue;">
+								<svg
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M6 18L18 18L18 18L6 18"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+									/>
+								</svg>
+							</div>
+						{/if}
+					</div>
+					<div class="flex justify-center">
+						{#if item.license}
+							<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M5 12L10 17L19 7"
+									stroke="blue"
+									stroke-width="2"
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						{:else}
+							<div style="color: blue;">
+								<svg
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M6 18L18 18L18 18L6 18"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+									/>
+								</svg>
+							</div>
+						{/if}
+					</div>
+					<div class="flex justify-center">
+						{#if item.subscription}
+							<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M5 12L10 17L19 7"
+									stroke="blue"
+									stroke-width="2"
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						{:else}
+							<div style="color: blue;">
+								<svg
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										d="M6 18L18 18L18 18L6 18"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+									/>
+								</svg>
+							</div>
+						{/if}
+					</div>
+				{/each}
+			{/if}
+		{/each}
+	</section>
+{/snippet}
+
 <main class="relative min-h-screen px-4 py-24">
 	<div
 		class="rounded-b-field absolute
@@ -385,31 +506,6 @@
 
 		<!-- {@render TimeSheetSection(pricing)} -->
 
-		<div class="grid grid-cols-[1fr_auto_auto_auto] gap-8">
-			{#each _pricing.categories as category}
-				<button
-					class=" text-left {category.tooltip ? 'underline' : ''}"
-					onclick={() => handleToggleCategory(category.name)}>{category.name}</button
-				>
-				{@render Rating(category.stars.free)}
-				{@render Rating(category.stars.license)}
-				{@render Rating(category.stars.subscription)}
-				{#if state.openCategories.includes(category.name)}
-					{#each category.items as item}
-						<div class="flex">
-							<div class="tooltip">
-								<div class="tooltip-content">
-									<p class="">{category.tooltip}</p>
-								</div>
-								<p class="">{item.name}</p>
-							</div>
-						</div>
-						<p class="">{item.free}</p>
-						<p class="">{item.license}</p>
-						<p class="">{item.subscription}</p>
-					{/each}
-				{/if}
-			{/each}
-		</div>
+		{@render OpenCategories(_pricing)}
 	</div>
 </main>
