@@ -5,10 +5,12 @@
 	import interactionPlugin from '@fullcalendar/interaction';
 	import { onMount } from 'svelte';
 	import * as luxon from 'luxon';
-	import * as cally from 'cally';
+	import Icon from '@iconify/svelte';
+	import DatePicker from '$lib/components/forms/DatePicker.svelte';
 
 	let shiftModal: HTMLDialogElement;
 	let calendar: Calendar;
+	let calendarDiv: HTMLDivElement;
 
 	const paycodes = [
 		{
@@ -49,11 +51,59 @@
 	];
 
 	let modalState = $state({
-		entryType: 'shift' as 'shift' | 'break',
-
+		id: '',
+		entryType: 'shift' as 'shift' | 'break' | 'timeoff',
 		start: luxon.DateTime.now().toISO(),
-		end: luxon.DateTime.now().plus({ hours: 1 }).toISO()
+		end: luxon.DateTime.now().plus({ hours: 1 }).toISO(),
+		open: false
 	});
+
+	const showModal = (options?: {
+		id?: string | null;
+		start?: string;
+		end?: string;
+		entryType?: 'shift' | 'break' | 'timeoff';
+	}) => {
+		const { id, start, end, entryType } = options || {};
+		const idempotency = Math.random().toString(36).substring(7);
+		modalState = {
+			...modalState,
+			id: id || idempotency,
+			start: start || luxon.DateTime.now().toISO(),
+			end: end || luxon.DateTime.now().plus({ hours: 1 }).toISO(),
+			entryType: entryType || 'shift',
+			open: true
+		};
+		shiftModal.showModal();
+	};
+
+	const closeModal = () => {
+		// reset modal state
+		modalState = {
+			...modalState,
+			open: false,
+			entryType: 'shift',
+			start: luxon.DateTime.now().toISO(),
+			end: luxon.DateTime.now().plus({ hours: 1 }).toISO()
+		};
+		shiftModal.close();
+	};
+
+	const handleSubmit = () => {
+		// Create event on the calendar
+		// Calculate the amount of hours worked
+		const duration = luxon.DateTime.fromISO(modalState.end)
+			.diff(luxon.DateTime.fromISO(modalState.start), 'minutes')
+			.as('hours');
+		const event = {
+			id: modalState.id,
+			title: duration + ' Hour Shift',
+			start: modalState.start,
+			end: modalState.end
+		};
+		calendar.addEvent(event);
+		closeModal();
+	};
 
 	onMount(() => {
 		const calendarEl = document.getElementById('calendar');
@@ -67,7 +117,7 @@
 			plugins: [timeGridPlugin, interactionPlugin, listPlugin],
 			initialView: isMobile ? 'timeGridDay' : 'timeGridWeek',
 			headerToolbar: {
-				left: 'addShift prev,today,next',
+				left: 'prev,today,next',
 				center: 'title',
 				right: 'timeGridDay,timeGridWeek,list'
 			},
@@ -75,23 +125,7 @@
 			selectable: true,
 			selectMirror: true,
 			nowIndicator: true,
-			customButtons: {
-				addShift: {
-					text: 'Create Entry',
-					click: () => {
-						showModal();
-						console.log('Add Shift');
-					}
-				}
-			},
-			events: [
-				{
-					title: 'Holiday Premium',
-					start: luxon.DateTime.now().minus({ days: -1, hours: 3 }).toISO(),
-					end: luxon.DateTime.now().plus({ days: 1, hours: 1 }).toISO(),
-					display: 'background'
-				}
-			],
+			events: [],
 			buttonText: {
 				today: 'Today',
 				day: 'Day',
@@ -100,8 +134,11 @@
 				list: 'List'
 			},
 			select: (arg) => {
-				showModal();
-				console.log('select', arg);
+				showModal({
+					id: null,
+					start: arg.startStr,
+					end: arg.endStr
+				});
 			},
 			eventClick: (arg) => {
 				console.log('clicked', arg);
@@ -111,30 +148,66 @@
 			}
 		});
 
-		const showModal = () => {
-			shiftModal.showModal();
-		};
-
 		calendar.render();
-	});
 
-	onMount(() => {
-		shiftModal.showModal();
+		calendarDiv.style.maxHeight = '70vh';
+
+		// shiftModal.showModal();
 	});
 </script>
 
 <dialog class="modal" bind:this={shiftModal}>
-	<div class="modal-box w-11/12 max-w-xl">
+	<div class="modal-box flex w-11/12 max-w-xl flex-col gap-4">
 		<div class="h3 text-xl font-bold">Shift Modal</div>
 
-		<div class="modal-action">
-			<button class="btn btn-primary" onclick={() => shiftModal.close()}>Close</button>
+		<div class="join join-horizontal grid grid-cols-3">
+			<button
+				class="join-item btn btn-primary {modalState.entryType === 'shift' ? '' : 'btn-outline'}"
+				onclick={() => (modalState.entryType = 'shift')}>Shift</button
+			>
+			<button
+				class="join-item btn btn-primary {modalState.entryType === 'break' ? '' : 'btn-outline'}"
+				onclick={() => (modalState.entryType = 'break')}>Break</button
+			>
+			<button
+				class="join-item btn btn-primary {modalState.entryType === 'timeoff' ? '' : 'btn-outline'}"
+				onclick={() => (modalState.entryType = 'timeoff')}>Time Off</button
+			>
+		</div>
+		{#if modalState.open}
+			<div id="pickers" class="flex flex-col items-center gap-4 lg:flex-row">
+				<DatePicker bind:result={modalState.start} />
+				<Icon icon="mdi:minus" width="24" height="24" />
+				<DatePicker bind:result={modalState.end} />
+			</div>
+		{/if}
+		<div class="divider"></div>
+		<div class="flex items-center justify-end gap-4">
+			<button class="btn btn-error btn-outline flex items-center gap-2" onclick={closeModal}>
+				<Icon icon="f7:close" width="24" height="24" />
+				<span>Close</span>
+			</button>
+			<button class="btn btn-primary flex items-center gap-2" onclick={handleSubmit}>
+				<Icon icon="mdi:check" width="24" height="24" />
+				<span>Save</span>
+			</button>
 		</div>
 	</div>
 </dialog>
 
-<div class="mx-auto flex w-full justify-center">
+<div class="mx-auto flex w-full justify-center p-4">
 	<div class="flex w-full max-w-7xl flex-col gap-4 py-4">
-		<div id="calendar"></div>
+		<h1 class="text-3xl font-black">Shift Calendar Demo</h1>
+		<div class="flex items-center gap-4">
+			<button class="btn btn-primary flex items-center gap-2" onclick={() => showModal()}>
+				<Icon icon="f7:plus" width="24" height="24" />
+				<span>New Entry</span>
+			</button>
+			<button class="btn btn-primary flex items-center gap-2" onclick={handleSubmit}>
+				<Icon icon="mdi:paper-plane" width="24" height="24" />
+				<span>Submit</span>
+			</button>
+		</div>
+		<div bind:this={calendarDiv} id="calendar"></div>
 	</div>
 </div>
