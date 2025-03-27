@@ -121,8 +121,6 @@ export default {
 
 		pageTitle: "Plans and Pricing",
 
-		// TODO: Change this structure and naming to something better fitting 
-
 		free: {
 			title: "Free Tier",
 			frequency: "Free Forever",
