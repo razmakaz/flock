@@ -4,6 +4,8 @@
 	import { emailRegex } from '$lib/regex';
 	import { t } from '$lib/translations.svelte';
 	import Icon from '@iconify/svelte';
+	import TimesheetsDemo from '../demos/TimesheetsDemo.svelte';
+	import DemoContainer from '../demos/DemoContainer.svelte';
 
 	let input = $state('');
 	const disabled = $derived(!emailRegex.test(input));
@@ -87,19 +89,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="relative w-full">
-			<div
-				class="absolute w-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-				style="height: 2px;"
-			></div>
-		</div>
+
 		<div class="relative z-10 p-8">
-			<div class="mockup-browser border-base-300 bg-base-100 w-full border">
-				<div class="mockup-browser-toolbar">
-					<div class="input">https://www.flocit.app</div>
-				</div>
-				<img src="https://placehold.co/1280x720/aaa/31343C" class="" alt="placeholder" />
-			</div>
+			<DemoContainer />
 		</div>
 	</div>
 </section>
