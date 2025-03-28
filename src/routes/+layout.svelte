@@ -100,6 +100,41 @@
 
 <svelte:head>
 	<link rel="stylesheet" href="/theme" />
+
+	<style>
+		:root {
+			--fc-small-font-size: 0.85em;
+			--fc-page-bg-color: transparent;
+			--fc-neutral-bg-color: var(--color-neutral);
+			--fc-neutral-text-color: var(--color-neutral-content);
+			--fc-border-color: var(--color-base-300);
+			--fc-button-text-color: var(--color-base-content);
+			--fc-button-bg-color: var(--color-base-100);
+			--fc-button-border-color: var(--color-primary);
+			--fc-button-hover-bg-color: var(--color-primary);
+			--fc-button-hover-border-color: var(--color-primary);
+			--fc-button-active-bg-color: var(--color-primary);
+			--fc-button-active-border-color: var(--color-primary);
+			--fc-event-bg-color: var(--color-primary);
+			--fc-event-border-color: var(--color-primary);
+			--fc-event-text-color: var(--color-primary-content);
+			--fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
+			--fc-more-link-bg-color: #d0d0d0;
+			--fc-more-link-text-color: inherit;
+			--fc-event-resizer-thickness: 8px;
+			--fc-event-resizer-dot-total-width: 8px;
+			--fc-event-resizer-dot-border-width: 1px;
+			--fc-non-business-color: var(--color-accent);
+			--fc-bg-event-color: #8fdf82;
+			--fc-bg-event-opacity: 0.3;
+			--fc-highlight-color: transparent;
+			--fc-today-bg-color: var(--color-base-200);
+			--fc-now-indicator-color: var(--color-accent);
+			--fc-list-event-dot-width: 10px;
+			--fc-daygrid-event-dot-width: 8px;
+			--fc-list-event-hover-bg-color: var(--color-base-200);
+		}
+	</style>
 </svelte:head>
 
 {#if ready}

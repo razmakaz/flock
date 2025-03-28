@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { scale } from 'svelte/transition';
 	import Pricing from '$lib/components/pricing/Pricing.svelte';
 	import { t } from '$lib/translations.svelte';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import App from '$lib/stores/App';
+	import numeral from 'numeral';
+	import { cubicOut } from 'svelte/easing';
 
 	let state = $state({
 		openCategories: []
@@ -359,140 +362,68 @@
 {#snippet Rating(stars)}
 	<div class="rating">
 		{#each Array.from({ length: 5 }, (_, i) => i + 1) as star, i}
-			<div class="mask mask-star" aria-label="{star} star" aria-current={i === stars}></div>
+			<div
+				class="mask mask-squircle scale-[0.8] {i <= stars ? 'bg-primary' : 'bg-neutral'}"
+				aria-label="{star} star"
+				aria-current={i === stars}
+			></div>
 		{/each}
 	</div>
 {/snippet}
 
-{#snippet ItemValue(value: boolean | number)}
-	{#if typeof value == 'boolean'}
-		<Icon icon={value ? 'check' : 'close'} />
-	{:else if value == null}
-		<Icon icon="minus" />
-	{:else if typeof value == 'number'}
-		{value}
-	{:else}
-		{value}
-	{/if}
+{#snippet ItemValue(value)}
+	<div class="flex items-center justify-center">
+		{#if typeof value == 'boolean'}
+			<Icon class="text-xl font-bold" icon={value ? 'akar-icons:check' : 'akar-icons:cross'} />
+		{:else if value == null}
+			<Icon class="text-xl font-bold" icon="akar-icons:minus" />
+		{:else if typeof value == 'number'}
+			<div>{numeral(value).format('$0,0.00')}</div>
+		{:else}
+			<div>{value}</div>
+		{/if}
+	</div>
 {/snippet}
 
 {#snippet OpenCategories(pricing)}
 	<section class="grid grid-cols-[1fr_auto_auto_auto] gap-8">
 		{#each pricing.categories as category}
 			<button
-				class=" text-left {category.tooltip
-					? 'underline'
-					: ''} trasnition cursor-pointer text-xl font-bold duration-200 hover:translate-x-2"
-				onclick={() => handleToggleCategory(category.name)}>{category.name}</button
+				class="flex items-center gap-2 text-left text-xl font-bold"
+				onclick={() => handleToggleCategory(category.name)}
+			>
+				<div
+					class="transition-all duration-75 {state.openCategories.includes(category.name)
+						? 'rotate-90'
+						: ''}"
+				>
+					<Icon icon="material-symbols:chevron-right" width="24" height="24" />
+				</div>
+				<div>{category.name}</div></button
 			>
 			{@render Rating(category.stars.free)}
 			{@render Rating(category.stars.license)}
 			{@render Rating(category.stars.subscription)}
-			{#if state.openCategories.includes(category.name)}
-				{#each category.items as item}
-					<div class="flex">
-						<div class="tooltip">
-							<div class="tooltip-content p-4">
-								<p class="">{item.tooltip}</p>
+			<div class="inner-contents contents">
+				{#if state.openCategories.includes(category.name)}
+					{#each category.items as item}
+						<div class="flex pl-12">
+							<div class="tooltip tooltip-bottom lg:tooltip-right">
+								<div class="tooltip-content p-4">
+									<p class="">{item.tooltip}</p>
+								</div>
+								<p class={item.tooltip ? ' border-b border-dashed' : ''}>{item.name}</p>
 							</div>
-							<p class="">{item.name}</p>
 						</div>
-					</div>
-					<div class="flex justify-center">
-						{#if item.free}
-							<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M5 12L10 17L19 7"
-									stroke="blue"
-									stroke-width="2"
-									fill="none"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						{:else}
-							<div style="color: blue;">
-								<svg
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										d="M6 18L18 18L18 18L6 18"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-									/>
-								</svg>
-							</div>
-						{/if}
-					</div>
-					<div class="flex justify-center">
-						{#if item.license}
-							<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M5 12L10 17L19 7"
-									stroke="blue"
-									stroke-width="2"
-									fill="none"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						{:else}
-							<div style="color: blue;">
-								<svg
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										d="M6 18L18 18L18 18L6 18"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-									/>
-								</svg>
-							</div>
-						{/if}
-					</div>
-					<div class="flex justify-center">
-						{#if item.subscription}
-							<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M5 12L10 17L19 7"
-									stroke="blue"
-									stroke-width="2"
-									fill="none"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						{:else}
-							<div style="color: blue;">
-								<svg
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										d="M6 18L18 18L18 18L6 18"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-									/>
-								</svg>
-							</div>
-						{/if}
-					</div>
-				{/each}
-			{/if}
+
+						{@render ItemValue(item.free)}
+
+						{@render ItemValue(item.license)}
+
+						{@render ItemValue(item.subscription)}
+					{/each}
+				{/if}
+			</div>
 		{/each}
 	</section>
 {/snippet}

@@ -7,6 +7,7 @@
 	import * as luxon from 'luxon';
 	import Icon from '@iconify/svelte';
 	import DatePicker from '$lib/components/forms/DatePicker.svelte';
+	import AnimatedCounter from '$lib/components/AnimatedCounter.svelte';
 
 	let shiftModal: HTMLDialogElement;
 	let calendar: Calendar;
@@ -58,6 +59,11 @@
 		open: false
 	});
 
+	let pageState = $state({
+		events: [] as any,
+		totalHours: 0
+	});
+
 	const showModal = (options?: {
 		id?: string | null;
 		start?: string;
@@ -77,8 +83,27 @@
 		shiftModal.showModal();
 	};
 
+	const updateState = () => {
+		const _events = calendar.getEvents();
+		const _stateEvents = [] as any;
+		_events.forEach((event) => {
+			_stateEvents.push({
+				id: event.id,
+				title: event.title,
+				start: event.start,
+				end: event.end
+			});
+		});
+		pageState.events = _stateEvents;
+	};
+
 	const closeModal = () => {
 		// reset modal state
+		console.log('pageState.events', calendar.getEvents());
+		updateState();
+
+		localStorage.setItem('floc-cal-demo', JSON.stringify(pageState.events));
+
 		modalState = {
 			...modalState,
 			open: false,
@@ -87,6 +112,20 @@
 			end: luxon.DateTime.now().plus({ hours: 1 }).toISO()
 		};
 		shiftModal.close();
+	};
+
+	const calculateTotalHours = () => {
+		// Calculate the total hours worked from calendar.events
+		const events = calendar.getEvents();
+		let totalHours = 0;
+		events.forEach((event) => {
+			const duration = luxon.DateTime.fromISO(event.endStr)
+				.diff(luxon.DateTime.fromISO(event.startStr), 'minutes')
+				.as('hours');
+			totalHours += duration;
+		});
+		console.log('Total Hours:', totalHours);
+		pageState.totalHours = totalHours;
 	};
 
 	const handleSubmit = () => {
@@ -101,7 +140,15 @@
 			start: modalState.start,
 			end: modalState.end
 		};
+		pageState.events.push(event);
 		calendar.addEvent(event);
+		calculateTotalHours();
+		closeModal();
+	};
+
+	const handleDelete = () => {
+		// Delete event from the calendar
+		calendar.getEventById(modalState.id)?.remove();
 		closeModal();
 	};
 
@@ -109,6 +156,9 @@
 		const calendarEl = document.getElementById('calendar');
 
 		const isMobile = window.innerWidth < 768;
+
+		const events = JSON.parse(localStorage.getItem('floc-cal-demo') || '[]');
+		pageState.events = events;
 
 		if (!calendarEl) {
 			return;
@@ -119,13 +169,13 @@
 			headerToolbar: {
 				left: 'prev,today,next',
 				center: 'title',
-				right: 'timeGridDay,timeGridWeek,list'
+				right: 'timeGridDay,timeGridWeek,listWeek'
 			},
 			editable: true,
 			selectable: true,
 			selectMirror: true,
 			nowIndicator: true,
-			events: [],
+			events: events,
 			buttonText: {
 				today: 'Today',
 				day: 'Day',
@@ -141,9 +191,19 @@
 				});
 			},
 			eventClick: (arg) => {
+				showModal({
+					id: arg.event.id,
+					start: arg.event.startStr,
+					end: arg.event.endStr
+				});
 				console.log('clicked', arg);
 			},
 			eventDrop: (arg) => {
+				showModal({
+					id: arg.event.id,
+					start: arg.event.startStr,
+					end: arg.event.endStr
+				});
 				console.log('dropped', arg);
 			}
 		});
@@ -152,7 +212,7 @@
 
 		calendarDiv.style.maxHeight = '70vh';
 
-		// shiftModal.showModal();
+		calculateTotalHours();
 	});
 </script>
 
@@ -182,15 +242,25 @@
 			</div>
 		{/if}
 		<div class="divider"></div>
-		<div class="flex items-center justify-end gap-4">
-			<button class="btn btn-error btn-outline flex items-center gap-2" onclick={closeModal}>
-				<Icon icon="f7:close" width="24" height="24" />
-				<span>Close</span>
-			</button>
-			<button class="btn btn-primary flex items-center gap-2" onclick={handleSubmit}>
-				<Icon icon="mdi:check" width="24" height="24" />
-				<span>Save</span>
-			</button>
+		<div class="flex items-center justify-between gap-4">
+			<div>
+				{#if modalState.id}
+					<button class="btn btn-error flex items-center gap-2" onclick={handleDelete}>
+						<Icon icon="f7:close" width="24" height="24" />
+						<span>Delete</span>
+					</button>
+				{/if}
+			</div>
+			<div class="flex gap-4">
+				<button class="btn btn-outline flex items-center gap-2" onclick={closeModal}>
+					<Icon icon="f7:close" width="24" height="24" />
+					<span>Close</span>
+				</button>
+				<button class="btn btn-primary flex items-center gap-2" onclick={handleSubmit}>
+					<Icon icon="mdi:check" width="24" height="24" />
+					<span>Save</span>
+				</button>
+			</div>
 		</div>
 	</div>
 </dialog>
@@ -198,15 +268,20 @@
 <div class="mx-auto flex w-full justify-center p-4">
 	<div class="flex w-full max-w-7xl flex-col gap-4 py-4">
 		<h1 class="text-3xl font-black">Shift Calendar Demo</h1>
-		<div class="flex items-center gap-4">
-			<button class="btn btn-primary flex items-center gap-2" onclick={() => showModal()}>
-				<Icon icon="f7:plus" width="24" height="24" />
-				<span>New Entry</span>
-			</button>
-			<button class="btn btn-primary flex items-center gap-2" onclick={handleSubmit}>
-				<Icon icon="mdi:paper-plane" width="24" height="24" />
-				<span>Submit</span>
-			</button>
+		<div class="grid grid-cols-[1fr_auto] gap-4">
+			<div class="flex items-center gap-4">
+				<button class="btn btn-primary flex items-center gap-2" onclick={() => showModal()}>
+					<Icon icon="f7:plus" width="24" height="24" />
+					<span>New Entry</span>
+				</button>
+				<button class="btn btn-primary flex items-center gap-2" onclick={handleSubmit}>
+					<Icon icon="mdi:paper-plane" width="24" height="24" />
+					<span>Submit</span>
+				</button>
+			</div>
+			<div class="flex items-center gap-4">
+				<AnimatedCounter icon="tabler:clock-filled" value={pageState.totalHours} label="hrs" />
+			</div>
 		</div>
 		<div bind:this={calendarDiv} id="calendar"></div>
 	</div>

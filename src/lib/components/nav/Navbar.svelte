@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { onDestroy, onMount } from 'svelte';
 	import LangSelect from './LangSelect.svelte';
-	import { t } from '$lib/translations.svelte';
+	import { locale, t } from '$lib/translations.svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	import Icon from '@iconify/svelte';
 	import App from '$lib/stores/App';
@@ -12,38 +12,47 @@
 		sidebarOpen: false
 	});
 
-	const mobileItems = [
-		{
-			icon: 'mdi:close',
-			view: 'mobile',
-			label: $t('nav.closeSidebar'),
-			action: () => (state.sidebarOpen = false)
-		},
-		{
-			icon: 'ant-design:product-filled',
-			view: 'all',
-			label: $t('landing.nav.product'),
-			action: () => handleNavigate('/product')
-		},
-		{
-			icon: 'ri:money-dollar-circle-fill',
-			view: 'all',
-			label: $t('landing.nav.pricing'),
-			action: () => handleNavigate('/pricing')
-		},
-		{
-			icon: 'mdi:about',
-			view: 'all',
-			label: $t('landing.nav.about'),
-			action: () => handleNavigate('/about')
-		},
-		{
-			icon: 'material-symbols:lock',
-			view: 'desktop-bottom',
-			label: $t('common.login'),
-			action: () => handleNavigate('/login')
-		}
-	];
+	const getNavItems = () => {
+		return [
+			{
+				icon: 'mdi:close',
+				view: 'mobile',
+				label: $t('nav.closeSidebar'),
+				action: () => (state.sidebarOpen = false)
+			},
+			{
+				icon: 'ant-design:product-filled',
+				view: 'all',
+				label: $t('landing.nav.product'),
+				action: () => handleNavigate('/product')
+			},
+			{
+				icon: 'ri:money-dollar-circle-fill',
+				view: 'all',
+				label: $t('landing.nav.pricing'),
+				action: () => handleNavigate('/pricing')
+			},
+			{
+				icon: 'mdi:about',
+				view: 'all',
+				label: $t('landing.nav.about'),
+				action: () => handleNavigate('/about')
+			},
+			{
+				icon: 'material-symbols:lock',
+				view: 'desktop-bottom',
+				label: $t('common.login'),
+				action: () => handleNavigate('/login')
+			}
+		];
+	};
+
+	let navItems = $state(getNavItems());
+
+	locale.subscribe((l) => {
+		console.log(l);
+		navItems = getNavItems();
+	});
 
 	$effect(() => {
 		console.log(state.sidebarOpen);
@@ -109,7 +118,7 @@
 		"
 	>
 		<div class="flex flex-col gap-4 p-4">
-			{#each mobileItems as item}
+			{#each navItems as item}
 				{@render navButton(item)}
 			{/each}
 		</div>
@@ -149,14 +158,14 @@
 				? ''
 				: ' bg-transparent'} bg-base-200 hidden items-center gap-4 rounded-full px-8 lg:flex"
 		>
-			{#each mobileItems.filter((a) => a.view === 'all') as item}
+			{#each navItems.filter((a) => a.view === 'all') as item}
 				{@render navButton(item)}
 			{/each}
 		</div>
 		<div class="hidden items-center justify-end gap-4 lg:flex">
 			<LangSelect />
 			<ThemeSwitcher />
-			{#each mobileItems.filter((a) => a.view === 'desktop-bottom') as item}
+			{#each navItems.filter((a) => a.view === 'desktop-bottom') as item}
 				{@render navButton(item)}
 			{/each}
 		</div>
