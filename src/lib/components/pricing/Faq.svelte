@@ -2,6 +2,7 @@
 	import { t } from '$lib/translations.svelte';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
 
 	let state = $state({
 		openQuestions: [] as number[]
@@ -83,7 +84,7 @@
 			</button>
 
 			{#if state.openQuestions.includes(item.id)}
-				<div class="px-4 transition duration-200">
+				<div transition:slide={{ axis: 'y', duration: 222 }} class="px-4">
 					<p>{item.answer}</p>
 				</div>
 			{/if}
@@ -92,7 +93,7 @@
 {/snippet}
 
 <section class="mx-auto max-w-4xl">
-	<h2 class="text-4xl">FAQ</h2>
+	<h2 class="text-4xl">{$t('faq.title')}</h2>
 
 	{@render Questions(faq)}
 </section>

@@ -135,6 +135,9 @@ export default {
 			privacy: 'Privacy'
 		}
 	},
+	faq: {
+		title: 'FAQ'
+	},
 	about: {
 		title: "About Floc"
 	},

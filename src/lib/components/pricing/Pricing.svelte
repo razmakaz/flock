@@ -450,10 +450,10 @@
 {/snippet}
 
 {#snippet PricingSnippet(section)}
-	<section class="flex">
+	<section class="flex gap-8">
 		{#each section.priceInfo as item}
 			<div
-				class="bg-base-100 transition-ease grid w-full cursor-pointer grid-rows-2 gap-2 p-6 shadow-lg duration-200 hover:-translate-y-[5px]"
+				class="bg-base-200 transition-ease grid w-full cursor-pointer grid-rows-2 gap-2 p-6 shadow-lg duration-200 hover:-translate-y-[5px]"
 			>
 				<h2 class="text-3xl">{item.title}</h2>
 				<p class="text-lg">{item.frequency}</p>
@@ -462,8 +462,11 @@
 	</section>
 {/snippet}
 
-<div class="mx-auto flex w-full max-w-7xl flex-col gap-24 py-24">
-	<h1 class="text-6xl">{$t('pricing.pageTitle')}</h1>
+<div class="relative mx-auto flex w-full max-w-7xl flex-col gap-24 py-24">
+	<h1 class="flex flex-col gap-6 text-6xl">
+		{$t('pricing.pageTitle')}
+		<div class="border-base-300 border-b-[1px]"></div>
+	</h1>
 
 	{@render PricingSnippet(_pricing)}
 

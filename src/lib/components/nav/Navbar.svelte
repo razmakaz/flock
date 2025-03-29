@@ -27,12 +27,6 @@
 				action: () => handleNavigate('/product')
 			},
 			{
-				icon: 'ri:money-dollar-circle-fill',
-				view: 'all',
-				label: $t('landing.nav.pricing'),
-				action: () => handleNavigate('/pricing')
-			},
-			{
 				icon: 'mdi:about',
 				view: 'all',
 				label: $t('landing.nav.about'),
