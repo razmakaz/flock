@@ -65,11 +65,11 @@
 </script>
 
 {#snippet Questions(section)}
-	<div class="flex flex-col gap-8 rounded py-8">
+	<div class="flex flex-col items-center gap-8 rounded py-8">
 		{#each section as item}
 			<button
 				type="button"
-				class="bg-base-200 flex cursor-pointer justify-between p-4"
+				class="bg-base-200 flex cursor-pointer items-center justify-between p-4"
 				onclick={() => handleToggleQuestions(item.id)}
 			>
 				<p>{item.question}</p>
@@ -91,7 +91,7 @@
 	</div>
 {/snippet}
 
-<section>
+<section class="mx-auto max-w-4xl">
 	<h2 class="text-4xl">FAQ</h2>
 
 	{@render Questions(faq)}

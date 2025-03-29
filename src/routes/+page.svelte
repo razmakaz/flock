@@ -4,6 +4,7 @@
 	import Hero from '$lib/components/landing/Hero.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Features from '$lib/components/landing/Features.svelte';
+	import Pricing from '$lib/components/pricing/Pricing.svelte';
 
 	onMount(() => {
 		console.log('Page mounted');
@@ -32,5 +33,7 @@
 	<Hero />
 
 	<Features />
+
+	<Pricing />
 </main>
 <Footer />
