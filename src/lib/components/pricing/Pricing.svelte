@@ -33,7 +33,7 @@
 	{/each}
 {/snippet}
 
-<section class="relative w-full py-16">
+<section class="relative w-full">
 	<div class="mx-auto flex h-fit max-w-7xl justify-between gap-16">
 		{@render PricingSnippet(pricing)}
 	</div>

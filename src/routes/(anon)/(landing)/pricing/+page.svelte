@@ -7,6 +7,8 @@
 	import App from '$lib/stores/App';
 	import numeral from 'numeral';
 	import { cubicOut } from 'svelte/easing';
+	import Faq from '$lib/components/pricing/Faq.svelte';
+	import Footer from '$lib/components/footer/Footer.svelte';
 
 	let state = $state({
 		openCategories: []
@@ -288,21 +290,21 @@
 							free: false,
 							license: false,
 							subscription: true,
-							tooltip: $t('services.accountingIntegrations.quickenToolTip')
+							tooltip: $t('services.accountingIntegrations.quickenTooltip')
 						},
 						{
 							name: $t('services.accountingIntegrations.netSuite'),
 							free: false,
 							license: false,
 							subscription: true,
-							tooltip: $t('services.accountingIntegrations.netSuiteToolTip')
+							tooltip: $t('services.accountingIntegrations.netSuiteTooltip')
 						},
 						{
 							name: $t('services.accountingIntegrations.sageIntacct'),
 							free: false,
 							license: false,
 							subscription: true,
-							tooltip: $t('services.accountingIntegrations.sageIntacctToolTip')
+							tooltip: $t('services.accountingIntegrations.sageIntacctTooltip')
 						}
 					]
 				},
@@ -389,7 +391,7 @@
 	<section class="grid grid-cols-[1fr_auto_auto_auto] gap-8">
 		{#each pricing.categories as category}
 			<button
-				class="flex items-center gap-2 text-left text-xl font-bold"
+				class="flex cursor-pointer items-center gap-2 text-left text-xl font-bold"
 				onclick={() => handleToggleCategory(category.name)}
 			>
 				<div
@@ -399,8 +401,8 @@
 				>
 					<Icon icon="material-symbols:chevron-right" width="24" height="24" />
 				</div>
-				<div>{category.name}</div></button
-			>
+				<p>{category.name}</p>
+			</button>
 			{@render Rating(category.stars.free)}
 			{@render Rating(category.stars.license)}
 			{@render Rating(category.stars.subscription)}
@@ -440,10 +442,13 @@
       ease-out"
 		style="height: 100vh;"
 	></div>
-	<div class="mx-auto max-w-7xl">
+	<div class="mx-auto flex max-w-7xl flex-col gap-24">
 		<h1 class="text-6xl">{$t('pricing.pageTitle')}</h1>
 		<Pricing />
 
 		{@render OpenCategories(_pricing)}
+
+		<Faq />
 	</div>
 </main>
+<Footer />

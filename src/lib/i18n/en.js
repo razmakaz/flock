@@ -96,6 +96,7 @@ export default {
 		},
 		features: {
 			sectionTitle: 'Features',
+			featureTagline: 'Take Control of Your Time & Finances: An Open Tool for Tracking, Invoicing, and Connecting Your Projects.',
 
 			// Invoicing
 			invoicing: 'Invoicing',
@@ -134,6 +135,9 @@ export default {
 			privacy: 'Privacy'
 		}
 	},
+	about: {
+		title: "About Floc"
+	},
 	pricing: {
 		pageTitle: 'Plans and Pricing',
 
@@ -165,6 +169,8 @@ export default {
 	services: {
 		timesheet: {
 			title: 'Timesheet',
+
+
 			projectRates: 'Project Rates and Hourly Rates',
 			projectRatesTooltip:
 				'Manage hourly rates and project-based billing to streamline payroll and invoicing.',
@@ -195,6 +201,8 @@ export default {
 		},
 		invoicing: {
 			title: 'Invoicing',
+
+
 			contractManagement: 'Contract Management',
 			contractManagementTooltip:
 				'Manage and store contracts associated with invoicing and payments.',
@@ -221,6 +229,8 @@ export default {
 		},
 		ai: {
 			title: 'AI Features',
+
+
 			textToShifts: 'Text-To-Shifts',
 			textToShiftsTooltip: 'Convert simple text messages into shift schedules automatically.',
 			scheduleImport: 'Printed Schedule Import Parsing',
@@ -240,6 +250,7 @@ export default {
 		},
 		accountingIntegrations: {
 			title: 'Accounting Integrations',
+
 			quickBooks: 'QuickBooks',
 			quickBooksTooltip:
 				'Seamlessly sync financial data with QuickBooks for streamlined accounting.',
