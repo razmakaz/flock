@@ -1,26 +1,35 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import '../app.css';
-	import { goto } from '$app/navigation';
 	import Navbar from '$lib/components/nav/Navbar.svelte';
-	import Footer from '$lib/components/footer/Footer.svelte';
 	import App from '$lib/stores/App';
 	import type { Unsubscriber } from 'svelte/store';
 	import { setLocale } from '$lib/translations.svelte';
+	import { createClient, AuthClient } from '@supabase/supabase-js';
+	import { page } from '$app/state';
+	import {
+		PUBLIC_ENVIRONMENT,
+		PUBLIC_SUPABASE_ANON_KEY,
+		PUBLIC_SUPABASE_URL
+	} from '$env/static/public';
+	import { goto } from '$app/navigation';
 
 	let { data, children } = $props();
-
-	// const { session } = data;
 
 	let ready = $state(false);
 
 	let appHandler: Unsubscriber;
 
+	App.update((s) => {
+		s.supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+		return s;
+	});
+
 	// Apply data.theme as css to the document
 
 	onMount(() => {
 		// Register Service Worker
-		if ('serviceWorker' in navigator) {
+		if ('serviceWorker' in navigator && PUBLIC_ENVIRONMENT === 'prod') {
 			navigator.serviceWorker
 				.register('/sw.js')
 				.then((registration) => {
@@ -82,14 +91,21 @@
 			localStorage.setItem('floc', JSON.stringify({ lang: s.lang, theme: s.theme }));
 		});
 
-		// Set ready to true
-		ready = true;
-
-		// Redirect to /app if the user is already logged in
-		// if (session) {
-		// 	goto('/app');
-		// 	return;
-		// }
+		$App.supabase?.auth
+			.getSession()
+			.then((res) => {
+				const { session } = res.data;
+				App.update((s) => {
+					s.session = session;
+					return s;
+				});
+				if (session) {
+					goto('/app');
+				}
+			})
+			.finally(() => {
+				ready = true;
+			});
 	});
 
 	onDestroy(() => {
@@ -138,7 +154,9 @@
 </svelte:head>
 
 {#if ready}
-	<Navbar />
+	{#if !$App.session}
+		<Navbar />
+	{/if}
 	<div>
 		{@render children()}
 	</div>

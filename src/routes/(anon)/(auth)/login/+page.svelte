@@ -8,6 +8,8 @@
 	import { emailRegex } from '$lib/regex';
 	import { page } from '$app/state';
 	import { t } from '$lib/translations.svelte';
+	import App from '$lib/stores/App';
+	import type { Provider } from '@supabase/supabase-js';
 
 	const state = $state({
 		email: page.url.searchParams.get('email') || '',
@@ -49,36 +51,39 @@
 
 	const avaiableProviders = providers.filter((provider) => provider.enabled);
 
-	const handleSubmit = async (provider = 'email') => {
+	const handleSubmit = async (provider: Provider | null = null) => {
 		if (!isValid) return;
 
-		// Perform login logic here
-		const payload = {
-			email: state.email,
-			provider: provider
-		};
+		if (!provider) {
+			// Send OTP to email
+			const res = await $App.supabase?.auth.signInWithOtp({
+				email: state.email
+			});
+			if (!res) return;
 
-		const res = await fetch('', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(payload)
-		}).then((res) => res.json());
+			if (res.error) {
+				console.error(res.error);
+				return;
+			}
 
-		console.log(res);
+			// Redirect to Success Page
+			goto('/login/success');
+		} else {
+			// Redirect to OAuth provider
+			const res = await $App.supabase?.auth.signInWithOAuth({
+				provider: provider
+			});
 
-		const isProvider = providers.find((p) => p.id === provider);
-		if (isProvider) {
-			// Handle opening the provider's login page
-			window.open(res.data.url);
+			if (!res) return;
+
+			if (res.error) {
+				console.error(res.error);
+				return;
+			}
+
+			window.location.href = res.data.url;
 		}
 
-		if (!res.success) {
-			// Handle login error
-			console.error('Login failed');
-			return;
-		}
 		// Redirect to app or dashboard after successful login
 	};
 
