@@ -5,16 +5,18 @@
 	import Sidebar from '$lib/components/nav/Sidebar.svelte';
 	import Icon from '@iconify/svelte';
 	import Noty from '$lib/components/notifications/Noty.svelte';
+	import App from '$lib/stores/App';
 
 	let { children } = $props();
 
-	let isAuthed = false;
+	let isAuthed = !!$App.session;
 
 	const state = $state({
 		sidebarOpen: false
 	});
 
 	onMount(() => {
+		console.log('Is Authed', isAuthed);
 		if (!isAuthed) {
 			goto('/login');
 		}

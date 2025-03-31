@@ -1,7 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import App from '$lib/stores/App';
 
-	const handleLogout = () => {};
+	const handleLogout = () => {
+		$App.supabase?.auth.signOut().finally(() => {
+			App.update((s) => {
+				s.session = null;
+				return s;
+			});
+			goto('/');
+		});
+	};
 </script>
 
 <div class="mx-auto flex flex-col">

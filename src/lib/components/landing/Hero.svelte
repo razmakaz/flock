@@ -40,12 +40,10 @@
 	<canvas
 		class="absolute inset-0 -translate-y-1/2 {$App.theme === 'dark' ? '' : 'hidden'} "
 		id="dark-bg-canvas"
-		style="width: 100vw;"
 	></canvas>
 	<canvas
 		class="absolute inset-0 -translate-y-1/2 {$App.theme === 'dark' ? 'hidden' : ''} "
 		id="light-bg-canvas"
-		style="width: 100vw;"
 	></canvas>
 	<div class="hero-content relative z-20 flex flex-col">
 		<div class="relative z-10">
