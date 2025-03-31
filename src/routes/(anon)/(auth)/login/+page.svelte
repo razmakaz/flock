@@ -86,18 +86,6 @@
 
 		// Redirect to app or dashboard after successful login
 	};
-
-	onMount(() => {
-		if (PUBLIC_ENVIRONMENT === 'dev') {
-			if (!state.email) {
-				const idempotency = Math.random().toString(36).substring(2, 8);
-				state.email = `thejessekoch+${idempotency}@gmail.com`;
-				state.emailValid = true;
-			} else {
-				state.emailValid = emailRegex.test(state.email);
-			}
-		}
-	});
 </script>
 
 <svelte:head>
