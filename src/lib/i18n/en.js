@@ -109,6 +109,15 @@ export default {
 
 			// Integrations
 			integrations: 'Integrations'
+
+			// time sheet entry
+			// overtime compliance
+			// shift level approvals
+			// AI time sheet generation
+			// 
+
+			// invoices
+
 		},
 		footer: {
 			// Resources
