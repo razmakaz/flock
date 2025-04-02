@@ -10,6 +10,7 @@
 	import { t } from '$lib/translations.svelte';
 	import App from '$lib/stores/App';
 	import type { Provider } from '@supabase/supabase-js';
+	import CRAPI from '$lib/CRAPI';
 
 	const state = $state({
 		email: page.url.searchParams.get('email') || '',
@@ -49,43 +50,61 @@
 		}
 	];
 
-	const avaiableProviders = providers.filter((provider) => provider.enabled);
+	const availableProviders = providers.filter((provider) => provider.enabled);
 
-	const handleSubmit = async (provider: Provider | null = null) => {
-		if (!isValid) return;
-
-		if (!provider) {
-			// Send OTP to email
-			const res = await $App.supabase?.auth.signInWithOtp({
+	const handleSubmit = async () => {
+		const data = await fetch('', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
 				email: state.email
-			});
-			if (!res) return;
+			})
+		}).then((res) => res.json());
 
-			if (res.error) {
-				console.error(res.error);
-				return;
-			}
-
-			// Redirect to Success Page
-			goto('/login/success');
+		if (data.success) {
+			CRAPI.notify.trigger(data.message, { style: 'success' });
 		} else {
-			// Redirect to OAuth provider
-			const res = await $App.supabase?.auth.signInWithOAuth({
-				provider: provider
-			});
-
-			if (!res) return;
-
-			if (res.error) {
-				console.error(res.error);
-				return;
-			}
-
-			window.location.href = res.data.url;
+			CRAPI.notify.trigger(data.error, { style: 'error' });
 		}
-
-		// Redirect to app or dashboard after successful login
 	};
+
+	// const handleSubmit = async (provider: Provider | null = null) => {
+	// 	if (!isValid) return;
+
+	// 	if (!provider) {
+	// 		// Send OTP to email
+	// 		const res = await $App.supabase?.auth.signInWithOtp({
+	// 			email: state.email
+	// 		});
+	// 		if (!res) return;
+
+	// 		if (res.error) {
+	// 			console.error(res.error);
+	// 			return;
+	// 		}
+
+	// 		// Redirect to Success Page
+	// 		goto('/login/success');
+	// 	} else {
+	// 		// Redirect to OAuth provider
+	// 		const res = await $App.supabase?.auth.signInWithOAuth({
+	// 			provider: provider
+	// 		});
+
+	// 		if (!res) return;
+
+	// 		if (res.error) {
+	// 			console.error(res.error);
+	// 			return;
+	// 		}
+
+	// 		window.location.href = res.data.url;
+	// 	}
+
+	// 	// Redirect to app or dashboard after successful login
+	// };
 </script>
 
 <svelte:head>
@@ -142,7 +161,7 @@
 
 		<div class="divider my-0">{$t('common.separatorOr')}</div>
 		<div class="flex flex-col gap-4">
-			{#each avaiableProviders as provider}
+			{#each availableProviders as provider}
 				{@render oauthButton(provider)}
 			{/each}
 		</div>
