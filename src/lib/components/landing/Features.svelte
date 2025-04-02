@@ -40,18 +40,24 @@
 {#snippet FeatureCards(section)}
 	<div class="relative grid cursor-pointer grid-cols-1 gap-4 md:grid-cols-2">
 		{#each section as feature}
-			<button
-				class="bg-base-200 flex cursor-pointer flex-col items-start p-4
-				 shadow-2xl duration-200 hover:translate-x-4 hover:-translate-y-4 hover:rotate-3 active:scale-95"
-				onclick={() => {
-					selectedFeature.title = feature.title;
-					selectedFeature.body = feature.body;
-				}}
+			<div
+				class="bg-base-200 cursor-pointer bg-gradient-to-br from-violet-500 to-violet-600 p-0 shadow-2xl duration-200 hover:scale-105 hover:p-4"
 			>
-				<div class="mb-4 text-blue-400" aria-hidden="true"></div>
-				<h3 class="mb-2 text-xl font-semibold text-white">{feature.title}</h3>
-				<p class="text-sm text-gray-400">{feature.body}</p>
-			</button>
+				<button
+					class=" bg-base-200 flex h-full w-full flex-none cursor-pointer flex-col items-start p-4
+				 "
+					onclick={() => {
+						selectedFeature.title = feature.title;
+						selectedFeature.body = feature.body;
+					}}
+				>
+					<div class="mb-4 text-blue-400" aria-hidden="true"></div>
+					<h3 class="mb-2 text-lg font-semibold break-normal text-white sm:text-xl">
+						{feature.title}
+					</h3>
+					<p class="text-sm text-gray-400">{feature.body}</p>
+				</button>
+			</div>
 		{/each}
 	</div>
 {/snippet}
@@ -71,7 +77,7 @@
 				</p>
 			</div>
 
-			<button class="btn btn-primary w-fit cursor-pointer"> Placeholder </button>
+			<button class="btn btn-primary w-fit cursor-pointer">Placeholder</button>
 		</div>
 
 		{@render FeatureCards(features)}
