@@ -92,7 +92,7 @@
 	</div>
 {/snippet}
 
-<section class="mx-auto max-w-4xl">
+<section class="mx-auto max-w-4xl p-4">
 	<h2 class="text-4xl">{$t('faq.title')}</h2>
 
 	{@render Questions(faq)}

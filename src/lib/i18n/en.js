@@ -108,7 +108,7 @@ export default {
 			crossFeatureTools: 'Cross-Feature Tools',
 
 			// Integrations
-			integrations: 'Integrations'
+			integrations: 'Integrations',
 
 			// time sheet entry
 			// overtime compliance
@@ -117,7 +117,7 @@ export default {
 			// 
 
 			// invoices
-
+			aiGeneration: "AI Generation"
 		},
 		footer: {
 			// Resources
