@@ -16,7 +16,7 @@
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
 		"caddy": "./scripts/caddy.sh",
-		"pb": "./.pocketbase/pocketbase",
+		"pb": "./.pocketbase/pocketbase serve",
 		"migrate": "./.pocketbase/pocketbase migrate",
 		"pb:start": "./.pocketbase/pocketbase start"
 	},
