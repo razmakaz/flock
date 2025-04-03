@@ -11,7 +11,8 @@
 	import Footer from '$lib/components/footer/Footer.svelte';
 
 	let state = $state({
-		openCategories: []
+		openCategories: [],
+		mobileView: false
 	});
 
 	const genItems = () => {
@@ -373,10 +374,23 @@
 		}
 	};
 
+	// checks if webpage is mobile
+	const checkMobileView = () => {
+		state.mobileView = window.innerWidth < 768;
+	};
+
 	onMount(() => {
+		// check on mount
+		checkMobileView();
+		window.addEventListener('resize', checkMobileView);
+
 		t.subscribe(() => {
 			_pricing = genItems();
 		});
+
+		return () => {
+			window.removeEventListener('resize', checkMobileView);
+		};
 	});
 </script>
 
@@ -406,69 +420,146 @@
 	</div>
 {/snippet}
 
-{#snippet OpenCategories(pricing)}
-	<section class="grid grid-cols-[1fr_auto_auto_auto] gap-8">
-		{#each pricing.categories as category}
-			<button
-				class="flex cursor-pointer items-center gap-2 text-left text-xl font-bold"
-				onclick={() => handleToggleCategory(category.name)}
-			>
-				<div
-					class="transition-all duration-75 {state.openCategories.includes(category.name)
-						? 'rotate-90'
-						: ''}"
-				>
-					<Icon icon="material-symbols:chevron-right" width="24" height="24" />
-				</div>
-				<p>{category.name}</p>
-			</button>
-			{@render Rating(category.stars.free)}
-			{@render Rating(category.stars.license)}
-			{@render Rating(category.stars.subscription)}
-			<div class="inner-contents contents">
-				{#if state.openCategories.includes(category.name)}
-					{#each category.items as item}
-						<div class="flex pl-12">
-							<div class="tooltip tooltip-bottom lg:tooltip-right">
-								<div class="tooltip-content p-4">
-									<p class="">{item.tooltip}</p>
-								</div>
-								<p class={item.tooltip ? ' border-b border-dashed' : ''}>{item.name}</p>
-							</div>
-						</div>
+{#snippet MobileTierHeader(tier)}
+	<div class="mb-4 flex items-center justify-between border-b pb-2">
+		<span class="font-bold">{tier}</span>
+		{#if tier === 'Free'}
+			{@render Rating(_pricing.categories[0].stars.free)}
+		{:else if tier === 'License'}
+			{@render Rating(_pricing.categories[0].stars.license)}
+		{:else}
+			{@render Rating(_pricing.categories[0].stars.subscription)}
+		{/if}
+	</div>
+{/snippet}
 
-						{@render ItemValue(item.free)}
-
-						{@render ItemValue(item.license)}
-
-						{@render ItemValue(item.subscription)}
-					{/each}
-				{/if}
+{#snippet MobileFeatureComparison(item)}
+	<div class="bg-base-200 mb-4 rounded-lg p-4">
+		<div class="mb-2 font-medium">{item.name}</div>
+		<div class="grid grid-cols-3 gap-2">
+			<div class="flex flex-col items-center">
+				<span class="text-base-content/70 text-sm">Free</span>
+				{@render ItemValue(item.free)}
 			</div>
-		{/each}
-	</section>
+			<div class="flex flex-col items-center">
+				<span class="text-base-content/70 text-sm">License</span>
+				{@render ItemValue(item.license)}
+			</div>
+			<div class="flex flex-col items-center">
+				<span class="text-base-content/70 text-sm">Subscription</span>
+				{@render ItemValue(item.subscription)}
+			</div>
+		</div>
+		{#if item.tooltip}
+			<div class="text-base-content/70 mt-2 text-xs italic">{item.tooltip}</div>
+		{/if}
+	</div>
+{/snippet}
+
+{#snippet OpenCategories(pricing)}
+	{#if state.mobileView}
+		<section class="flex flex-col gap-4">
+			{#each pricing.categories as category}
+				<div class="border-base-300 border-b pb-4">
+					<button
+						class="flex w-full cursor-pointer items-center justify-between gap-2 py-2 text-left text-xl font-bold"
+						onclick={() => handleToggleCategory(category.name)}
+					>
+						<div class="flex items-center gap-2">
+							<div
+								class="transition-all duration-75 {state.openCategories.includes(category.name)
+									? 'rotate-90'
+									: ''}"
+							>
+								<Icon icon="material-symbols:chevron-right" width="24" height="24" />
+							</div>
+							<p>{category.name}</p>
+						</div>
+					</button>
+
+					{#if state.openCategories.includes(category.name)}
+						<div class="mt-4 space-y-4">
+							{#each category.items as item}
+								{@render MobileFeatureComparison(item)}
+							{/each}
+						</div>
+					{/if}
+				</div>
+			{/each}
+		</section>
+	{:else}
+		<section class="grid grid-cols-[1fr_auto_auto_auto] gap-8">
+			{#each pricing.categories as category}
+				<button
+					class="flex cursor-pointer items-center gap-2 text-left text-xl font-bold"
+					onclick={() => handleToggleCategory(category.name)}
+				>
+					<div
+						class="transition-all duration-75 {state.openCategories.includes(category.name)
+							? 'rotate-90'
+							: ''}"
+					>
+						<Icon icon="material-symbols:chevron-right" width="24" height="24" />
+					</div>
+					<p>{category.name}</p>
+				</button>
+				{@render Rating(category.stars.free)}
+				{@render Rating(category.stars.license)}
+				{@render Rating(category.stars.subscription)}
+				<div class="inner-contents contents">
+					{#if state.openCategories.includes(category.name)}
+						{#each category.items as item}
+							<div class="flex pl-12">
+								<div class="tooltip tooltip-bottom lg:tooltip-right">
+									<div class="tooltip-content p-4">
+										<p class="">{item.tooltip}</p>
+									</div>
+									<p class={item.tooltip ? ' border-b border-dashed' : ''}>{item.name}</p>
+								</div>
+							</div>
+
+							{@render ItemValue(item.free)}
+
+							{@render ItemValue(item.license)}
+
+							{@render ItemValue(item.subscription)}
+						{/each}
+					{/if}
+				</div>
+			{/each}
+		</section>
+	{/if}
 {/snippet}
 
 {#snippet PricingSnippet(section)}
-	<section class="flex flex-col gap-8 md:flex-row">
+	<section class="flex flex-col gap-4 md:flex-row md:gap-8">
 		{#each section.priceInfo as item}
 			<div
-				class="bg-base-200 transition-ease grid w-full cursor-pointer grid-rows-2 gap-2 p-6 shadow-lg duration-200 hover:-translate-y-[5px]"
+				class="bg-base-200 transition-ease grid w-full cursor-pointer grid-rows-2 gap-2 rounded-lg p-4 shadow-lg duration-200 hover:-translate-y-[5px] md:p-6"
 			>
-				<h2 class="text-3xl">{item.title}</h2>
-				<p class="text-lg">{item.frequency}</p>
+				<h2 class="text-2xl md:text-3xl">{item.title}</h2>
+				<p class="text-base md:text-lg">{item.frequency}</p>
 			</div>
 		{/each}
 	</section>
 {/snippet}
 
-<div class="relative mx-auto flex w-full max-w-7xl flex-col gap-24 px-4 py-24">
-	<h1 class="flex flex-col gap-6 text-6xl">
+<div class="relative mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 py-12 md:gap-24 md:py-24">
+	<h1 class="flex flex-col gap-4 text-4xl md:gap-6 md:text-6xl">
 		{$t('pricing.pageTitle')}
 		<div class="border-base-300 border-b-[1px]"></div>
 	</h1>
 
 	{@render PricingSnippet(_pricing)}
+
+	<div class="bg-base-100 sticky top-0 z-10 -mx-4 hidden px-4 py-4 shadow-sm md:block">
+		<div class="mx-auto grid max-w-7xl grid-cols-[1fr_auto_auto_auto] gap-8">
+			<div class="text-lg font-bold">Feature</div>
+			<div class="text-center text-lg font-bold">Free</div>
+			<div class="text-center text-lg font-bold">License</div>
+			<div class="text-center text-lg font-bold">Subscription</div>
+		</div>
+	</div>
 
 	{@render OpenCategories(_pricing)}
 

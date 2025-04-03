@@ -38,7 +38,7 @@
 </script>
 
 {#snippet FeatureCards(section)}
-	<div class="relative grid min-h-[450px] cursor-pointer grid-cols-1 gap-4 md:grid-cols-2">
+	<div class="relative grid min-h-[450px] cursor-pointer grid-cols-1 gap-4 lg:grid-cols-2">
 		{#each section as feature}
 			<button
 				class="bg-base-100 relative h-full w-full cursor-pointer transition-all duration-300 *:rounded-sm"
