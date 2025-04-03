@@ -552,15 +552,6 @@
 
 	{@render PricingSnippet(_pricing)}
 
-	<div class="bg-base-100 sticky top-0 z-10 -mx-4 hidden px-4 py-4 shadow-sm md:block">
-		<div class="mx-auto grid max-w-7xl grid-cols-[1fr_auto_auto_auto] gap-8">
-			<div class="text-lg font-bold">{$t('pricing.pageTitle')}</div>
-			<p class="text-center text-lg font-bold">{$t('pricing.free.title')}</p>
-			<p class="text-center text-lg font-bold">{$t('pricing.license.title')}</p>
-			<p class="text-center text-lg font-bold">{$t('pricing.subscription.title')}</p>
-		</div>
-	</div>
-
 	{@render OpenCategories(_pricing)}
 
 	<Faq />

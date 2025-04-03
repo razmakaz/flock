@@ -295,7 +295,7 @@
 				<AnimatedCounter icon="tabler:clock-filled" value={pageState.totalHours} label="hrs" />
 			</div>
 		</div>
-		<div bind:this={calendarDiv} id="calendar" class="fc-header-toolbar"></div>
+		<div bind:this={calendarDiv} id="calendar" class="fc-header-toolbar fc-view-harness"></div>
 	</div>
 </div>
 
@@ -305,6 +305,10 @@
 			display: flex !important;
 			flex-direction: column;
 			gap: 1rem;
+		}
+
+		:global(.fc-view-harness) {
+			height: 800px;
 		}
 	}
 </style>
