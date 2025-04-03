@@ -278,10 +278,10 @@
 </dialog>
 
 <div class="mx-auto flex w-full justify-center p-4">
-	<div class="flex w-full max-w-7xl flex-col gap-4 py-4">
-		<h1 class="text-3xl font-black">{$t('demos.timesheets.demoName')}</h1>
-		<div class="grid grid-cols-[1fr_auto] gap-4">
-			<div class="flex items-center gap-4">
+	<div class="flex w-full max-w-7xl flex-col gap-8 py-4 md:gap-4">
+		<h1 class="text-center text-3xl font-black md:text-left">{$t('demos.timesheets.demoName')}</h1>
+		<div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto]">
+			<div class="flex flex-col items-center gap-4 md:flex-row">
 				<button class="btn btn-primary flex items-center gap-2" onclick={() => showModal()}>
 					<Icon icon="f7:plus" width="24" height="24" />
 					<span>{$t('demos.timesheets.newEntry')}</span>
@@ -291,10 +291,20 @@
 					<span>{$t('common.submit')}</span>
 				</button>
 			</div>
-			<div class="flex items-center gap-4">
+			<div class="flex items-center justify-center gap-4 md:justify-start">
 				<AnimatedCounter icon="tabler:clock-filled" value={pageState.totalHours} label="hrs" />
 			</div>
 		</div>
-		<div bind:this={calendarDiv} id="calendar"></div>
+		<div bind:this={calendarDiv} id="calendar" class="fc-header-toolbar"></div>
 	</div>
 </div>
+
+<style>
+	@media (max-width: 48rem) {
+		:global(.fc-header-toolbar) {
+			display: flex !important;
+			flex-direction: column;
+			gap: 1rem;
+		}
+	}
+</style>

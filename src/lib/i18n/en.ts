@@ -155,18 +155,24 @@ export default {
 
 		free: {
 			title: 'Free Tier',
+			subTitle: "Free",
+
 			frequency: 'Free Forever',
 			bestFor: 'Best for trying out the service',
 			inclusions: ''
 		},
 		license: {
 			title: '$149 Personal License',
+			subTitle: "License",
+
 			frequency: 'One-Time Payment Per License',
 			bestFor: 'Best for independent contractors',
 			inclusions: 'Everything In Free Tier'
 		},
 		subscription: {
 			title: '$19/MAU',
+			subTitle: "Subscription",
+
 			frequency: 'Short-Term Project',
 			bestFor: 'Best for business managing teams',
 			inclusions: 'Everything in One-Time Payment'

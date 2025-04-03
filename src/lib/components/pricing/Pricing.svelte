@@ -438,20 +438,20 @@
 		<div class="mb-2 font-medium">{item.name}</div>
 		<div class="grid grid-cols-3 gap-2">
 			<div class="flex flex-col items-center">
-				<span class="text-base-content/70 text-sm">Free</span>
+				<span class="text-base-content/70 text-sm">{$t('pricing.free.subTitle')}</span>
 				{@render ItemValue(item.free)}
 			</div>
 			<div class="flex flex-col items-center">
-				<span class="text-base-content/70 text-sm">License</span>
+				<span class="text-base-content/70 text-sm">{$t('pricing.license.subTitle')}</span>
 				{@render ItemValue(item.license)}
 			</div>
 			<div class="flex flex-col items-center">
-				<span class="text-base-content/70 text-sm">Subscription</span>
+				<span class="text-base-content/70 text-sm">{$t('pricing.subscription.subTitle')}</span>
 				{@render ItemValue(item.subscription)}
 			</div>
 		</div>
 		{#if item.tooltip}
-			<div class="text-base-content/70 mt-2 text-xs italic">{item.tooltip}</div>
+			<p class="text-base-content/70 mt-2 text-xs italic">{item.tooltip}</p>
 		{/if}
 	</div>
 {/snippet}
@@ -554,10 +554,10 @@
 
 	<div class="bg-base-100 sticky top-0 z-10 -mx-4 hidden px-4 py-4 shadow-sm md:block">
 		<div class="mx-auto grid max-w-7xl grid-cols-[1fr_auto_auto_auto] gap-8">
-			<div class="text-lg font-bold">Feature</div>
-			<div class="text-center text-lg font-bold">Free</div>
-			<div class="text-center text-lg font-bold">License</div>
-			<div class="text-center text-lg font-bold">Subscription</div>
+			<div class="text-lg font-bold">{$t('pricing.pageTitle')}</div>
+			<p class="text-center text-lg font-bold">{$t('pricing.free.title')}</p>
+			<p class="text-center text-lg font-bold">{$t('pricing.license.title')}</p>
+			<p class="text-center text-lg font-bold">{$t('pricing.subscription.title')}</p>
 		</div>
 	</div>
 

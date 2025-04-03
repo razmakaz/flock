@@ -48,12 +48,12 @@
 	<div class="hero-content relative z-20 flex flex-col">
 		<div class="relative z-10">
 			<div
-				class="z-10 flex flex-col items-center justify-center gap-4 px-4 py-8 text-center lg:py-24"
+				class="z-10 flex flex-col items-center justify-center gap-4 px-8 py-8 text-center lg:py-24"
 			>
-				<h1 class="floc inline-block text-6xl font-black">
+				<h1 class="floc inline-block text-5xl font-black md:text-6xl">
 					{$t('landing.hero.title')}
 				</h1>
-				<h2 class="py-6 text-center text-2xl leading-12 tracking-wide">
+				<h2 class="py-6 text-center text-lg leading-12 tracking-wide md:text-2xl">
 					{@html $t('landing.hero.subtitle')}
 				</h2>
 				<div class="flex justify-center">
