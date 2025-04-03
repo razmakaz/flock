@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
 	import TextInput from '$lib/components/forms/TextInput.svelte';
-	import { goto, invalidate } from '$app/navigation';
 	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
@@ -11,13 +11,19 @@
 	import App from '$lib/stores/App';
 	import type { Provider } from '@supabase/supabase-js';
 	import CRAPI from '$lib/CRAPI';
+	import type IReply from '$lib/@types/IReply';
 
 	const state = $state({
 		email: page.url.searchParams.get('email') || '',
-		emailValid: false
+		emailValid: false,
+		loading: false,
+		success: false,
+		messages: [] as string[],
+		errors: [] as string[]
 	});
 
 	let isValid = $derived(state.emailValid);
+	let isDisabled = $derived(state.loading || state.success);
 
 	const providers = [
 		{
@@ -61,50 +67,13 @@
 			body: JSON.stringify({
 				email: state.email
 			})
-		}).then((res) => res.json());
+		}).then((res) => res.json() as IReply);
 
-		if (data.success) {
-			CRAPI.notify.trigger(data.message, { style: 'success' });
-		} else {
-			CRAPI.notify.trigger(data.error, { style: 'error' });
-		}
+		console.log(data);
+		state.success = data.success || false;
+		state.errors = data.errors || [];
+		state.messages = data.messages || [];
 	};
-
-	// const handleSubmit = async (provider: Provider | null = null) => {
-	// 	if (!isValid) return;
-
-	// 	if (!provider) {
-	// 		// Send OTP to email
-	// 		const res = await $App.supabase?.auth.signInWithOtp({
-	// 			email: state.email
-	// 		});
-	// 		if (!res) return;
-
-	// 		if (res.error) {
-	// 			console.error(res.error);
-	// 			return;
-	// 		}
-
-	// 		// Redirect to Success Page
-	// 		goto('/login/success');
-	// 	} else {
-	// 		// Redirect to OAuth provider
-	// 		const res = await $App.supabase?.auth.signInWithOAuth({
-	// 			provider: provider
-	// 		});
-
-	// 		if (!res) return;
-
-	// 		if (res.error) {
-	// 			console.error(res.error);
-	// 			return;
-	// 		}
-
-	// 		window.location.href = res.data.url;
-	// 	}
-
-	// 	// Redirect to app or dashboard after successful login
-	// };
 </script>
 
 <svelte:head>
@@ -148,6 +117,7 @@
 			name="email"
 			label={$t('auth.login.email')}
 			required={true}
+			disabled={isDisabled}
 			bind:isValid={state.emailValid}
 			validation={(input: string) => {
 				return emailRegex.test(input);
@@ -155,15 +125,31 @@
 			validationError={$t('auth.login.emailInvalid')}
 		/>
 
-		<button disabled={!isValid} class="btn btn-primary" onclick={() => handleSubmit()}>
-			{$t('auth.login.action')}
-		</button>
-
-		<div class="divider my-0">{$t('common.separatorOr')}</div>
-		<div class="flex flex-col gap-4">
-			{#each availableProviders as provider}
-				{@render oauthButton(provider)}
+		{#if !state.success}
+			<button
+				transition:slide={{ axis: 'y', duration: 222 }}
+				disabled={!isValid}
+				class="btn btn-primary"
+				onclick={() => handleSubmit()}
+			>
+				{$t('auth.login.action')}
+			</button>
+			<div class="divider my-0">{$t('common.separatorOr')}</div>
+			<div class="flex flex-col gap-4">
+				{#each availableProviders as provider}
+					{@render oauthButton(provider)}
+				{/each}
+			</div>
+		{:else}
+			{#each state.messages as message}
+				<div transition:slide={{ axis: 'y', duration: 222 }} class="alert alert-success">
+					{message}
+				</div>
 			{/each}
-		</div>
+			{#each state.errors as error}
+				<div transition:slide={{ axis: 'y', duration: 222 }} class="alert alert-error">{error}</div>
+			{/each}
+			<button class="btn btn-primary" onclick={() => window.location.reload()}> Retry </button>
+		{/if}
 	</div>
 </div>

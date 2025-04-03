@@ -1,16 +1,12 @@
+import type IReply from "$lib/@types/IReply";
+
 export default ({
     success = true,
     data = [],
     messages = [],
     errors = [],
     status = 200,
-}: {
-    success?: boolean;
-    data?: any;
-    messages?: string[];
-    errors?: string[];
-    status?: number;
-}) => {
+}: IReply) => {
     return new Response(
         JSON.stringify({
             success,

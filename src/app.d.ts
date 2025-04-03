@@ -8,8 +8,6 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			supabase: SupabaseClient;
-			session: Session | null;
 			lang: string;
 			pocketbase: PocketBase;
 		}

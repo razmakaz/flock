@@ -7,6 +7,7 @@
 		name,
 		value = $bindable(),
 		validation,
+		disabled = false,
 		required = false,
 		isValid = $bindable(),
 		validationError = 'Invalid input',
@@ -14,6 +15,7 @@
 	}: {
 		label?: string;
 		name: string;
+		disabled: boolean;
 		value: string;
 		required?: boolean;
 		isValid?: boolean;
@@ -68,6 +70,7 @@
 			? 'input-error'
 			: ''} {state.hasBlurred && isValid ? 'input-success' : ''}"
 		bind:value
+		{disabled}
 		{onblur}
 		{onfocus}
 	/>

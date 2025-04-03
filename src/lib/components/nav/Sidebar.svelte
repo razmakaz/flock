@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import {} from '$app/navigation';
+	import { nav } from '$lib/client/navigation';
 	import Icon from '@iconify/svelte';
 
 	const {
@@ -33,7 +34,7 @@
 			icon: 'iconamoon:home-fill',
 			label: 'Home',
 			visible: true,
-			onclick: () => goto('/app')
+			onclick: () => nav('/app')
 		}
 	];
 </script>
@@ -67,7 +68,7 @@
 		{@render navItem({
 			icon: 'ri:user-5-fill',
 			label: 'Profile',
-			onclick: () => goto('/app/profile')
+			onclick: () => nav('/app/profile')
 		})}
 	</div>
 </div>

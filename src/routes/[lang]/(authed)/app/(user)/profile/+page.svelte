@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { nav } from '$lib/client/navigation';
 	import App from '$lib/stores/App';
 
 	const handleLogout = () => {
@@ -8,7 +8,7 @@
 				s.session = null;
 				return s;
 			});
-			goto('/');
+			nav('/');
 		});
 	};
 </script>

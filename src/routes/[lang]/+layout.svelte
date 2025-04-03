@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import '../app.css';
+	import '../../app.css';
 	import Navbar from '$lib/components/nav/Navbar.svelte';
 	import App from '$lib/stores/App';
 	import type { Unsubscriber } from 'svelte/store';
-	import { setLocale } from '$lib/translations.svelte';
 	import { createClient, AuthClient } from '@supabase/supabase-js';
 	import { page } from '$app/state';
 	import {
@@ -12,9 +11,11 @@
 		PUBLIC_SUPABASE_ANON_KEY,
 		PUBLIC_SUPABASE_URL
 	} from '$env/static/public';
-	import { goto } from '$app/navigation';
+	import { nav } from '$lib/client/navigation';
 
 	let { data, children } = $props();
+
+	console.log(data);
 
 	let ready = $state(false);
 
@@ -83,10 +84,6 @@
 				document.documentElement.setAttribute('data-theme', s.theme);
 			}
 
-			if (s.lang) {
-				setLocale(s.lang);
-			}
-
 			// Update the local storage with the new theme
 			localStorage.setItem('floc', JSON.stringify({ lang: s.lang, theme: s.theme }));
 		});
@@ -100,7 +97,7 @@
 					return s;
 				});
 				if (session) {
-					goto('/app');
+					nav('/app');
 				}
 			})
 			.finally(() => {

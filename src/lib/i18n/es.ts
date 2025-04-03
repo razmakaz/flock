@@ -37,36 +37,27 @@ export default {
 		features: {
 			sectionTitle: 'Características',
 
-			// Invoicing
 			invoicing: 'Facturación',
 
-			// Time Entry
 			timeEntry: 'Registro de Tiempo',
 
-			// Cross-Feature Tools
 			crossFeatureTools: 'Herramientas Inter-Características',
 
-			// Integrations
 			integrations: 'Integraciones'
 		},
 		footer: {
-			// Recursos
 			resourcesTitle: 'Recursos',
 			helpCenter: 'Centro de Ayuda',
 
-			// Soluciones
 			solutionsTitle: 'Soluciones',
-			// Características
 			featuresTitle: 'Características',
 			invoicing: 'Facturación',
 			timeEntry: 'Registro de Tiempo',
 			crossFeatureTools: 'Herramientas Inter-Características',
 			integrations: 'Integraciones',
 
-			// Producto
 			productTitle: 'Producto',
 
-			// Misc
 			rightsReserved: 'Todos los derechos reservados.',
 			terms: 'Términos de Servicio',
 			cookies: 'Preferencias de Cookies',
