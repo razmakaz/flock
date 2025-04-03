@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import CRAPI from '$lib/CRAPI';
 	import { emailRegex } from '$lib/regex';
 	import { t } from '$lib/translations.svelte';
@@ -9,6 +8,7 @@
 	import { onMount } from 'svelte';
 	import { Gradient } from '../stripebg/Gradient';
 	import App from '$lib/stores/App';
+	import { nav } from '$lib/client/navigation';
 
 	let input = $state('');
 	const disabled = $derived(!emailRegex.test(input));
@@ -24,7 +24,7 @@
 		const url = new URL(window.location.href);
 		url.pathname = '/login';
 		url.searchParams.append('email', input);
-		goto(url.href);
+		nav(url.href);
 	};
 
 	onMount(() => {

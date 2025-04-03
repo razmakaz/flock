@@ -1,11 +1,11 @@
 <!-- This route is used for inbound webhooks -->
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Sidebar from '$lib/components/nav/Sidebar.svelte';
 	import Icon from '@iconify/svelte';
 	import Noty from '$lib/components/notifications/Noty.svelte';
 	import App from '$lib/stores/App';
+	import { nav } from '$lib/client/navigation';
 
 	let { children } = $props();
 
@@ -18,7 +18,7 @@
 	onMount(() => {
 		console.log('Is Authed', isAuthed);
 		if (!isAuthed) {
-			goto('/login');
+			nav('/login');
 		}
 	});
 </script>

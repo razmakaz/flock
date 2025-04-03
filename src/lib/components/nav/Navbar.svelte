@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { onDestroy, onMount } from 'svelte';
 	import LangSelect from './LangSelect.svelte';
 	import { locale, t } from '$lib/translations.svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 	import Icon from '@iconify/svelte';
 	import App from '$lib/stores/App';
+	import { nav } from '$lib/client/navigation';
 
 	const state = $state({
 		atTop: false,
@@ -60,7 +60,7 @@
 
 	const handleNavigate = (path: string) => {
 		state.sidebarOpen = false;
-		goto(path);
+		nav(path);
 	};
 
 	const handleScroll = () => {
@@ -145,7 +145,7 @@
 		<button class="lg:hidden" onclick={() => (state.sidebarOpen = !state.sidebarOpen)}>
 			<Icon icon="mdi:menu" class="h-8 w-8" />
 		</button>
-		<button class="flex cursor-pointer items-center gap-4 lg:gap-2" onclick={() => goto('/')}>
+		<button class="flex cursor-pointer items-center gap-4 lg:gap-2" onclick={() => nav('/')}>
 			<img
 				class="h-8 w-8 lg:h-12 lg:w-12 {$App.theme === 'light' ? 'invert' : ''}"
 				src="/img/floc-alt.svg"

@@ -1,5 +1,4 @@
 <script>
-	import { goto } from '$app/navigation';
 	import { t } from '$lib/translations.svelte';
 </script>
 
@@ -10,8 +9,8 @@
 			<p class="text-sm">{@html $t('auth.login.success.subtitle')}</p>
 		</div>
 		<div>{$t('auth.login.success.message')}</div>
-		<button class="btn btn-primary" onclick={() => goto('/login')}>
+		<a class="btn btn-primary" href="/login">
 			{$t('auth.login.success.continue')}
-		</button>
+		</a>
 	</div>
 </div>

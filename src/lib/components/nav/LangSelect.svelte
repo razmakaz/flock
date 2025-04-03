@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { t, locale, setLocale } from '$lib/translations.svelte';
+	import { t, locale } from '$lib/translations.svelte';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 
 	const languages = [
 		{ code: 'en', icon: 'circle-flags:lang-en-us', visible: true },
@@ -16,6 +18,16 @@
 	];
 
 	$: selectedLang = languages.find((lang) => lang.code === $locale) || languages[0];
+
+	const setLocale = async (lang: string) => {
+		console.log('Setting locale to', lang);
+		const path = `/${lang}/lang`;
+		console.log(path);
+		await fetch(path, {
+			method: 'POST'
+		});
+		window.location.reload();
+	};
 </script>
 
 <div class="dropdown dropdown-end">
