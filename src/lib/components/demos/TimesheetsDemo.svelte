@@ -296,9 +296,10 @@
 			</div>
 		</div>
 		<div bind:this={calendarDiv} id="calendar" class="fc-header-toolbar fc-view-harness"></div>
-	</div>
+	</div>	
 </div>
 
+<!-- media queries for calendar classes -->
 <style>
 	@media (max-width: 48rem) {
 		:global(.fc-header-toolbar) {
