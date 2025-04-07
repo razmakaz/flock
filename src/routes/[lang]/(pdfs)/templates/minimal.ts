@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { t } from '$lib/translations.svelte';
 
-export const returnMinimal = (invoiceData: any) => {
+export const returnMinimal = async (invoiceData: any) => {
 	const translate = get(t);
 
 	return `
@@ -381,8 +381,8 @@ export const returnMinimal = (invoiceData: any) => {
 						</tr>
 					</thead>
 					<tbody>
-						${invoiceData.items.map((item: any, index: number) => {
-							return `
+						${invoiceData.items.map(
+							(item: any, index: number) => `
 						<tr>
 							<td>${index}</td>
 							<td>
@@ -395,8 +395,8 @@ export const returnMinimal = (invoiceData: any) => {
 							<td class="text-center">${item.quantity}</td>
 							<td class="text-right">${item.total}</td>
 						</tr>
-						`;
-						})}
+						`
+						)}
 
 					</tbody>
 				</table>
@@ -439,14 +439,13 @@ export const returnMinimal = (invoiceData: any) => {
 								<td>${invoiceData.taxAmount}</td>
 							</tr>
 							${
-								invoiceData.discount
-									? `
+								invoiceData.discount &&
+								`
 							<tr>
 								<td>${translate('invoice.discount')}</td>
 								<td>${invoiceData.discount}</td>
 							</tr>
 							`
-									: ''
 							}
 
 							<tr>

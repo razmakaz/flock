@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const page = await browser.newPage();
 
-		const htmlContent = returnMinimal(invoiceData);
+		const htmlContent = await returnMinimal(invoiceData);
 
 		if (!htmlContent) return new Response(htmlContent, { status: 500 });
 
