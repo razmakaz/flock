@@ -338,7 +338,9 @@ export default {
 		subtotal: 'Subtotal',
 		tax: 'Tax',
 		discount: 'Discount',
-		totalAmount: 'Total Due'
+		totalAmount: 'Total Due',
+
+		authorizedSign: 'Authorized Sign'
 	},
 	auth: {
 		login: {

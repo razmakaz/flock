@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import type { RequestHandler } from '@sveltejs/kit';
-import { returnMinimal } from '../templates/minimal';
+import { returnTemplateOne } from '$lib/templates/templateOne';
+import { returnTemplateTwo } from '$lib/templates/templateTwo';
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
@@ -55,7 +56,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const page = await browser.newPage();
 
-		const htmlContent = await returnMinimal(invoiceData);
+		const htmlContent = await returnTemplateOne(invoiceData);
 
 		if (!htmlContent) return new Response(htmlContent, { status: 500 });
 
