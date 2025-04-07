@@ -306,17 +306,19 @@ export default {
 		}
 	},
 	invoice: {
+		title: 'INVOICE',
+
 		// header structure
 		invoiceTo: 'Invoice To',
 		invoiceNumber: 'InvoiceNumber',
-		dateIssued: 'Date Issued',
+		issueDate: 'Date Issued',
 		dueDate: 'Due Date',
 
 		// items section
 		service: 'Service',
 		rate: 'Rate',
 		quantity: 'Qty',
-		amount: 'Amount',
+		total: 'Amount',
 
 		// footer
 

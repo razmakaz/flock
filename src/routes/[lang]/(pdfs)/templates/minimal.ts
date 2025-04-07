@@ -1,6 +1,9 @@
+import { get } from 'svelte/store';
 import { t } from '$lib/translations.svelte';
 
-const returnMinimal = () => {
+export const returnMinimal = (invoiceData: any) => {
+	const translate = get(t);
+
 	return `
 <html lang="en">
 	<head>
@@ -333,37 +336,34 @@ const returnMinimal = () => {
 						<div class="logo-inner"></div>
 					</div>
 					<div class="company-info">
-						<h1>Apex Design</h1>
-						<p>Creative Solutions</p>
+						<h1>${invoiceData.companyName}</h1>
+						<p>${invoiceData.companyTagline}</p>
 					</div>
 				</div>
-				<div class="invoice-title">INVOICE</div>
+				<div class="invoice-title">${translate('invoice.title')}</div>
 			</div>
 
 			<!-- Invoice Details -->
 			<div class="invoice-details">
 				<div class="client-info">
-					<p class="section-title">Invoice To</p>
-					<p class="client-name">Alexander Morrison</p>
+					<p class="section-title">${translate('invoice.invoiceTo')}</p>
+					<p class="client-name">${invoiceData.receiver}</p>
 					<p class="address">
-						28 Innovation Avenue<br />
-						Metropolitan District, 10045<br />
-						contact@alexmorrison.com<br />
-						+1 (555) 123-4567
+						${invoiceData.address}
 					</p>
 				</div>
 				<div class="invoice-info">
 					<div>
-						<p class="detail-label">${$t('invoice.invoiceNumber')}</p>
-						<p class="detail-value">INV-2025-0418</p>
+						<p class="detail-label">${translate('invoice.invoiceNumber')}</p>
+						<p class="detail-value">${invoiceData.number}</p>
 					</div>
 					<div>
-						<p class="detail-label">Date Issued</p>
-						<p class="detail-value">April 6, 2025</p>
+						<p class="detail-label">${translate('invoice.issueDate')}</p>
+						<p class="detail-value">${invoiceData.issueDate}</p>
 					</div>
 					<div>
-						<p class="detail-label">Due Date</p>
-						<p class="detail-value">April 20, 2025</p>
+						<p class="detail-label">${translate('invoice.dueDate')}</p>
+						<p class="detail-value">${invoiceData.dueDate}</p>
 					</div>
 				</div>
 			</div>
@@ -374,30 +374,29 @@ const returnMinimal = () => {
 					<thead>
 						<tr>
 							<th style="width: 5%">#</th>
-							<th style="width: 45%">${$t('invoice.service')}</th>
-							<th style="width: 15%" class="text-right">Rate</th>
-							<th style="width: 15%" class="text-center">Qty</th>
-							<th style="width: 20%" class="text-right">Amount</th>
+							<th style="width: 45%">${translate('invoice.service')}</th>
+							<th style="width: 15%" class="text-right">${translate('invoice.rate')}</th>
+							<th style="width: 15%" class="text-center">${translate('invoice.quantity')}</th>
+							<th style="width: 20%" class="text-right">${translate('invoice.total')}</th>
 						</tr>
 					</thead>
 					<tbody>
-						${items.map(
-							(item, index: number) => `
+						${invoiceData.items.map((item: any, index: number) => {
+							return `
 						<tr>
 							<td>${index}</td>
 							<td>
 								<div class="item-name">${item.name}</div>
 								<div class="item-description">
-									Complete brand identity package including logo design, color palette, and
-									typography guidelines
+									<p>${item.description}</p>
 								</div>
 							</td>
-							<td class="text-right">$1,200.00</td>
-							<td class="text-center">1</td>
-							<td class="text-right">$1,200.00</td>
+							<td class="text-right">${item.rate}</td>
+							<td class="text-center">${item.quantity}</td>
+							<td class="text-right">${item.total}</td>
 						</tr>
-						`
-						)}
+						`;
+						})}
 
 					</tbody>
 				</table>
@@ -406,20 +405,20 @@ const returnMinimal = () => {
 			<!-- Invoice Footer -->
 			<div class="invoice-footer">
 				<div class="left-footer">
-					<div class="thank-you">${$t('invoice.thankYou')}</div>
+					<div class="thank-you">${translate('invoice.thankYou')}</div>
 
 					<div class="footer-section">
-						<div class="footer-title">${$t('invoice.paymentDetails')}</div>
+						<div class="footer-title">${translate('invoice.paymentDetails')}</div>
 						<div class="payment-details">
-							<p><span>${$t('invoice.bankName')}</span> National Finance Bank</p>
-							<p><span>Account Name:</span> Apex Design LLC</p>
-							<p><span>Account Number:</span> 1234 5678 9012 3456</p>
-							<p><span>Routing Number:</span> 987654321</p>
+							<p><span>${translate('invoice.bankName')}</span> ${invoiceData.bank.bankName}</p>
+							<p><span>${translate('invoice.accountName')}</span> ${invoiceData.bank.accountName}</p>
+							<p><span>${translate('invoice.accountNumber')}</span> ${invoiceData.bank.accountNumber}</p>
+							<p><span>${translate('invoice.routingNumber')}</span> ${invoiceData.bank.routingNumber}</p>
 						</div>
 					</div>
 
 					<div class="footer-section">
-						<div class="footer-title">Terms & Conditions</div>
+						<div class="footer-title">${translate('invoice.termsTitle')}</div>
 						<div class="terms-text">
 							Payment is due within 14 days of invoice date. Please include the invoice number with
 							your payment. Late payments are subject to a 5% monthly fee. For questions regarding
@@ -432,20 +431,27 @@ const returnMinimal = () => {
 					<table class="totals-table">
 						<tbody>
 							<tr>
-								<td>Subtotal</td>
-								<td>$5,450.00</td>
+								<td>${translate('invoice.subtotal')}</td>
+								<td>${invoiceData.subtotal}</td>
 							</tr>
 							<tr>
-								<td>Tax (8.5%)</td>
-								<td>$463.25</td>
+								<td>${translate('invoice.tax')}</td>
+								<td>${invoiceData.taxAmount}</td>
 							</tr>
+							${
+								invoiceData.discount
+									? `
 							<tr>
-								<td>Discount</td>
-								<td>-$250.00</td>
+								<td>${translate('invoice.discount')}</td>
+								<td>${invoiceData.discount}</td>
 							</tr>
+							`
+									: ''
+							}
+
 							<tr>
-								<td>Total Due</td>
-								<td>$5,663.25</td>
+								<td>${translate('invoice.totalAmount')}</td>
+								<td>${invoiceData.totalAmount}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -461,5 +467,3 @@ const returnMinimal = () => {
 </html>
 `;
 };
-
-export default returnMinimal;
