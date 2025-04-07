@@ -96,7 +96,8 @@ export default {
 		},
 		features: {
 			sectionTitle: 'Features',
-			featureTagline: 'Take Control of Your Time & Finances: An Open Tool for Tracking, Invoicing, and Connecting Your Projects.',
+			featureTagline:
+				'Take Control of Your Time & Finances: An Open Tool for Tracking, Invoicing, and Connecting Your Projects.',
 
 			// Invoicing
 			invoicing: 'Invoicing',
@@ -114,10 +115,10 @@ export default {
 			// overtime compliance
 			// shift level approvals
 			// AI time sheet generation
-			// 
+			//
 
 			// invoices
-			aiGeneration: "AI Generation"
+			aiGeneration: 'AI Generation'
 		},
 		footer: {
 			// Resources
@@ -148,14 +149,14 @@ export default {
 		title: 'FAQ'
 	},
 	about: {
-		title: "About Floc"
+		title: 'About Floc'
 	},
 	pricing: {
 		pageTitle: 'Plans and Pricing',
 
 		free: {
 			title: 'Free Tier',
-			subTitle: "Free",
+			subTitle: 'Free',
 
 			frequency: 'Free Forever',
 			bestFor: 'Best for trying out the service',
@@ -163,7 +164,7 @@ export default {
 		},
 		license: {
 			title: '$149 Personal License',
-			subTitle: "License",
+			subTitle: 'License',
 
 			frequency: 'One-Time Payment Per License',
 			bestFor: 'Best for independent contractors',
@@ -171,7 +172,7 @@ export default {
 		},
 		subscription: {
 			title: '$19/MAU',
-			subTitle: "Subscription",
+			subTitle: 'Subscription',
 
 			frequency: 'Short-Term Project',
 			bestFor: 'Best for business managing teams',
@@ -187,7 +188,6 @@ export default {
 	services: {
 		timesheet: {
 			title: 'Timesheet',
-
 
 			projectRates: 'Project Rates and Hourly Rates',
 			projectRatesTooltip:
@@ -220,7 +220,6 @@ export default {
 		invoicing: {
 			title: 'Invoicing',
 
-
 			contractManagement: 'Contract Management',
 			contractManagementTooltip:
 				'Manage and store contracts associated with invoicing and payments.',
@@ -247,7 +246,6 @@ export default {
 		},
 		ai: {
 			title: 'AI Features',
-
 
 			textToShifts: 'Text-To-Shifts',
 			textToShiftsTooltip: 'Convert simple text messages into shift schedules automatically.',
@@ -306,6 +304,39 @@ export default {
 			premiumSupport: 'Premium Support',
 			premiumSupportTooltip: 'Access dedicated support services for priority issue resolution.'
 		}
+	},
+	invoice: {
+		// header structure
+		invoiceTo: 'Invoice To',
+		invoiceNumber: 'InvoiceNumber',
+		dateIssued: 'Date Issued',
+		dueDate: 'Due Date',
+
+		// items section
+		service: 'Service',
+		rate: 'Rate',
+		quantity: 'Qty',
+		amount: 'Amount',
+
+		// footer
+
+		// footer payment details
+		thankYou: 'Thank you for doing business!',
+		paymentDetails: 'Payment Details',
+		bankName: 'Bank Name:',
+		accountName: 'Account Name:',
+		accountNumber: 'Account Number:',
+		routingNumber: 'Routing Number:',
+
+		// terms
+		termsTitle: 'Terms & Conditions',
+		// term: "Payment is due within 14 days of invoice date. Please include the invoice number with your payment. Late payments are subject to a 5% monthly fee. For questions regarding this invoice, please contact our accounting department at accounting@apexdesign.com.",
+
+		// amounts
+		subtotal: 'Subtotal',
+		tax: 'Tax',
+		discount: 'Discount',
+		totalAmount: 'Total Due'
 	},
 	auth: {
 		login: {

@@ -65,7 +65,7 @@
 
 <section class="bg-primary h-fit px-4 py-32">
 	<div
-		class="bg-base-100 mx-auto flex h-fit w-full max-w-7xl flex-col justify-between gap-8 p-16 sm:flex-row"
+		class="bg-base-100 mx-auto flex h-fit w-full max-w-7xl flex-col justify-between gap-8 p-12 sm:flex-row md:p-16"
 	>
 		<div class="flex w-1/2 flex-col justify-between">
 			<div class="flex flex-col gap-2">

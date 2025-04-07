@@ -72,6 +72,7 @@
 		"pickerjs": "^1.2.1",
 		"pikaday": "^1.8.2",
 		"pocketbase": "^0.25.2",
+		"puppeteer": "^24.6.0",
 		"sveltekit-i18n": "^2.4.2",
 		"zod": "^3.24.2"
 	}
