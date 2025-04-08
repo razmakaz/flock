@@ -4,14 +4,7 @@
 	import Navbar from '$lib/components/nav/Navbar.svelte';
 	import App from '$lib/stores/App';
 	import type { Unsubscriber } from 'svelte/store';
-	import { createClient, AuthClient } from '@supabase/supabase-js';
-	import { page } from '$app/state';
-	import {
-		PUBLIC_ENVIRONMENT,
-		PUBLIC_SUPABASE_ANON_KEY,
-		PUBLIC_SUPABASE_URL
-	} from '$env/static/public';
-	import { nav } from '$lib/client/navigation';
+	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
 
 	let { data, children } = $props();
 
@@ -22,7 +15,12 @@
 	let appHandler: Unsubscriber;
 
 	App.update((s) => {
-		s.supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+		if (data.session) {
+			s.session = data.session;
+			console.log('Session:', s.session);
+		} else {
+			console.log('Unauthenticated');
+		}
 		return s;
 	});
 
@@ -40,11 +38,6 @@
 					console.error('Service Worker registration failed:', error);
 				});
 		}
-
-		// const style = document.createElement('style');
-		// style.id = 'main-theme';
-		// style.innerHTML = data.theme;
-		// document.head.appendChild(style);
 
 		// Set the default language and theme based on the user's browser settings
 		if (typeof window !== 'undefined') {
@@ -88,21 +81,7 @@
 			localStorage.setItem('floc', JSON.stringify({ lang: s.lang, theme: s.theme }));
 		});
 
-		$App.supabase?.auth
-			.getSession()
-			.then((res) => {
-				const { session } = res.data;
-				App.update((s) => {
-					s.session = session;
-					return s;
-				});
-				if (session) {
-					nav('/app');
-				}
-			})
-			.finally(() => {
-				ready = true;
-			});
+		ready = true;
 	});
 
 	onDestroy(() => {
