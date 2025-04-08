@@ -5,9 +5,12 @@
 
 	const mockData = {
 		companyName: 'Apex Design Co.',
-		companyTagline: 'Innovative Solutions for Modern Brands',
+
+		// get receiver and address from address collection
 		receiver: 'Jane Doe',
 		address: '1234 Market Street\nSan Francisco, CA 94103\nUnited States',
+
+		// auto generate invoice number
 		number: 'INV-2025-0012',
 		issueDate: '2025-04-06',
 		dueDate: '2025-04-20',
@@ -38,6 +41,14 @@
 			}
 		],
 		subtotal: '$2,075.00',
+		// give location to be taxed from (client location)
+		// give the tax code of each item (user provided)
+		// the amount that item costs (each item)
+		// provide via api for taxjar, taxjar returns the amount of tax per item
+
+		// nexus location would be the location of the user that is billing
+
+		// use amount to collect
 		taxAmount: '$124.50',
 		discount: '$100.00',
 		totalAmount: '$2,099.50',
@@ -67,7 +78,6 @@
 
 	let invoiceData = $state({
 		companyName: '',
-		companyTagline: '',
 		receiver: '',
 		address: '',
 		number: '',
@@ -146,12 +156,14 @@
 				<input type="text" name="companyName" />
 			</div>
 			<div class="flex flex-col">
-				<label for="companyTagline" class="text-base-content">Company Tag Line</label>
-				<input type="text" name="companyTagline" />
+				<label for="receiver" class="text-base-content"
+					>Receiver <span class="text-error">*</span></label
+				>
+				<input type="text" name="receiver" />
 			</div>
 			<div class="flex flex-col">
 				<label for="receiver" class="text-base-content"
-					>Receiver <span class="text-error">*</span></label
+					>Receiver Address <span class="text-error">*</span></label
 				>
 				<input type="text" name="receiver" />
 			</div>
@@ -166,12 +178,6 @@
 					>Due Date <span class="text-error">*</span></label
 				>
 				<input type="date" name="dueDate" />
-			</div>
-			<div class="flex flex-col">
-				<label for="subtotal" class="text-base-content"
-					>Sub Total <span class="text-error">*</span></label
-				>
-				<input type="text" name="subtotal" />
 			</div>
 		</div>
 	</div>

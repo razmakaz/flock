@@ -329,7 +329,6 @@ body {
 					</div>
 					<div class="company-info">
 						<h1>${invoiceData.companyName}</h1>
-						<p>${invoiceData.companyTagline}</p>
 					</div>
 				</div>
 				<div class="invoice-title">${translate('invoice.title')}</div>

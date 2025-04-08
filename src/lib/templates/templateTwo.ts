@@ -368,7 +368,6 @@ body {
             </div>
             <div class="brand-text">
               <p class="brand-name">${invoiceData.companyName}</p>
-              <p class="tagline">${invoiceData.companyTagline}</p>
             </div>
           </div>
         </div>
