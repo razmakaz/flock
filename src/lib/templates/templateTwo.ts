@@ -233,6 +233,17 @@ body {
   background-color: #f9f9f9;
 }
 
+.item-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.item-description {
+  font-size: 13px;
+  margin-top: 5px;
+  color: #8c98a4;
+}
+
 .thank-you {
   font-weight: bold;
   margin-bottom: 20px;
@@ -396,6 +407,7 @@ body {
             <tr>
               <th>#</th>
               <th>${translate('invoice.service')}</th>
+              <th>${translate('invoice.serviceDate')}</th>
               <th>${translate('invoice.rate')}</th>
               <th>${translate('invoice.quantity')}</th>
               <th>${translate('invoice.total')}</th>
@@ -406,7 +418,13 @@ body {
 							(item, index) => `
                 <tr>
                     <td>${index}</td>
-                    <td>${item.name}</td>
+                    <td>
+                      <div class="item-name">${item.name}</div>
+                      <div class="item-description">
+                        <p>${item.description}</p>
+                      </div>
+                  	</td>
+                    <td>${item.serviceDate}</td>
                     <td>${item.rate}</td>
                     <td>${item.quantity}</td>
                     <td>${item.total}</td>

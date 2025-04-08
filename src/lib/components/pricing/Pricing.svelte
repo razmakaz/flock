@@ -408,8 +408,6 @@
 			subscription: false
 		};
 
-		console.log(priceCat);
-
 		return () => {
 			window.removeEventListener('resize', checkMobileView);
 		};

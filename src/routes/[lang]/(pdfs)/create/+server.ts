@@ -25,6 +25,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				{
 					name: 'Website Redesign',
 					description: 'Full redesign of corporate website including UI/UX strategy.',
+					serviceDate: '12/6/12',
 					rate: '$150.00',
 					quantity: 10,
 					total: '$1,500.00'
@@ -32,6 +33,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				{
 					name: 'SEO Optimization',
 					description: 'Comprehensive keyword research and technical optimization.',
+					serviceDate: '12/6/12',
 					rate: '$100.00',
 					quantity: 5,
 					total: '$500.00'
@@ -39,6 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				{
 					name: 'Monthly Maintenance',
 					description: 'Site backups, updates, and performance monitoring for April.',
+					serviceDate: '12/6/12',
 					rate: '$75.00',
 					quantity: 1,
 					total: '$75.00'
@@ -59,7 +62,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const page = await browser.newPage();
 
 		// grabbing html template and setting the invoice data
-		const htmlContent = await returnTemplateOne(invoiceData);
+		const htmlContent = await returnTemplateTwo(invoiceData);
 
 		if (!htmlContent) return new Response(htmlContent, { status: 500 });
 

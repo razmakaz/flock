@@ -316,6 +316,7 @@ export default {
 
 		// items section
 		service: 'Service',
+		serviceDate: 'Date',
 		rate: 'Rate',
 		quantity: 'Qty',
 		total: 'Amount',

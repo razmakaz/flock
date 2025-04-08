@@ -367,6 +367,7 @@ body {
 						<tr>
 							<th style="width: 5%">#</th>
 							<th style="width: 45%">${translate('invoice.service')}</th>
+              <th style="width: 15%" class="text-right">${translate('invoice.serviceDate')}</th>
 							<th style="width: 15%" class="text-right">${translate('invoice.rate')}</th>
 							<th style="width: 15%" class="text-center">${translate('invoice.quantity')}</th>
 							<th style="width: 20%" class="text-right">${translate('invoice.total')}</th>
@@ -383,6 +384,7 @@ body {
 									<p>${item.description}</p>
 								</div>
 							</td>
+              <td class="text-right">${item.serviceDate}</td>
 							<td class="text-right">${item.rate}</td>
 							<td class="text-center">${item.quantity}</td>
 							<td class="text-right">${item.total}</td>
