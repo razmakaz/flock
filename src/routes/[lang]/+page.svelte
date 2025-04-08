@@ -14,7 +14,6 @@
 <svelte:head>
 	<title>{$t('seo.landing.title')}</title>
 	<meta name="description" content="A simple landing page for our application." />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website" />

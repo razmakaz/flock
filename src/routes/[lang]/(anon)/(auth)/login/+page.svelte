@@ -1,16 +1,12 @@
 <script lang="ts">
+	import PocketBase from 'pocketbase';
 	import { slide } from 'svelte/transition';
 	import TextInput from '$lib/components/forms/TextInput.svelte';
-	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
-	import { onMount } from 'svelte';
-	import { enhance } from '$app/forms';
+	import { PUBLIC_PB_URL } from '$env/static/public';
 	import Icon from '@iconify/svelte';
 	import { emailRegex } from '$lib/regex';
 	import { page } from '$app/state';
 	import { t } from '$lib/translations.svelte';
-	import App from '$lib/stores/App';
-	import type { Provider } from '@supabase/supabase-js';
-	import CRAPI from '$lib/CRAPI';
 	import type IReply from '$lib/@types/IReply';
 
 	const state = $state({
@@ -74,6 +70,32 @@
 		state.errors = data.errors || [];
 		state.messages = data.messages || [];
 	};
+
+	const handleOauth = async (provider: string) => {
+		const pb = new PocketBase(PUBLIC_PB_URL);
+		const redirectURI = `${window.location.origin}/oauth/callback`;
+		console.log(redirectURI);
+		const result = await pb.collection('users').authWithOAuth2({
+			provider: provider,
+			redirectUrl: redirectURI
+		});
+
+		pb.authStore.save(result.token, result.record);
+		const payload = {
+			token: result.token,
+			record: result.record
+		};
+
+		const res = await fetch('', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(payload)
+		});
+
+		console.log('res', res);
+	};
 </script>
 
 <svelte:head>
@@ -97,8 +119,7 @@
 		<button
 			class="btn btn-outline w-full"
 			style="border: 2px solid {color};"
-			disabled={!state.emailValid}
-			onclick={() => handleSubmit(id)}
+			onclick={() => handleOauth(id)}
 		>
 			<Icon {icon} width={18} height={18} />
 			<span>{label}</span>
