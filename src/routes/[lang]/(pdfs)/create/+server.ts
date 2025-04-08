@@ -3,10 +3,12 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { returnTemplateOne } from '$lib/templates/templateOne';
 import { returnTemplateTwo } from '$lib/templates/templateTwo';
 
+// TODO: Add feature so user can dynamically set the html template
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		// const customData: PDFData = await request.json();
 
+		// creating puppeteer browser window
 		const browser = await puppeteer.launch({
 			headless: false
 		});
@@ -56,10 +58,12 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const page = await browser.newPage();
 
+		// grabbing html template and setting the invoice data
 		const htmlContent = await returnTemplateOne(invoiceData);
 
 		if (!htmlContent) return new Response(htmlContent, { status: 500 });
 
+		// setting html content
 		await page.setContent(htmlContent, {
 			waitUntil: 'networkidle0'
 		});
