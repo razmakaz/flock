@@ -35,7 +35,7 @@ export const POST = async ({ request }) => {
 	// If the user doesn't exist, create them
 	if (!user) {
 		try {
-			console.log('Creating user', email);
+			// console.log('Creating user', email);
 			const password = Math.random().toString(36).slice(2);
 			const createdUser = await god.collection('users').create({
 				email,
@@ -43,12 +43,12 @@ export const POST = async ({ request }) => {
 				password: password,
 				passwordConfirm: password
 			});
-			console.log('Created user', createdUser);
+			// console.log('Created user', createdUser);
 		} catch (e) {
 			if (e instanceof ClientResponseError) {
-				console.log(e.response);
+				// console.log(e.response);
 			} else {
-				console.log(e);
+				// console.log(e);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ export const POST = async ({ request }) => {
 export const PUT = async ({ request, cookies }) => {
 	const data = await request.json();
 
-	console.log('data', data);
+	// console.log('data', data);
 
 	setCookie(cookies, 'session', JSON.stringify(data));
 

@@ -8,7 +8,7 @@
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				console.log('Logged out', res);
+				// console.log('Logged out', res);
 				$App.pb.authStore.clear();
 				window.location.href = '/';
 			})

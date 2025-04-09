@@ -8,7 +8,7 @@
 
 	let { data, children } = $props();
 
-	console.log(data);
+	// console.log(data);
 
 	let ready = $state(false);
 
@@ -33,7 +33,7 @@
 							})
 								.then((res) => res.json())
 								.then((res) => {
-									console.log('Session refreshed', res);
+									// console.log('Session refreshed', res);
 									s.session = data.session;
 								});
 						})
@@ -47,7 +47,7 @@
 					s.session = data.session;
 				}
 			} else {
-				console.log('Unauthenticated');
+				// console.log('Unauthenticated');
 			}
 			return s;
 		});
@@ -56,7 +56,7 @@
 			navigator.serviceWorker
 				.register('/sw.js')
 				.then((registration) => {
-					console.log('Service Worker registered with scope:', registration.scope);
+					// console.log('Service Worker registered with scope:', registration.scope);
 				})
 				.catch((error) => {
 					console.error('Service Worker registration failed:', error);

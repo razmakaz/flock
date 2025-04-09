@@ -37,7 +37,7 @@
 	const onblur = (event: Event) => {
 		const target = event.target as HTMLInputElement;
 		value = target.value;
-		console.log('Changing', validation, state.hasBlurred);
+		// console.log('Changing', validation, state.hasBlurred);
 		state.hasBlurred = true;
 
 		isValid = true;
@@ -45,13 +45,13 @@
 
 		// Validate the input
 		if (validation && state.hasBlurred) {
-			console.log('Is validating');
+			// console.log('Is validating');
 			if (!validation(value)) {
 				isValid = false;
 				state.error = validationError;
 			}
 		}
-		console.log('Is valid', state.error);
+		// console.log('Is valid', state.error);
 	};
 </script>
 

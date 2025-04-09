@@ -20,9 +20,9 @@
 	$: selectedLang = languages.find((lang) => lang.code === $locale) || languages[0];
 
 	const setLocale = async (lang: string) => {
-		console.log('Setting locale to', lang);
+		// console.log('Setting locale to', lang);
 		const path = `/${lang}/lang`;
-		console.log(path);
+		// console.log(path);
 		await fetch(path, {
 			method: 'POST'
 		});
