@@ -5,8 +5,11 @@
 	import App from '$lib/stores/App';
 	import type { Unsubscriber } from 'svelte/store';
 	import { PUBLIC_ENVIRONMENT } from '$env/static/public';
+	import { page } from '$app/state';
 
 	let { data, children } = $props();
+
+	const noui = page.url.searchParams.get('noui');
 
 	// console.log(data);
 
@@ -153,7 +156,9 @@
 	</style>
 </svelte:head>
 
-{#if ready}
+{#if noui}
+	{@render children()}
+{:else if ready}
 	{#if !$App.session}
 		<Navbar />
 	{/if}
