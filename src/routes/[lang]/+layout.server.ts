@@ -7,7 +7,7 @@ export const load = async ({ request, locals, fetch, url, cookies }) => {
 
 	const session = getCookie(cookies, 'session');
 
-	console.log('got session', session);
+	// console.log('got session', session);
 
 	const { lang } = locals;
 

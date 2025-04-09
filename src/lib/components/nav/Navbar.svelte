@@ -44,12 +44,12 @@
 	let navItems = $state(getNavItems());
 
 	locale.subscribe((l) => {
-		console.log(l);
+		// console.log(l);
 		navItems = getNavItems();
 	});
 
 	$effect(() => {
-		console.log(state.sidebarOpen);
+		// console.log(state.sidebarOpen);
 	});
 
 	const handleNavigate = (path: string) => {
