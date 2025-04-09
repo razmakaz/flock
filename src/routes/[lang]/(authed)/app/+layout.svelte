@@ -16,7 +16,7 @@
 	});
 
 	onMount(() => {
-		console.log('Is Authed', isAuthed);
+		// console.log('Is Authed', isAuthed);
 		if (!isAuthed) {
 			nav('/login');
 		}
@@ -44,7 +44,7 @@
 			forceOpen
 			onclose={() => {
 				state.sidebarOpen = false;
-				console.log('Closing');
+				// console.log('Closing');
 			}}
 		/>
 	</div>
@@ -54,7 +54,7 @@
 				class="flex items-center gap-4 p-4"
 				onclick={() => {
 					state.sidebarOpen = !state.sidebarOpen;
-					console.log(state.sidebarOpen);
+					// console.log(state.sidebarOpen);
 				}}
 			>
 				<Icon icon="gg:sidebar-open" width="32" height="32" class="inline-block" />

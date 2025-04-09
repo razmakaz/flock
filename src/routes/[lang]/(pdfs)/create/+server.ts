@@ -59,20 +59,37 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		};
 
+		// const htmlContent = await returnTemplateOne(invoiceData);
+
+		// if (!htmlContent) return new Response(htmlContent, { status: 500 });
+
+		// await page.setContent(htmlContent, {
+		// 	waitUntil: 'networkidle0'
+		// });
 		const page = await browser.newPage();
 
-		// grabbing html template and setting the invoice data
-		const htmlContent = await returnTemplateTwo(invoiceData);
+		// You get this data string by using
+		// btoa(JSON.stringify(customData))
+		const data =
+			'eyJjb21wYW55TmFtZSI6IkFwZXggRGVzaWduIENvLiIsImNvbXBhbnlUYWdsaW5lIjoiSW5ub3ZhdGl2ZSBTb2x1dGlvbnMgZm9yIE1vZGVybiBCcmFuZHMiLCJyZWNlaXZlciI6IkphbmUgRG9lIiwiYWRkcmVzcyI6IjEyMzQgTWFya2V0IFN0cmVldFxuU2FuIEZyYW5jaXNjbywgQ0EgOTQxMDNcblVuaXRlZCBTdGF0ZXMiLCJudW1iZXIiOiJJTlYtMjAyNS0wMDEyIiwiaXNzdWVEYXRlIjoiMjAyNS0wNC0wNiIsImR1ZURhdGUiOiIyMDI1LTA0LTIwIiwiaXRlbXMiOlt7Im5hbWUiOiJXZWJzaXRlIFJlZGVzaWduIiwiZGVzY3JpcHRpb24iOiJGdWxsIHJlZGVzaWduIG9mIGNvcnBvcmF0ZSB3ZWJzaXRlIGluY2x1ZGluZyBVSS9VWCBzdHJhdGVneS4iLCJzZXJ2aWNlRGF0ZSI6IjEyLzYvMTIiLCJyYXRlIjoiJDE1MC4wMCIsInF1YW50aXR5IjoxMCwidG90YWwiOiIkMSw1MDAuMDAifSx7Im5hbWUiOiJTRU8gT3B0aW1pemF0aW9uIiwiZGVzY3JpcHRpb24iOiJDb21wcmVoZW5zaXZlIGtleXdvcmQgcmVzZWFyY2ggYW5kIHRlY2huaWNhbCBvcHRpbWl6YXRpb24uIiwic2VydmljZURhdGUiOiIxMi82LzEyIiwicmF0ZSI6IiQxMDAuMDAiLCJxdWFudGl0eSI6NSwidG90YWwiOiIkNTAwLjAwIn0seyJuYW1lIjoiTW9udGhseSBNYWludGVuYW5jZSIsImRlc2NyaXB0aW9uIjoiU2l0ZSBiYWNrdXBzLCB1cGRhdGVzLCBhbmQgcGVyZm9ybWFuY2UgbW9uaXRvcmluZyBmb3IgQXByaWwuIiwic2VydmljZURhdGUiOiIxMi82LzEyIiwicmF0ZSI6IiQ3NS4wMCIsInF1YW50aXR5IjoxLCJ0b3RhbCI6IiQ3NS4wMCJ9XSwic3VidG90YWwiOiIkMiwwNzUuMDAiLCJ0YXhBbW91bnQiOiIkMTI0LjUwIiwiZGlzY291bnQiOiIkMTAwLjAwIiwidG90YWxBbW91bnQiOiIkMiwwOTkuNTAiLCJiYW5rIjp7ImJhbmtOYW1lIjoiRmlyc3QgTmF0aW9uYWwgQmFuayIsImFjY291bnROYW1lIjoiQXBleCBEZXNpZ24gQ28uIiwiYWNjb3VudE51bWJlciI6IjEyMzQ1Njc4OTAiLCJyb3V0aW5nTnVtYmVyIjoiOTg3NjU0MzIxIn19';
+		const url = new URL(request.url + '/' + data);
 
-		if (!htmlContent) return new Response(htmlContent, { status: 500 });
+		// Added noui parameter to remove the UI
+		url.searchParams.set('noui', 'true');
 
-		// setting html content
-		await page.setContent(htmlContent, {
-			waitUntil: 'networkidle0'
+		console.log(url.toString());
+
+		await page.goto(url.toString());
+
+		// Set the viewport size to match the exact dimensions of the PDF
+		// This is important for ensuring the PDF is generated with the correct size
+		await page.setViewport({
+			width: Math.round(8.5 * 96), // 8.5 inches in pixels (assuming 96 DPI)
+			height: Math.round(11 * 96) // 11 inches in pixels (assuming 96 DPI)
 		});
 
 		const pdfBuffer = await page.pdf({
-			format: 'A4',
+			format: 'Letter',
 			printBackground: true
 		});
 
