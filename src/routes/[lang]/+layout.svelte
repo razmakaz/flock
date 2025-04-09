@@ -14,19 +14,43 @@
 
 	let appHandler: Unsubscriber;
 
-	App.update((s) => {
-		if (data.session) {
-			s.session = data.session;
-			console.log('Session:', s.session);
-		} else {
-			console.log('Unauthenticated');
-		}
-		return s;
-	});
-
 	// Apply data.theme as css to the document
 
 	onMount(() => {
+		App.update((s) => {
+			if (data.session) {
+				s.pb.authStore.save(data.session.token, data.session.record);
+				if (!s.pb.authStore.isValid) {
+					s.pb
+						.collection('users')
+						.authRefresh()
+						.then((session) => {
+							fetch('/login', {
+								method: 'PUT',
+								body: JSON.stringify({
+									...session
+								})
+							})
+								.then((res) => res.json())
+								.then((res) => {
+									console.log('Session refreshed', res);
+									s.session = data.session;
+								});
+						})
+						.catch((err) => {
+							s.pb.authStore.clear();
+							fetch('/login', {
+								method: 'DELETE'
+							});
+						});
+				} else {
+					s.session = data.session;
+				}
+			} else {
+				console.log('Unauthenticated');
+			}
+			return s;
+		});
 		// Register Service Worker
 		if ('serviceWorker' in navigator && PUBLIC_ENVIRONMENT === 'prod') {
 			navigator.serviceWorker

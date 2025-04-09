@@ -1,4 +1,5 @@
 import { get, writable } from 'svelte/store';
+import App from './stores/App';
 
 export type TNotyType = 'toast' | 'snack' | 'banner';
 export type TNotyStyle = 'success' | 'error' | 'info' | 'warning';

@@ -1,9 +1,6 @@
+import type { AuthRecord } from 'pocketbase';
+
 export interface ISession {
-	id: string;
-	userId: string;
-	email: string;
-	name: string;
-	role: string;
-	exp: number;
-	iat: number;
+	token: string;
+	record: AuthRecord;
 }

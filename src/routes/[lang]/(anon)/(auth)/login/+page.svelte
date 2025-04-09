@@ -73,7 +73,7 @@
 
 	const handleOauth = async (provider: string) => {
 		const pb = new PocketBase(PUBLIC_PB_URL);
-		const redirectURI = `${window.location.origin}/oauth/callback`;
+		const redirectURI = `${window.location.origin}/login/callback`;
 		console.log(redirectURI);
 		const result = await pb.collection('users').authWithOAuth2({
 			provider: provider,
@@ -92,7 +92,15 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(payload)
-		});
+		}).then((res) => res.json());
+
+		if (res.success) {
+			window.location.href = '/';
+		} else {
+			state.success = false;
+			state.messages = [];
+			state.errors = res.errors || [];
+		}
 
 		console.log('res', res);
 	};
@@ -133,7 +141,7 @@
 			<h1 class="text-2xl font-bold">{@html $t('auth.login.title')}</h1>
 			<p class="text-sm">{@html $t('auth.login.subtitle')}</p>
 		</div>
-		<TextInput
+		<!-- <TextInput
 			bind:value={state.email}
 			name="email"
 			label={$t('auth.login.email')}
@@ -144,7 +152,11 @@
 				return emailRegex.test(input);
 			}}
 			validationError={$t('auth.login.emailInvalid')}
-		/>
+		/> -->
+		<div class="card bg-primary/50 p-4">
+			<h4>Email Login is Currently Disabled</h4>
+			<p>Please use one of our providers.</p>
+		</div>
 
 		{#if !state.success}
 			<button

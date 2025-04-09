@@ -2,17 +2,7 @@ import god from '$lib/server/god';
 import Reply from '$lib/server/Reply';
 import { ClientResponseError } from 'pocketbase';
 import type { Cookies } from '@sveltejs/kit';
-
-const storeSession = (cookies: Cookies, session: object) => {
-	console.log('Storing session', session);
-	cookies.set('pocketbase_auth', JSON.stringify(session), {
-		path: '/',
-		sameSite: 'lax',
-		httpOnly: true,
-		secure: false,
-		maxAge: 60 * 60 * 24 * 30 // 30 days
-	});
-};
+import { deleteCookie, setCookie } from '$lib/server/cookies.js';
 
 export const POST = async ({ request }) => {
 	const data = await request.json();
@@ -75,9 +65,17 @@ export const POST = async ({ request }) => {
 export const PUT = async ({ request, cookies }) => {
 	const data = await request.json();
 
-	console.log('Storing session');
-	storeSession(cookies, data);
+	console.log('data', data);
 
+	setCookie(cookies, 'session', JSON.stringify(data));
+
+	return Reply({
+		messages: ['OK']
+	});
+};
+
+export const DELETE = async ({ cookies }) => {
+	deleteCookie(cookies, 'session');
 	return Reply({
 		messages: ['OK']
 	});
