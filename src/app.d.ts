@@ -1,6 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { Session, SupabaseClient } from '@supabase/supabase-js';
+import type { ISession } from '$lib/@types/ISession';
 import PocketBase from 'pocketbase';
 
 // for information about these interfaces
@@ -9,7 +9,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			lang: string;
-			session: any;
+			session: ISession | null;
 			pocketbase: PocketBase;
 		}
 		// interface PageData {}

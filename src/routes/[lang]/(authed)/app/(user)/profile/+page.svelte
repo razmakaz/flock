@@ -3,13 +3,18 @@
 	import App from '$lib/stores/App';
 
 	const handleLogout = () => {
-		$App.supabase?.auth.signOut().finally(() => {
-			App.update((s) => {
-				s.session = null;
-				return s;
+		fetch('/login', {
+			method: 'DELETE'
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				console.log('Logged out', res);
+				$App.pb.authStore.clear();
+				window.location.href = '/';
+			})
+			.catch((err) => {
+				console.error('Error logging out', err);
 			});
-			nav('/');
-		});
 	};
 </script>
 

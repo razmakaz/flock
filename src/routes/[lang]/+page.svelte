@@ -5,9 +5,14 @@
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Features from '$lib/components/landing/Features.svelte';
 	import Pricing from '$lib/components/pricing/Pricing.svelte';
+	import App from '$lib/stores/App';
+	import { nav } from '$lib/client/navigation';
 
 	onMount(() => {
 		console.log('Page mounted');
+		if ($App.session) {
+			nav('/app');
+		}
 	});
 </script>
 

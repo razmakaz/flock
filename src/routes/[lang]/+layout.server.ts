@@ -1,22 +1,28 @@
-import { decodeJWT } from '$lib/server/jwt.js';
-import { validateSession } from '$lib/server/session.js';
+import type { ISession } from '$lib/@types/ISession.js';
+import { getCookie } from '$lib/server/cookies.js';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ request, locals, fetch, url, cookies }) => {
 	const theme = await fetch('/theme').then((res) => res.text());
 
-	// const session = await validateSession(cookies);
-	// if (session) {
-	// 	const decoded = await decodeJWT(session);
-	// 	if (decoded) {
-	// 		locals.session = decoded;
-	// 	}
-	// }
+	const session = getCookie(cookies, 'session');
+
+	console.log('got session', session);
 
 	const { lang } = locals;
 
+	// if (session && url.pathname === `/${lang}`) {
+	// 	const redirectUrl = new URL(`/${lang}/app`, url);
+	// 	throw redirect(302, redirectUrl.toString());
+	// }
+
 	return {
-		session: null,
+		session,
 		lang,
 		theme
+	} as {
+		session: ISession | null;
+		lang: string;
+		theme: string;
 	};
 };
