@@ -32,23 +32,29 @@ class InvoiceTools {
 		return quantity * rate;
 	}
 
-	// calculate the total tax amount of each invoice line item
-	static calculateInvoiceLine(
-		quantity: number,
-		rate: number,
-		taxRate: number,
-		thresholdAmount: number
-	) {
+	/**
+	 * Calculates the total amount for an invoice line item including tax.
+	 *
+	 * @param lineData The invoice line item data
+	 * @returns The total amount including tax
+	 */
+	static calculateInvoiceLine(lineData: any) {
+		const { quantity, rate, thresholdAmount = 0, tax } = lineData;
+
 		// total time in item multiplied by the rate
-		const totalAmount = quantity * rate;
+		const subtotal = quantity * rate;
 
 		// apply tax to total amount
-		const taxableAmount = Math.max(totalAmount - thresholdAmount, 0);
-		const tax = taxableAmount * (taxRate / 100);
-		return totalAmount - tax;
+		const taxableAmount = Math.max(subtotal - thresholdAmount, 0);
+		const taxAmount = taxableAmount * (tax / 100);
+		return Number((subtotal + taxAmount).toFixed(2));
 	}
 
-	// return dates from startTime: (Exp: 12-10-2000)
+	/**
+	 * Calculates the date of the startTime
+	 * @param startTime The start of the timesheet shift
+	 * @returns The date of startTime
+	 * */
 	static getTimesheetDates = (startTime: string) => {
 		const startDate = new Date(startTime);
 
@@ -59,7 +65,11 @@ class InvoiceTools {
 		return `${month}/${day}/${year}`;
 	};
 
-	// calculate line data and return
+	/**
+	 * Calculates the invoice line data such as quantity and total after tax
+	 * @param itemData The data of the invoice line
+	 * @returns New invoice line object with updated values
+	 */
 	static genDemoLineData(itemData: IInvoiceLineData) {
 		const { id, start, end, date, title, tax = 2, thresholdAmount = 0, rate = 15 } = itemData;
 
@@ -69,7 +79,7 @@ class InvoiceTools {
 			quantity = this.getHourDifference(start, end) || 0;
 		}
 
-		const totalAmount = this.calculateInvoiceLine(quantity, rate, tax, thresholdAmount);
+		const totalAmount = this.calculateInvoiceLine({ quantity, rate, tax, thresholdAmount });
 
 		const newDate = date || (start ? this.getTimesheetDates(start) : '');
 
@@ -80,9 +90,7 @@ class InvoiceTools {
 			rate: rate,
 			tax,
 			quantity: quantity,
-			total: totalAmount,
-			start,
-			end
+			total: totalAmount
 		};
 	}
 }

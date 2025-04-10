@@ -9,9 +9,9 @@ export interface IInvoiceLineData {
 	id: string;
 	title: string;
 	date: string;
-	rate?: number;
-	quantity?: number;
-	total?: number;
+	rate: number;
+	quantity: number;
+	total: number;
 
 	start?: string;
 	end?: string;
@@ -28,7 +28,7 @@ export interface IInvoiceData {
 	issueDate: string;
 	dueDate: string;
 	items: IInvoiceLineData[];
-	subtotal: string;
-	totalAmount: string;
+	subtotal: number;
+	totalAmount: number;
 	bank: IBankInvoiceData;
 }

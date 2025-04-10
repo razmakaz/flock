@@ -13,8 +13,8 @@
 		issueDate: '2025-04-06',
 		dueDate: '2025-04-20',
 		items: [],
-		subtotal: '',
-		totalAmount: '',
+		subtotal: 0,
+		totalAmount: 0,
 		bank: {
 			bankName: 'First National Bank',
 			accountName: 'Apex Design Co.',
@@ -58,6 +58,13 @@
 			if (!newItem) return;
 			mockData.items[itemIndex] = newItem;
 		}
+		mockData.subtotal = 0;
+		mockData.totalAmount = 0;
+		mockData.items.forEach((item) => {
+			const subtotal = InvoiceTools.calcSubtotal(item);
+			mockData.subtotal += subtotal;
+			mockData.totalAmount += item.total;
+		});
 	};
 
 	const handleChange = (id: string, e: Event) => {
@@ -80,7 +87,9 @@
 
 		mockData.items.forEach((item) => {
 			const subtotal = InvoiceTools.calcSubtotal(item);
+			const total = InvoiceTools.calculateInvoiceLine(item);
 			mockData.subtotal += subtotal;
+			mockData.totalAmount += total;
 		});
 	});
 
