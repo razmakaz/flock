@@ -1,45 +1,9 @@
 <script lang="ts">
+	import type { IInvoiceData, IInvoiceLineData } from '$lib/@types/IInvoice';
 	import InvoiceTools from '$lib/tools/InvoiceTools';
 	import { onMount } from 'svelte';
 
-	interface IBankInvoiceData {
-		bankName: string;
-		accountName: string;
-		accountNumber: string;
-		routingNumber: string;
-	}
-
-	interface IInvoiceLineData {
-		id: string;
-		title: string;
-		date: string;
-		tax: number;
-		rate?: number;
-		quantity?: number;
-		total?: number;
-	}
-
-	interface IInvoiceData {
-		companyName: string;
-		client: string;
-		address: string;
-		number: string;
-		issueDate: string;
-		dueDate: string;
-		items: IInvoiceLineData[];
-		subtotal: string;
-		totalAmount: string;
-		bank: IBankInvoiceData;
-	}
-
-	interface ITimesheetData {
-		id: string;
-		start: string;
-		end: string;
-		tite: string;
-	}
-
-	let timesheetData: ITimesheetData[] | undefined = $state([]);
+	let timesheetData: IInvoiceLineData[] | undefined = $state([]);
 
 	let mockData: IInvoiceData = $state({
 		companyName: 'Apex Design Co.',
@@ -82,16 +46,41 @@
 		return;
 	};
 
+	const recalcLine = (id: string, value: number) => {
+		const itemIndex = mockData.items.findIndex((item) => item.id === id);
+
+		if (itemIndex !== -1) {
+			mockData.items[itemIndex].rate = value;
+			const newItem = InvoiceTools.genDemoLineData(mockData.items[itemIndex]);
+
+			console.log('New item for invoice data:', newItem);
+
+			if (!newItem) return;
+			mockData.items[itemIndex] = newItem;
+		}
+	};
+
+	const handleChange = (id: string, e: Event) => {
+		const target = e.target as HTMLInputElement;
+		const value = Number(target.value);
+		console.log(value);
+
+		recalcLine(id, value);
+	};
+
 	onMount(() => {
 		getTimesheetData();
-
-		console.log(timesheetData);
 
 		if (!timesheetData) return;
 
 		timesheetData.forEach((time) => {
-			const itemData = InvoiceTools.genDemoLineData(time, 15, 2);
+			const itemData = InvoiceTools.genDemoLineData(time);
 			mockData.items = [...mockData.items, itemData];
+		});
+
+		mockData.items.forEach((item) => {
+			const subtotal = InvoiceTools.calcSubtotal(item);
+			mockData.subtotal += subtotal;
 		});
 	});
 
@@ -105,9 +94,6 @@
 		<h2 class="text-center text-3xl md:text-left">Invoice Demo</h2>
 
 		<div class="flex flex-col justify-between gap-8 md:flex-row">
-			<div>
-				<input type="text" class="bg-base-300 text-bg-content rounded" />
-			</div>
 			<div class="text-xl">
 				<h3 class="text-2xl">For testing</h3>
 				<p>{mockData.companyName}</p>
@@ -178,7 +164,12 @@
 										{item.date}
 									</td>
 									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
-										<input type="text" defaultValue={item.rate ? item.rate : ''} class="w-32" />
+										<input
+											type="text"
+											defaultValue={item.rate ? item.rate : ''}
+											class="w-24"
+											oninput={(e) => handleChange(item.id, e)}
+										/>
 									</td>
 									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
 										{item.tax}%
@@ -195,8 +186,10 @@
 					</table>
 				</div>
 
-				<p>{mockData.subtotal}</p>
-				<p>{mockData.totalAmount}</p>
+				<div class="flex flex-col">
+					<p>{mockData.subtotal}</p>
+					<p>{mockData.totalAmount}</p>
+				</div>
 
 				<p>{mockData.bank.bankName}</p>
 				<p>{mockData.bank.accountName}</p>

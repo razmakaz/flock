@@ -1,3 +1,5 @@
+import type { IInvoiceLineData } from '$lib/@types/IInvoice';
+
 class InvoiceTools {
 	instance: InvoiceTools | null = null;
 
@@ -6,16 +8,28 @@ class InvoiceTools {
 		this.instance = this;
 	}
 
-	// use this function to take the end time and use it for the service date
 	static getHourDifference(startTime: string, endTime: string) {
 		const startDate = new Date(startTime);
 		const endDate = new Date(endTime);
 
-		const diffInMs = Math.abs(endDate - startDate);
+		// checking if both dates are valid
+		if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+			return undefined;
+		}
 
-		// convert milliseconds to hours
-		const diffInHours = diffInMs / (1000 * 60 * 60);
-		return diffInHours;
+		const diffInMs = endDate.getTime() - startDate.getTime();
+		const hourDiff = diffInMs / (1000 * 60 * 60);
+
+		return hourDiff;
+	}
+
+	static calcSubtotal(itemData: IInvoiceLineData) {
+		const { start, end, rate } = itemData;
+		if (!start || !end || !rate) return;
+
+		const quantity = this.getHourDifference(start, end) || 0;
+
+		return quantity * rate;
 	}
 
 	// calculate the total tax amount of each invoice line item
@@ -46,21 +60,29 @@ class InvoiceTools {
 	};
 
 	// calculate line data and return
-	static genDemoLineData(timesheetData: any, rate = 0, taxRate = 0, thresholdAmount = 0) {
-		const { id, start, end, title } = timesheetData;
+	static genDemoLineData(itemData: IInvoiceLineData) {
+		const { id, start, end, date, title, tax = 2, thresholdAmount = 0, rate = 15 } = itemData;
 
-		const quantity = this.getHourDifference(start, end);
-		const totalAmount = this.calculateInvoiceLine(quantity, rate, taxRate, thresholdAmount);
-		const date = this.getTimesheetDates(start);
+		let quantity = 0;
+
+		if (start && end) {
+			quantity = this.getHourDifference(start, end) || 0;
+		}
+
+		const totalAmount = this.calculateInvoiceLine(quantity, rate, tax, thresholdAmount);
+
+		const newDate = date || (start ? this.getTimesheetDates(start) : '');
 
 		return {
 			id: id,
 			title: title,
-			date: date,
+			date: newDate,
 			rate: rate,
-			tax: taxRate,
+			tax,
 			quantity: quantity,
-			total: totalAmount
+			total: totalAmount,
+			start,
+			end
 		};
 	}
 }
