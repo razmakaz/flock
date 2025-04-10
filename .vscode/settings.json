@@ -4,7 +4,8 @@
   },
   "cSpell.words": [
     "iconify",
-    "izyk"
+    "izyk",
+    "timesheet"
   ],
   "deno.enablePaths": [
     "supabase/functions"

@@ -1,65 +1,63 @@
 <script lang="ts">
+	import InvoiceTools from '$lib/tools/InvoiceTools';
 	import { onMount } from 'svelte';
 
-	// make mock data to render out an invoice from data
+	interface IBankInvoiceData {
+		bankName: string;
+		accountName: string;
+		accountNumber: string;
+		routingNumber: string;
+	}
 
-	const mockData = {
+	interface IInvoiceLineData {
+		id: string;
+		title: string;
+		date: string;
+		tax: number;
+		rate?: number;
+		quantity?: number;
+		total?: number;
+	}
+
+	interface IInvoiceData {
+		companyName: string;
+		client: string;
+		address: string;
+		number: string;
+		issueDate: string;
+		dueDate: string;
+		items: IInvoiceLineData[];
+		subtotal: string;
+		totalAmount: string;
+		bank: IBankInvoiceData;
+	}
+
+	interface ITimesheetData {
+		id: string;
+		start: string;
+		end: string;
+		tite: string;
+	}
+
+	let timesheetData: ITimesheetData[] | undefined = $state([]);
+
+	let mockData: IInvoiceData = $state({
 		companyName: 'Apex Design Co.',
-
-		// get receiver and address from address collection
-		receiver: 'Jane Doe',
+		client: 'Jane Doe',
 		address: '1234 Market Street\nSan Francisco, CA 94103\nUnited States',
-
-		// auto generate invoice number
 		number: 'INV-2025-0012',
 		issueDate: '2025-04-06',
 		dueDate: '2025-04-20',
-		items: [
-			{
-				name: 'Website Redesign',
-				description: 'Full redesign of corporate website including UI/UX strategy.',
-				serviceDate: '12/6/12',
-				rate: '$150.00',
-				quantity: 10,
-				total: '$1,500.00'
-			},
-			{
-				name: 'SEO Optimization',
-				description: 'Comprehensive keyword research and technical optimization.',
-				serviceDate: '12/6/12',
-				rate: '$100.00',
-				quantity: 5,
-				total: '$500.00'
-			},
-			{
-				name: 'Monthly Maintenance',
-				description: 'Site backups, updates, and performance monitoring for April.',
-				serviceDate: '12/6/12',
-				rate: '$75.00',
-				quantity: 1,
-				total: '$75.00'
-			}
-		],
-		subtotal: '$2,075.00',
-		// give location to be taxed from (client location)
-		// give the tax code of each item (user provided)
-		// the amount that item costs (each item)
-		// provide via api for taxjar, taxjar returns the amount of tax per item
-
-		// nexus location would be the location of the user that is billing
-
-		// use amount to collect
-		taxAmount: '$124.50',
-		discount: '$100.00',
-		totalAmount: '$2,099.50',
+		items: [],
+		subtotal: '',
+		totalAmount: '',
 		bank: {
 			bankName: 'First National Bank',
 			accountName: 'Apex Design Co.',
 			accountNumber: '1234567890',
 			routingNumber: '987654321'
 		}
-	};
-
+	});
 	// give dropdown of styles of invoice
 
 	// include invoice statement
@@ -74,71 +72,27 @@
 
 	// take timesheet data from timesheet demo and use it in the invoice
 
-	let timesheetData = $state();
-
-	let invoiceData = $state({
-		companyName: '',
-		receiver: '',
-		address: '',
-		number: '',
-		issueDate: '',
-		dueDate: '',
-		items: [],
-		subtotal: '',
-		taxAmount: '',
-		discount: '',
-		totalAmount: '',
-		bank: {
-			bankName: '',
-			accountName: '',
-			accountNumber: '',
-			routingNumber: ''
-		}
-	});
-
-	let subtotal = $state();
-	let taxPercentage = $state();
-	let total = $state();
-
 	const getTimesheetData = () => {
-		timesheetData = localStorage.getItem('floc-cal-demo');
-		timesheetData = JSON.parse(timesheetData);
-
-		const timedate = timesheetData[0].start;
-		const date = new Date(timedate);
-		console.log(date.toLocaleDateString());
-
-		const diff = getHourDifference(timesheetData[0].start, timesheetData[0].end);
-		console.log('Difference in time', diff);
-		console.log(timesheetData);
-	};
-
-	// use this function to take the end time and use it for the service date
-	function getHourDifference(startTime: string, endTime: string) {
-		const startDate = new Date(startTime);
-		const endDate = new Date(endTime);
-
-		const diffInMs = Math.abs(endDate - startDate);
-
-		// convert milliseconds to hours
-		const diffInHours = diffInMs / (1000 * 60 * 60);
-
-		return diffInHours;
-	}
-
-	// create an invoice id
-	const genInvoiceNum = () => {
-		const date = new Date();
-	};
-
-	const calulateTotals = () => {
-		timesheetData.forEach((timesheet) => {
-			const totalHours = getHourDifference(timesheet.start, timesheet.end);
-		});
+		const timeDemoData = localStorage.getItem('floc-cal-demo');
+		if (!timeDemoData) {
+			return;
+		}
+		const parsedTimeData = JSON.parse(timeDemoData);
+		timesheetData = parsedTimeData;
+		return;
 	};
 
 	onMount(() => {
 		getTimesheetData();
+
+		console.log(timesheetData);
+
+		if (!timesheetData) return;
+
+		timesheetData.forEach((time) => {
+			const itemData = InvoiceTools.genDemoLineData(time, 15, 2);
+			mockData.items = [...mockData.items, itemData];
+		});
 	});
 
 	// make invoice as component
@@ -147,37 +101,107 @@
 </script>
 
 <div class="mx-auto flex h-fit w-full justify-center">
-	<div class="flex w-full max-w-7xl flex-col gap-8 p-4 md:gap-4">
+	<div class="flex h-fit w-full max-w-7xl flex-col gap-8 p-4 md:gap-4">
 		<h2 class="text-center text-3xl md:text-left">Invoice Demo</h2>
 
-		<div class="text-primary-content w-full border-2">
-			<div class="flex flex-col">
-				<label for="companyName" class="text-base-content">Company Name</label>
-				<input type="text" name="companyName" />
+		<div class="flex flex-col justify-between gap-8 md:flex-row">
+			<div>
+				<input type="text" class="bg-base-300 text-bg-content rounded" />
 			</div>
-			<div class="flex flex-col">
-				<label for="receiver" class="text-base-content"
-					>Receiver <span class="text-error">*</span></label
-				>
-				<input type="text" name="receiver" />
-			</div>
-			<div class="flex flex-col">
-				<label for="receiver" class="text-base-content"
-					>Receiver Address <span class="text-error">*</span></label
-				>
-				<input type="text" name="receiver" />
-			</div>
-			<div class="flex flex-col">
-				<label for="issueDate" class="text-base-content"
-					>Issue Date <span class="text-error">*</span></label
-				>
-				<input type="date" name="issueDate" />
-			</div>
-			<div class="flex flex-col">
-				<label for="dueDate" class="text-base-content"
-					>Due Date <span class="text-error">*</span></label
-				>
-				<input type="date" name="dueDate" />
+			<div class="text-xl">
+				<h3 class="text-2xl">For testing</h3>
+				<p>{mockData.companyName}</p>
+				<p>{mockData.client}</p>
+				<p>{mockData.address}</p>
+				<p>{mockData.number}</p>
+				<p>{mockData.issueDate}</p>
+				<p>{mockData.dueDate}</p>
+
+				<div class="overflow-x-auto">
+					<table class="min-w-full divide-y divide-gray-200">
+						<thead class="bg-gray-50">
+							<tr>
+								<th
+									scope="col"
+									class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									ID
+								</th>
+								<th
+									scope="col"
+									class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									Title
+								</th>
+								<th
+									scope="col"
+									class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									Date
+								</th>
+								<th
+									scope="col"
+									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									Rate
+								</th>
+								<th
+									scope="col"
+									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									Tax
+								</th>
+								<th
+									scope="col"
+									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									Quantity
+								</th>
+								<th
+									scope="col"
+									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
+								>
+									Total
+								</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-gray-200 bg-white">
+							{#each mockData.items as item (item.id)}
+								<tr class="hover:bg-gray-50">
+									<td class="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+										{item.id}
+									</td>
+									<td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+										{item.title}
+									</td>
+									<td class="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+										{item.date}
+									</td>
+									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
+										<input type="text" defaultValue={item.rate ? item.rate : ''} class="w-32" />
+									</td>
+									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
+										{item.tax}%
+									</td>
+									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
+										{item.quantity}
+									</td>
+									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
+										{item.total}
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+
+				<p>{mockData.subtotal}</p>
+				<p>{mockData.totalAmount}</p>
+
+				<p>{mockData.bank.bankName}</p>
+				<p>{mockData.bank.accountName}</p>
+				<p>{mockData.bank.accountNumber}</p>
+				<p>{mockData.bank.routingNumber}</p>
 			</div>
 		</div>
 	</div>
