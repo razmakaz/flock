@@ -17,7 +17,6 @@ export interface IInvoiceLineData {
 	end?: string;
 
 	tax: number;
-	thresholdAmount?: number;
 }
 
 export interface IInvoiceData {

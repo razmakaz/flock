@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { IInvoiceData, IInvoiceLineData } from '$lib/@types/IInvoice';
-	import InvoiceTools from '$lib/tools/InvoiceTools';
+	import DemoInvoiceTools from '$lib/tools/DemoInvoiceTools';
+	import InvoiceTools from '$lib/tools/DemoInvoiceTools';
 	import { onMount } from 'svelte';
 
 	let timesheetData: IInvoiceLineData[] | undefined = $state([]);
@@ -36,6 +37,25 @@
 
 	// take timesheet data from timesheet demo and use it in the invoice
 
+	/**
+	 *
+	 * @returns Takes mock data totals and recalculates them based on new item info
+	 */
+	const updateMockTotals = () => {
+		mockData.subtotal = 0;
+		mockData.totalAmount = 0;
+		mockData.items.forEach((item) => {
+			const subtotal = DemoInvoiceTools.calcSubtotal(item);
+			if (subtotal) {
+				mockData.subtotal += subtotal;
+			}
+			mockData.totalAmount += item.total;
+		});
+	};
+
+	/**
+	 * @returns Time sheet data from local storage
+	 */
 	const getTimesheetData = () => {
 		const timeDemoData = localStorage.getItem('floc-cal-demo');
 		if (!timeDemoData) {
@@ -46,32 +66,29 @@
 		return;
 	};
 
+	/**
+	 * @param id
+	 * @param value
+	 * @returns Recalculates demo line and based on new rate input and recalculates new mock data totals
+	 */
 	const recalcLine = (id: string, value: number) => {
 		const itemIndex = mockData.items.findIndex((item) => item.id === id);
 
 		if (itemIndex !== -1) {
 			mockData.items[itemIndex].rate = value;
-			const newItem = InvoiceTools.genDemoLineData(mockData.items[itemIndex]);
+			const newItem = DemoInvoiceTools.genDemoLineData(mockData.items[itemIndex]);
 
 			console.log('New item for invoice data:', newItem);
 
 			if (!newItem) return;
 			mockData.items[itemIndex] = newItem;
 		}
-		mockData.subtotal = 0;
-		mockData.totalAmount = 0;
-		mockData.items.forEach((item) => {
-			const subtotal = InvoiceTools.calcSubtotal(item);
-			mockData.subtotal += subtotal;
-			mockData.totalAmount += item.total;
-		});
+		updateMockTotals();
 	};
 
 	const handleChange = (id: string, e: Event) => {
 		const target = e.target as HTMLInputElement;
 		const value = Number(target.value);
-		console.log(value);
-
 		recalcLine(id, value);
 	};
 
@@ -81,16 +98,11 @@
 		if (!timesheetData) return;
 
 		timesheetData.forEach((time) => {
-			const itemData = InvoiceTools.genDemoLineData(time);
+			const itemData = DemoInvoiceTools.genDemoLineData(time);
 			mockData.items = [...mockData.items, itemData];
 		});
 
-		mockData.items.forEach((item) => {
-			const subtotal = InvoiceTools.calcSubtotal(item);
-			const total = InvoiceTools.calculateInvoiceLine(item);
-			mockData.subtotal += subtotal;
-			mockData.totalAmount += total;
-		});
+		updateMockTotals();
 	});
 
 	// make invoice as component
