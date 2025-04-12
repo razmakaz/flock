@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import type { IInvoiceData } from '$lib/@types/IInvoice';
 
-	export let invoiceData: any;
+	export let invoiceData: IInvoiceData;
 	const { t, translate } = $page.data;
+
+	console.log(invoiceData);
 </script>
 
 <div
@@ -18,7 +21,6 @@
 			</div>
 			<div>
 				<h1 class="m-0 text-2xl font-semibold">{invoiceData.companyName}</h1>
-				<p class="m-0 text-sm opacity-80">{invoiceData.companyTagline}</p>
 			</div>
 		</div>
 		<div class="text-shadow-sm text-4xl font-bold tracking-wide">{translate('invoice.title')}</div>
@@ -30,7 +32,7 @@
 			<p class="mb-2 text-xs tracking-wide text-gray-500 uppercase">
 				{translate('invoice.invoiceTo')}
 			</p>
-			<p class="m-0 mb-2 text-lg font-semibold text-blue-500">{invoiceData.receiver}</p>
+			<p class="m-0 mb-2 text-lg font-semibold text-blue-500">{invoiceData.client}</p>
 			<p class="m-0 text-sm leading-relaxed text-gray-600">
 				{invoiceData.address}
 			</p>
@@ -84,11 +86,8 @@
 						<td class="border-b border-gray-200 px-4 py-4 text-left text-sm text-gray-600"
 							>{index}</td
 						>
-						<td class="border-b border-gray-200 px-4 py-4 text-left">
-							<div class="font-medium text-gray-800">{item.name}</div>
-							<div class="mt-1 text-xs text-gray-500">
-								<p>{item.description}</p>
-							</div>
+						<td class="border-b border-gray-200 px-4 py-4 text-left text-gray-950">
+							{item.title}
 						</td>
 						<td class="border-b border-gray-200 px-4 py-4 text-right text-sm text-gray-600"
 							>{item.rate}</td
@@ -158,20 +157,18 @@
 						<td class="py-2 text-right text-sm font-medium text-gray-600">{invoiceData.subtotal}</td
 						>
 					</tr>
-					<tr class="border-b border-gray-200">
+					<!-- <tr class="border-b border-gray-200">
 						<td class="py-2 text-sm text-gray-600">{translate('invoice.tax')}</td>
-						<td class="py-2 text-right text-sm font-medium text-gray-600"
-							>{invoiceData.taxAmount}</td
-						>
-					</tr>
-					{#if invoiceData.discount}
+						<td class="py-2 text-right text-sm font-medium text-gray-600">{invoiceData.tax}</td>
+					</tr> -->
+					<!-- {#if invoiceData.discount}
 						<tr class="border-b border-gray-200">
 							<td class="py-2 text-sm text-gray-600">{translate('invoice.discount')}</td>
 							<td class="py-2 text-right text-sm font-medium text-gray-600"
 								>{invoiceData.discount}</td
 							>
 						</tr>
-					{/if}
+					{/if} -->
 					<tr class="border-t-2 border-gray-200">
 						<td class="pt-4 text-lg font-semibold text-blue-500"
 							>{translate('invoice.totalAmount')}</td

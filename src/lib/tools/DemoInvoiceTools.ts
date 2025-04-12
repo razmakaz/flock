@@ -8,6 +8,12 @@ class DemoInvoiceTools {
 		this.instance = this;
 	}
 
+	/**
+	 *
+	 * @param startTime
+	 * @param endTime
+	 * @returns The difference of the start time and end time
+	 */
 	static getHourDifference(startTime: string, endTime: string) {
 		const startDate = new Date(startTime);
 		const endDate = new Date(endTime);

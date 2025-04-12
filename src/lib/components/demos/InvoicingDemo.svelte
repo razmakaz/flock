@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { IInvoiceData, IInvoiceLineData } from '$lib/@types/IInvoice';
 	import DemoInvoiceTools from '$lib/tools/DemoInvoiceTools';
-	import InvoiceTools from '$lib/tools/DemoInvoiceTools';
 	import { onMount } from 'svelte';
+	import TemplateOne from './templates/TemplateOne.svelte';
 
 	let timesheetData: IInvoiceLineData[] | undefined = $state([]);
 
@@ -97,10 +97,11 @@
 
 		if (!timesheetData) return;
 
-		timesheetData.forEach((time) => {
-			const itemData = DemoInvoiceTools.genDemoLineData(time);
-			mockData.items = [...mockData.items, itemData];
-		});
+		const newItems = timesheetData.map((time) => DemoInvoiceTools.genDemoLineData(time));
+		mockData = {
+			...mockData,
+			items: [...mockData.items, ...newItems]
+		};
 
 		updateMockTotals();
 	});
@@ -114,109 +115,10 @@
 	<div class="flex h-fit w-full max-w-7xl flex-col gap-8 p-4 md:gap-4">
 		<h2 class="text-center text-3xl md:text-left">Invoice Demo</h2>
 
-		<div class="flex flex-col justify-between gap-8 md:flex-row">
-			<div class="text-xl">
-				<h3 class="text-2xl">For testing</h3>
-				<p>{mockData.companyName}</p>
-				<p>{mockData.client}</p>
-				<p>{mockData.address}</p>
-				<p>{mockData.number}</p>
-				<p>{mockData.issueDate}</p>
-				<p>{mockData.dueDate}</p>
-
-				<div class="overflow-x-auto">
-					<table class="min-w-full divide-y divide-gray-200">
-						<thead class="bg-gray-50">
-							<tr>
-								<th
-									scope="col"
-									class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									ID
-								</th>
-								<th
-									scope="col"
-									class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									Title
-								</th>
-								<th
-									scope="col"
-									class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									Date
-								</th>
-								<th
-									scope="col"
-									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									Rate
-								</th>
-								<th
-									scope="col"
-									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									Tax
-								</th>
-								<th
-									scope="col"
-									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									Quantity
-								</th>
-								<th
-									scope="col"
-									class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase"
-								>
-									Total
-								</th>
-							</tr>
-						</thead>
-						<tbody class="divide-y divide-gray-200 bg-white">
-							{#each mockData.items as item (item.id)}
-								<tr class="hover:bg-gray-50">
-									<td class="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-										{item.id}
-									</td>
-									<td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
-										{item.title}
-									</td>
-									<td class="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-										{item.date}
-									</td>
-									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
-										<input
-											type="text"
-											defaultValue={item.rate ? item.rate : ''}
-											class="w-24"
-											oninput={(e) => handleChange(item.id, e)}
-										/>
-									</td>
-									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
-										{item.tax}%
-									</td>
-									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
-										{item.quantity}
-									</td>
-									<td class="px-6 py-4 text-right text-sm whitespace-nowrap text-gray-500">
-										{item.total}
-									</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
-
-				<div class="flex flex-col">
-					<p>{mockData.subtotal}</p>
-					<p>{mockData.totalAmount}</p>
-				</div>
-
-				<p>{mockData.bank.bankName}</p>
-				<p>{mockData.bank.accountName}</p>
-				<p>{mockData.bank.accountNumber}</p>
-				<p>{mockData.bank.routingNumber}</p>
+		{#if mockData}
+			<div>
+				<TemplateOne invoiceData={mockData} />
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
