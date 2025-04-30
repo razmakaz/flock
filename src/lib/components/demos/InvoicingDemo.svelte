@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import TemplateOne from './templates/TemplateOne.svelte';
 
-	let timesheetData: IInvoiceLineData[] | undefined = $state([]);
+	let timesheetData: object[] = $state([]);
 
 	let mockData: IInvoiceData = $state({
 		companyName: 'Apex Design Co.',
@@ -53,18 +53,7 @@
 		});
 	};
 
-	/**
-	 * @returns Time sheet data from local storage
-	 */
-	const getTimesheetData = () => {
-		const timeDemoData = localStorage.getItem('floc-cal-demo');
-		if (!timeDemoData) {
-			return;
-		}
-		const parsedTimeData = JSON.parse(timeDemoData);
-		timesheetData = parsedTimeData;
-		return;
-	};
+
 
 	/**
 	 * @param id
@@ -93,7 +82,7 @@
 	};
 
 	onMount(() => {
-		getTimesheetData();
+		timesheetData = DemoInvoiceTools.getTimesheetData();
 
 		if (!timesheetData) return;
 
@@ -117,7 +106,7 @@
 
 		{#if mockData}
 			<div>
-				<TemplateOne invoiceData={mockData} />
+				<TemplateOne {mockData} />
 			</div>
 		{/if}
 	</div>

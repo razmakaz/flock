@@ -1,5 +1,6 @@
 import type { IInvoiceLineData } from '$lib/@types/IInvoice';
 
+
 class DemoInvoiceTools {
 	instance: DemoInvoiceTools | null = null;
 
@@ -7,6 +8,19 @@ class DemoInvoiceTools {
 		if (this.instance) return this.instance;
 		this.instance = this;
 	}
+		
+	/**
+	 * @returns Time sheet data from local storage
+	 */
+	static getTimesheetData() {
+			const timeDemoData = localStorage.getItem('floc-cal-demo');
+			if (!timeDemoData) {
+				return [];
+			}
+			const parsedTimeData = JSON
+			.parse(timeDemoData);
+			return parsedTimeData;
+	};
 
 	/**
 	 *
@@ -31,7 +45,8 @@ class DemoInvoiceTools {
 	}
 
 	static calcSubtotal(itemData: IInvoiceLineData) {
-		return itemData.quantity * itemData.rate;
+		const subtotal = itemData.quantity * itemData.rate;
+		return Number(subtotal.toFixed(2))
 	}
 
 	/**
