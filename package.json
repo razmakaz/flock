@@ -8,6 +8,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
+		"prod": "npm run build && node --env-file=.env build",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
@@ -16,6 +17,7 @@
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
 		"caddy": "./scripts/caddy.sh",
+		"docker": "docker compose -f docker-compose.yml up --build",
 		"pb": "./.pocketbase/pocketbase serve",
 		"migrate": "./.pocketbase/pocketbase migrate",
 		"pb:start": "./.pocketbase/pocketbase start"
@@ -69,6 +71,7 @@
 		"auth0": "^4.21.0",
 		"chrono-node": "^2.7.8",
 		"daisyui": "^5.0.3",
+		"dotenv": "^16.5.0",
 		"flatpickr": "^4.6.13",
 		"jsonwebtoken": "^9.0.2",
 		"luxon": "^3.6.0",

@@ -1,0 +1,23 @@
+services:
+  floc:
+    container_name: floc
+    image: node:22
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - '4173:4173'
+    command: ['/bin/sh', '-c', 'npm install && npm run prod']
+
+  pocketbase:
+    container_name: pocketbase
+    image: alpine:latest
+    working_dir: /pocketbase
+    volumes:
+      - ./.pocketbase/:/pocketbase
+    command: ['./pocketbase', 'serve', '--http=0.0.0.0:8090']
+    ports:
+      - '8090:8090'
+
+networks:
+  floc:
