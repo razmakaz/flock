@@ -1,0 +1,2 @@
+import type { IModelsBase } from '.';
+import type { IContact } from './IContact';
