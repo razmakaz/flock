@@ -24,7 +24,6 @@ export * from './IInvoice';
 export * from './ILicenses';
 export * from './IMarketingOnboarding';
 export * from './IMarketingPreferences';
-export * from './index';
 export * from './IOrganizations';
 export * from './IPayment';
 export * from './IProfile';
