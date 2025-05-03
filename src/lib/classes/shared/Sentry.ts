@@ -36,7 +36,6 @@ export class SentryBase {
 	}
 
 	static debug(...args: unknown[]): void {
-		console.log('Running SentryBase.debug with args:', ...args);
 		if (!SentryBase.isEnabled('debug')) return;
 		this.logWithColor(chalk.gray, 'DEBUG', ...args);
 	}
