@@ -1,4 +1,4 @@
-import type { ISession } from '$lib/@types/ISession.js';
+import type { ISession } from '$lib/@types/system/ISession.js';
 import { getCookie } from '$lib/server/cookies.js';
 import { redirect } from '@sveltejs/kit';
 

@@ -1,7 +1,7 @@
 import type { IContact } from './IContact';
 import type { IModelsBase } from '.';
 
-export interface ICharges extends IModelsBase {
+export interface ICharge extends IModelsBase {
 	contact: IContact;
 	amount: number;
 	recurring: boolean;

@@ -1,6 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { ISession } from '$lib/@types/ISession';
+import type { ISession } from '$lib/@types/system/ISession';
 import PocketBase from 'pocketbase';
 
 // for information about these interfaces
