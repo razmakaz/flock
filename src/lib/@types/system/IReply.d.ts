@@ -4,4 +4,9 @@ export default interface IReply {
 	messages?: string[];
 	errors?: string[];
 	status?: number;
+
+	// Pagination properties (optional)
+	page?: number;
+	perPage?: number;
+	total?: number;
 }

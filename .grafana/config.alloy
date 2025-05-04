@@ -1,0 +1,20 @@
+logging {
+level  = "info"
+format = "logfmt"
+}
+
+local.file_match "var_logs" {
+path_targets = ["/var/log/*.log"]
+}
+
+loki.write "local" {
+endpoint {
+url = "http://loki:3100/loki/api/v1/push"
+}
+
+labels = {
+job = "var-logs"
+}
+
+forward_to = [local.file_match.var_logs.output]
+}

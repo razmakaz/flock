@@ -19,5 +19,31 @@ services:
     ports:
       - '8090:8090'
 
+  loki:
+    container_name: loki
+    image: grafana/loki:2.8.2
+    ports:
+      - '3100:3100'
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config:/etc/loki
+    networks:
+      - floc
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.1.1
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    depends_on:
+      - loki
+    networks:
+      - floc
+
 networks:
   floc:

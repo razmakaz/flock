@@ -19,5 +19,43 @@ services:
     ports:
       - '8090:8090'
 
+  grafana:
+    image: grafana/grafana:11.6.1
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - loki
+    networks:
+      - floc
+
+  loki:
+    image: grafana/loki:3.5.0
+    ports:
+      - '3100:3100'
+    command: -config.file=/etc/loki/config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/config.yaml
+    networks:
+      - floc
+
+  alloy:
+    image: grafana/alloy:latest
+    volumes:
+      - ./.grafana/config.alloy:/etc/alloy/config.alloy
+      - ./.grafana/logs:/var/log:ro
+    command: ['--config.file=/etc/alloy/config.alloy']
+    depends_on:
+      - loki
+    networks:
+      - floc
+
+volumes:
+  grafana-storage:
+
 networks:
   floc:

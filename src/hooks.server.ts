@@ -25,6 +25,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// Redirect to use language if not already
 	const langFromUrl = event.url.pathname.split('/')[1];
 
+	// If it's the API path, skip language handling
+	if (event.url.pathname.startsWith('/api/')) {
+		return resolve(event);
+	}
+
 	// Check if it's a supported language
 	if (!SUPPORTED_LANGUAGES.includes(langFromUrl)) {
 		// Get language from cookies, headers, or fallback to 'en'
