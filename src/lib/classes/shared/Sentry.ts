@@ -32,6 +32,24 @@ export class SentryBase {
 	}
 
 	private static logWithColor(colorFn: chalk.Chalk, label: string, ...args: unknown[]): void {
+		const isServer = typeof window === 'undefined';
+		if (isServer) {
+			import('../server/Loki').then(({ default: Loki }) => {
+				try {
+					console.log('Logging to Loki:');
+					Loki.log({
+						app: 'floc',
+						level: label.toLowerCase(),
+						message: args
+							.map((arg) => (typeof arg === 'object' ? JSON.stringify(arg) : arg))
+							.join(' ')
+					});
+				} catch (error) {
+					console.error('Failed to log to Loki:', error);
+				}
+			});
+		}
+
 		console.log(colorFn(`[${label}]`), ...args);
 	}
 
