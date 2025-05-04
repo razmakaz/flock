@@ -8,6 +8,8 @@ services:
     ports:
       - '5173:5173'
     command: ['/bin/sh', '-c', 'npm install && npm run dev']
+    networks:
+      - floc
 
   pocketbase:
     container_name: pocketbase
@@ -18,39 +20,47 @@ services:
     command: ['./pocketbase', 'serve', '--http=0.0.0.0:8090']
     ports:
       - '8090:8090'
+    networks:
+      - floc
 
   grafana:
-    image: grafana/grafana:11.6.1
+    container_name: grafana
+    image: grafana/grafana:latest
     ports:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./.grafana/ds.yaml:/etc/grafana/provisioning/datasources/ds.yaml
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_PATHS_PROVISIONING=${GF_PATHS_PROVISIONING}
+      - GF_AUTH_ANONYMOUS_ENABLED=${GF_AUTH_ANONYMOUS_ENABLED}
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=${GF_AUTH_ANONYMOUS_ORG_ROLE}
+      - GF_FEATURE_TOGGLES_ENABLE=${GF_FEATURE_TOGGLES_ENABLE}
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD:-admin}
     depends_on:
       - loki
     networks:
       - floc
 
   loki:
+    container_name: loki
     image: grafana/loki:3.5.0
     ports:
       - '3100:3100'
     command: -config.file=/etc/loki/config.yaml
     volumes:
-      - ./loki-config.yaml:/etc/loki/config.yaml
+      - ./.grafana/loki/config.yaml:/etc/loki/config.yaml
     networks:
       - floc
 
-  alloy:
-    image: grafana/alloy:latest
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:latest
     volumes:
-      - ./.grafana/config.alloy:/etc/alloy/config.alloy
-      - ./.grafana/logs:/var/log:ro
-    command: ['--config.file=/etc/alloy/config.alloy']
-    depends_on:
-      - loki
+      - ./.grafana/log:/var/log
+      - ./.grafana/promtail/config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
     networks:
       - floc
 

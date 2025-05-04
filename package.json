@@ -5,6 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "tsx ./scripts/index.ts && vite dev --host",
+		"devup": "podman compose -f docker-compose.dev.yml up -d --build",
+		"devdown": "podman compose -f docker-compose.dev.yml down",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
